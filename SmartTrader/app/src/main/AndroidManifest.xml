@@ -40,6 +40,10 @@
             android:name=".FriendsActivity"
             android:label="@string/title_activity_friends" >
         </activity>
+        <activity
+            android:name=".PendingActivity"
+            android:label="@string/title_activity_pending" >
+        </activity>
     </application>
 
 </manifest>
