@@ -5,6 +5,8 @@ package com.loveboyuan.smarttrader;
  */
 public class User {
 
+    // A User has his/her personal profile
+    private Profile profile;
     // A User has his/her inventory
     private Inventory inventory = new Inventory();
     // A User has his/her trade history
