@@ -13,4 +13,10 @@
     <string name="profile_activity_cell_button">Cell</string>
     <string name="profile_activity_age_button">Age</string>
     <string name="profile_activity_gender_button">Gender</string>
+    <string name="title_activity_friends">Friends</string>
+    
+    <string name="friends_activity_edit_button">Edit</string>
+    <string name="title_activity_pending">Pending Friend Requests</string>
+
+    <string name="pending_activity_accept_all_button">Accept All</string>
 </resources>
