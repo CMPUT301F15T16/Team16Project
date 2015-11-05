@@ -81,7 +81,7 @@ public class InventoryActivity extends AppCompatActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Item item = list.get(position);
-                        InventoryController.getInventoryModel().removeItem(item);
+                        InventoryController.removeItem(item);
                     }
                 });
                 adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

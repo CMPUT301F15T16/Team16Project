@@ -26,7 +26,7 @@ public class InventoryController {
 
     }
 
-    public void removeItem(Item item) {
+    public static void removeItem(Item item) {
         getInventoryModel().removeItem(item);
     }
 

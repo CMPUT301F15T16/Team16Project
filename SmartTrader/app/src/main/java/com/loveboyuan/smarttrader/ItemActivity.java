@@ -1,6 +1,7 @@
 package com.loveboyuan.smarttrader;
 
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,39 +42,40 @@ public class ItemActivity extends AppCompatActivity {
         try {
             Item item = (Item) getIntent().getSerializableExtra("MyItem");
 
-
-            Button addButton =(Button) findViewById(R.id.addButton);
-            Button updateButton = (Button) findViewById(R.id.updateButton);
-            addButton.setVisibility(View.GONE);
-            updateButton.setVisibility(View.VISIBLE);
-
-
             String name = item.getName();
-            String quality = item.getQuality();
-            String category = item.getCategory();
-            String description = item.getDescription();
-            int quantity = item.getQuantity();
-            EditText nameView = (EditText) findViewById(R.id.itemNameText);
-            RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
-            RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
-            EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
+            if(!name.equals("")) {
+                Button addButton = (Button) findViewById(R.id.addButton);
+
+                Button updateButton = (Button) findViewById(R.id.updateButton);
+                addButton.setVisibility(View.GONE);
+                updateButton.setVisibility(View.VISIBLE);
+
+                String quality = item.getQuality();
+                String category = item.getCategory();
+                String description = item.getDescription();
+                int quantity = item.getQuantity();
+                EditText nameView = (EditText) findViewById(R.id.itemNameText);
+                RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
+                RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
+                EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
 
 
+                nameView.setText(name);
 
-            nameView.setText(name);
+                numberPicker.setValue(quantity);
 
-            numberPicker.setValue(quantity);
+                qualityRadios.check(R.id.mediumRadioButton);
 
-            qualityRadios.check(R.id.mediumRadioButton);
+                privacyRadios.check(R.id.publicRadioButton);
 
-            privacyRadios.check(R.id.publicRadioButton);
+                spinner.setSelection(3);
 
-            spinner.setSelection(3);
-
-            descriptionView.setText(description);
+                descriptionView.setText(description);
 
 
-            Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
+
+            }
         } catch (RuntimeException exception){
         }
 
@@ -142,6 +144,19 @@ public class ItemActivity extends AppCompatActivity {
         InventoryController.addItem(item);
 
 
+        this.finish();
+    }
+
+
+
+    public void goBackInventory(){
+        this.finish();
 
     }
+
+    public void updateItem(){
+        this.finish();
+    }
+
+
 }
