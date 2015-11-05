@@ -5,24 +5,24 @@ import java.util.ArrayList;
  * Created by jiahui on 10/18/15.
  */
 public class FriendList {
-    private ArrayList<Profile> friendList = new ArrayList<Profile>();
+    private ArrayList<User> friendList = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
-    public void addFriend(Profile profile) {
-        if (false == this.friendList.contains(profile)) {
-            this.friendList.add(profile);
+    public void addFriend(User user) {
+        if (!this.friendList.contains(user)) {
+            this.friendList.add(user);
         }
         this.notifyAllObservers();
     }
 
-    public void removeFriend(Profile profile) {
-        if (this.friendList.contains(profile)) {
-            this.friendList.remove(profile);
+    public void removeFriend(User user) {
+        if (this.friendList.contains(user)) {
+            this.friendList.remove(user);
         }
         this.notifyAllObservers();
     }
 
-    public ArrayList<Profile> getFriendList() {
+    public ArrayList<User> getFriendList() {
         return friendList;
     }
 

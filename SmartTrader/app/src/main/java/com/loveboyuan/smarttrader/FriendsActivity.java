@@ -4,6 +4,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class FriendsActivity extends AppCompatActivity {
 
@@ -11,6 +17,13 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+        ListView friendListView = (ListView)findViewById(R.id.friendListView);
+        Collection<User> users = FriendListController.getFriendListModel().getFriendList();
+        final ArrayList<User> friendList = new ArrayList<User>(users);
+        final ArrayAdapter<User> friendListAdapter =
+                new ArrayAdapter<User>(this, android.R.layout.activity_list_item, friendList);
+        friendListView.setAdapter(friendListAdapter);
     }
 
     @Override
