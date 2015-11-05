@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Public"
-            android:id="@+id/radioButton4"
+            android:id="@+id/publicRadioButton"
             android:layout_below="@+id/textView7"
             android:layout_alignStart="@+id/radioButton5" />
 
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Private"
-            android:id="@+id/radioButton5"
+            android:id="@+id/privateRadioButton"
             android:layout_below="@+id/radioButton4"
             android:layout_alignStart="@+id/radioButton2" />
 
@@ -118,13 +118,13 @@
         android:layout_below="@+id/textView8"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/commitButton" />
+        android:layout_above="@+id/addButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cancel"
-        android:id="@+id/button"
+        android:id="@+id/cancelButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
@@ -132,7 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
-        android:id="@+id/commitButton"
+        android:id="@+id/addButton"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/descriptionText"
         android:onClick="addItem"/>
@@ -176,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Update"
-        android:id="@+id/button2"
+        android:id="@+id/updateButton"
         android:layout_below="@+id/descriptionText"
         android:layout_alignEnd="@+id/descriptionText"
         android:visibility="invisible"/>

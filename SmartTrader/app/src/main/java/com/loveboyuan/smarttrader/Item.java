@@ -2,10 +2,12 @@ package com.loveboyuan.smarttrader;
 
 import android.util.EventLogTags;
 
+import java.io.Serializable;
+
 /**
  * Created by boyuangu on 2015-10-16.
  */
-public class Item {
+public class Item implements Serializable {
     //final int id;
     private String name;
 
@@ -71,4 +73,19 @@ public class Item {
     }
 
 
+    public String getName() {
+        return name;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

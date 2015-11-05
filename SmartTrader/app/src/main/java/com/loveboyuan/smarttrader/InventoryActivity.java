@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,14 +22,19 @@ public class InventoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-
+        // getting the list view in the ui
         ListView inventoryListView = (ListView) findViewById(R.id.inventoryListView);
+        // items contains all items in the inventory
         Collection<Item> items = InventoryController.getInventoryModel().getInventory();
+        // list contains items
         final ArrayList<Item> list = new ArrayList<Item>(items);
-        final ArrayAdapter<Item> inventoryAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, list);;
+        // inventoryAdapter is an array Adapter to fit data in the list view
+        final ArrayAdapter<Item> inventoryAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, list);
+        // inventoryListView set inventoryAdapter as its adaptor
         inventoryListView.setAdapter(inventoryAdapter);
 
 
+        // we want a observer for the inventory model here. notify data change, and update the view
         InventoryController.getInventoryModel().addMyObserver(new MyObserver() {
             @Override
             public void update() {
@@ -40,10 +46,25 @@ public class InventoryActivity extends AppCompatActivity{
         });
 
 
-        // show inventory item
+        // show inventory item and let user modify item attributes
         inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Item item = list.get(position);
+                String name = item.getName();
+                String quality = item.getQuality();
+                String category = item.getCategory();
+                String description = item.getDescription();
+                int quantity = item.getQuantity();
+               // String quan = String.valueOf(quantity);
+
+
+               // Toast.makeText(InventoryActivity.this, quan, Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                intent.putExtra("MyItem", item);
+                startActivity(intent);
 
             }
         });

@@ -7,11 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -34,6 +36,48 @@ public class ItemActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+// In case of edit item in the inventory, the activity is started with message passed with. get intent!
+        try {
+            Item item = (Item) getIntent().getSerializableExtra("MyItem");
+
+
+            Button addButton =(Button) findViewById(R.id.addButton);
+            Button updateButton = (Button) findViewById(R.id.updateButton);
+            addButton.setVisibility(View.GONE);
+            updateButton.setVisibility(View.VISIBLE);
+
+
+            String name = item.getName();
+            String quality = item.getQuality();
+            String category = item.getCategory();
+            String description = item.getDescription();
+            int quantity = item.getQuantity();
+            EditText nameView = (EditText) findViewById(R.id.itemNameText);
+            RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
+            RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
+            EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
+
+
+
+            nameView.setText(name);
+
+            numberPicker.setValue(quantity);
+
+            qualityRadios.check(R.id.mediumRadioButton);
+
+            privacyRadios.check(R.id.publicRadioButton);
+
+            spinner.setSelection(3);
+
+            descriptionView.setText(description);
+
+
+            Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
+        } catch (RuntimeException exception){
+        }
+
+
     }
 
     @Override
@@ -96,6 +140,7 @@ public class ItemActivity extends AppCompatActivity {
         Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
 
         InventoryController.addItem(item);
+
 
 
     }
