@@ -1,5 +1,6 @@
 package com.loveboyuan.smarttrader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +22,7 @@ public class InventoryController {
     }
 
     public static void addItem(Item item) {
-            getInventoryModel().addItem(item);
+        getInventoryModel().addItem(item);
 
 
     }
@@ -30,4 +31,14 @@ public class InventoryController {
         getInventoryModel().removeItem(item);
     }
 
+    public static void removeSerializableItem(Serializable myItem) {
+        // I need to remove the real object, not just the serializable!
+        Item sItem = (Item) myItem;
+
+        for(Item item: getInventoryModel().getInventory()) {
+            if (item.getName().equals(sItem.getClass().getName())) {
+                getInventoryModel().removeItem(item);
+            }
+        }
+    }
 }

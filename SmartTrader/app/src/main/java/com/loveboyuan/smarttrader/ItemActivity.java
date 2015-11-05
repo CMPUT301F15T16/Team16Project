@@ -16,6 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 
 public class ItemActivity extends AppCompatActivity {
 
@@ -73,7 +75,7 @@ public class ItemActivity extends AppCompatActivity {
                 descriptionView.setText(description);
 
 
-                Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
 
             }
         } catch (RuntimeException exception){
@@ -105,56 +107,62 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     public void addItem(View view){
-        String name, category, quality, description, photoPath;
-        boolean isPrivate;
-        int quantity;
+        try {
+            String name, category, quality, description, photoPath;
+            boolean isPrivate;
+            int quantity;
 
-        // name
-        EditText nameView = (EditText) findViewById(R.id.itemNameText);
-        name = nameView.getText().toString();
-        // category
-        Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
-        category = spinner.getSelectedItem().toString();
-        // quantity
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        quantity = numberPicker.getValue();
-        // quality
-        RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
-        RadioButton qualityRadio = (RadioButton) findViewById(qualityRadios.getCheckedRadioButtonId());
-        quality = (String)qualityRadio.getText();
-        // isPrivate
-        RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
-        RadioButton privacyRadio = (RadioButton) findViewById(privacyRadios.getCheckedRadioButtonId());
-        String bool = (String)privacyRadio.getText();
-        if(bool.equals("Public")){
-            isPrivate = Boolean.FALSE;
-        }else{
-            isPrivate = Boolean.TRUE;
+
+            // name
+            EditText nameView = (EditText) findViewById(R.id.itemNameText);
+            name = nameView.getText().toString();
+            // category
+            Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
+            category = spinner.getSelectedItem().toString();
+            // quantity
+            NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
+            quantity = numberPicker.getValue();
+            // quality
+            RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
+            RadioButton qualityRadio = (RadioButton) findViewById(qualityRadios.getCheckedRadioButtonId());
+            quality = (String) qualityRadio.getText();
+            // isPrivate
+            RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
+            RadioButton privacyRadio = (RadioButton) findViewById(privacyRadios.getCheckedRadioButtonId());
+            String bool = (String) privacyRadio.getText();
+            if (bool.equals("Public")) {
+                isPrivate = Boolean.FALSE;
+            } else {
+                isPrivate = Boolean.TRUE;
+            }
+            // description
+            EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
+            description = descriptionView.getText().toString();
+            // photopath will be null for now
+            photoPath = "null";
+
+
+            Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
+
+            InventoryController.addItem(item);
+        }catch (RuntimeException ignored){
         }
-        // description
-        EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
-        description = descriptionView.getText().toString();
-        // photopath will be null for now
-        photoPath = "null";
-
-
-
-        Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
-
-        InventoryController.addItem(item);
-
 
         this.finish();
     }
 
 
 
-    public void goBackInventory(){
+    public void goBackInventory(View v){
         this.finish();
 
     }
 
-    public void updateItem(){
+    public void updateItem(View v){
+        addItem(v);
+        Serializable item = getIntent().getSerializableExtra("MyItem");
+        Item theItem = (Item) item;
+        InventoryController.removeSerializableItem(item);
         this.finish();
     }
 
