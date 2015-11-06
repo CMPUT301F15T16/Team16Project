@@ -9,7 +9,6 @@ public class Profile {
     private String firstName;
     private String lastName;
     private int age;
-    private String gender;
     private String email;
     private Bitmap photo;
     private String phoneNumber;
@@ -19,6 +18,7 @@ public class Profile {
     public Profile(String firstName, String lastName) {
         setFirstName(firstName);
         setLastName(lastName);
+        age = 0;
     }
 
     public String getName() {
@@ -46,15 +46,7 @@ public class Profile {
     }
 
     public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
+        if (age > 0 && age <= 100) this.age = age;
     }
 
     public String getEmail() {

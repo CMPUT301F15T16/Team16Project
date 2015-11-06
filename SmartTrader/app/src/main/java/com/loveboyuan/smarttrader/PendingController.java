@@ -81,4 +81,18 @@ public class PendingController {
         getPendingModel().removeAllRequests(list);
     }
 
+    /**
+     * Accesses getPendingSent from the Pending model
+     */
+    static public ArrayList<User> getPendingSent() {
+        return getPendingModel().getPendingSent();
+    }
+
+    /**
+     * Accesses getPendingReceived from the Pending model
+     */
+    static public ArrayList getPendingReceived() {
+        return getPendingModel().getPendingReceived();
+    }
+
 }

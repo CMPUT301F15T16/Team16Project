@@ -32,6 +32,7 @@ public class PendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending);
 
+
         ListView pendingSentView = (ListView) findViewById(R.id.pendingSentView);
         ListView pendingReceivedView = (ListView) findViewById(R.id.pendingReceivedView);
 
@@ -60,8 +61,8 @@ public class PendingActivity extends AppCompatActivity {
             public void update() {
                 pendingSent.clear();
                 pendingReceived.clear();
-                Collection<User> userSent = PendingController.getPendingModel().getPendingSent();
-                Collection<User> userReceived = PendingController.getPendingModel().getPendingReceived();
+                Collection<User> userSent = PendingController.getPendingSent();
+                Collection<User> userReceived = PendingController.getPendingReceived();
                 userSent.addAll(userSent);
                 userReceived.addAll(userReceived);
                 pendingSentAdapter.notifyDataSetChanged();
@@ -84,21 +85,20 @@ public class PendingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
 
     private OnClickListener acceptAllListener = new OnClickListener() {
         public void onClick(View v) {
             ArrayList<User> pending = PendingController.getPendingModel().getPendingReceived();
-            PendingController.getPendingModel().acceptAllFriends(pending);
+            PendingController.acceptAllFriends(pending);
         }
     };
 
     private OnClickListener cancelAllListener = new OnClickListener() {
         public void onClick(View v) {
             ArrayList<User> pending = PendingController.getPendingModel().getPendingSent();
-            PendingController.getPendingModel().cancelAllRequests(pending);
+            PendingController.cancelAllRequests(pending);
         }
     };
 
