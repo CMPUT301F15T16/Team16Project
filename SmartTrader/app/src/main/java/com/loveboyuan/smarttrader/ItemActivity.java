@@ -101,9 +101,6 @@ public class ItemActivity extends AppCompatActivity {
                 }
                 spinner.setSelection(select);
 
-
-
-
             }
         } catch (RuntimeException exception){
         }
