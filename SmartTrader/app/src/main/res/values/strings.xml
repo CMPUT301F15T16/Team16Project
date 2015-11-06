@@ -10,10 +10,12 @@
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_usersettings">Settings</string>
     
-    <string name="profile_activity_city_button">City</string>
-    <string name="profile_activity_cell_button">Cell</string>
-    <string name="profile_activity_age_button">Age</string>
-    <string name="profile_activity_gender_button">Gender</string>
+    <string name="profile_activity_city">City</string>
+    <string name="profile_activity_cell">Cell</string>
+    <string name="profile_activity_age">Age</string>
+    <string name="profile_activity_gender">Gender</string>
+    <string name="profile_activity_cancel">Cancel</string>
+    <string name="profile_activity_save">Save</string>
     <string name="title_activity_friends">Friends</string>
     <string name="pref_images">Download Images</string>
     <string name="pref_images_summ">When connected to a network</string>
