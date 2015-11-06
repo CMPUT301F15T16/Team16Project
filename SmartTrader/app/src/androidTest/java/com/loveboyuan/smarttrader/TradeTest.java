@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public class TradeTest extends TestCase {
 
     public void testAcceptTrade() throws Exception {
-        User borrower = new User();
-        User owner = new User();
+        User borrower = new User(1);
+        User owner = new User(2);
 
         borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
         borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
@@ -34,8 +34,8 @@ public class TradeTest extends TestCase {
     }
 
     public void testRejectTrade() throws Exception {
-        User borrower = new User();
-        User owner = new User();
+        User borrower = new User(1);
+        User owner = new User(2);
 
         borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
         borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
@@ -58,8 +58,8 @@ public class TradeTest extends TestCase {
     }
 
     public void testMakeCounterTrader() throws Exception {
-        User borrower = new User();
-        User owner = new User();
+        User borrower = new User(1);
+        User owner = new User(2);
 
         borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
         borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
@@ -89,8 +89,8 @@ public class TradeTest extends TestCase {
     }
 
     public void testEditOItem() throws Exception {
-        User borrower = new User();
-        User owner = new User();
+        User borrower = new User(1);
+        User owner = new User(2);
 
         borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
         borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
@@ -112,8 +112,8 @@ public class TradeTest extends TestCase {
     }
 
     public void testEditBItems() throws Exception {
-        User borrower = new User();
-        User owner = new User();
+        User borrower = new User(1);
+        User owner = new User(2);
 
         Item item1 = new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", "");
         borrower.getInventory().addItem(item1);

@@ -22,6 +22,6 @@
     
     <string name="friends_activity_edit_button">Edit</string>
     <string name="title_activity_pending">Pending Friend Requests</string>
-
+    <string name="pending_activity_cancel_all_button">Cancel All</string>>
     <string name="pending_activity_accept_all_button">Accept All</string>
 </resources>
