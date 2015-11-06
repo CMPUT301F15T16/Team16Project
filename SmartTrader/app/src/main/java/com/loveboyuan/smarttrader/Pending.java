@@ -1,58 +1,129 @@
 package com.loveboyuan.smarttrader;
+
 import java.util.ArrayList;
+import java.util.Collection;
+
+/**
+ * Created by bstang on 11/5/2015.
+ *
+ * This model is for the pending friend requests, both the ones you sent (needs to be implemented)
+ * and the friend requests you have received. Here you can accept or reject a friend request. You can
+ * also cancel a previously sent request.
+ */
 
 public class Pending {
+    private ArrayList<User> pendingSent = new ArrayList<User>();
+    private ArrayList<User> pendingReceived = new ArrayList<User>();
+    private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
-    //A pending friend request has a requester(person who requests to be a friend)
-    private User requester;
 
-    //A pending friend request has an owner
-    private User owner;
-
-    //An owner has a list of users that have requested them
-    private ArrayList<Item> receivedFriendRequests;
-
-    //An owner has a list of users they have sent friend requests to
-    private ArrayList<Item> sentFriendRequests;
-
-    //An owner can accept the friend request or deny it
-    private boolean friendResult;
-
-    //Pending  can get the owner of the request
-    public User getOwner() {
-        return owner;
+    /**
+     * Accepts the friend request and adds them to the current
+     * User friend list. It also removes the pending friend request
+     * from the received pending list.
+     * @param user this is the User being accepted as a friend
+     */
+    public void acceptFriend(User user) {
+        FriendListController.getFriendListModel().addFriend(user);
+        removeRequest(user);
+        this.notifyAllObservers();
     }
 
-    //Pending can get the requester
-    public User getRequester() {
-        return requester;
+    /**
+     * This accepts all friend requests in Pending and adds them all
+     * to the current User friend list. It also removes all of the friend
+     * requests from the received pending list.
+     * @param list this is the array list of all friend requests
+     */
+    public void acceptAllFriends(ArrayList list) {
+        //FriendListController.getFriendListModel().addAllFriends(list);
+        removeAllRequests(list);
+        this.notifyAllObservers();
     }
 
-    //Pending can get list of received friend requests
-    public ArrayList<Item> getReceivedFriendRequests() {
-        return this.receivedFriendRequests;
+    /**
+     * This adds a user to the sent pending list. This is invoked when the
+     * current User requests a friend.
+     * @param user us the User that has been requested as a friend
+     */
+    public void addPending(User user) {
+        if (!this.pendingSent.contains(user)) {
+            this.pendingSent.add(user);
+        }
+        this.notifyAllObservers();
     }
 
-    //Pending can get list of sent friend requests
-    public ArrayList<Item> getSentFriendRequests() {
-        return this.sentFriendRequests;
+
+    /**
+     * This removes a friend request from the sent requests
+     * pending list.
+     * @param user the User to be removed the the sent request
+     *             pending list
+     */
+    public void cancelRequest(User user) {
+        if (this.pendingSent.contains(user)) {
+            this.pendingSent.remove(user);
+        }
+        this.notifyAllObservers();
     }
 
-    //Pending can get result of friend request
-    public boolean getFriendResult() {
-        return friendResult;
+    /**
+     * This removes all pending sent friend requests
+     * @param list the array list of sent friend
+     *             requests to be removed from sent
+     *             pending list
+     */
+    public void cancelAllRequests(ArrayList list) {
+        this.pendingSent.removeAll(list);
+        this.notifyAllObservers();
     }
 
-    //Owner can accept friend request
-    public void acceptFriend() {
-        this.friendResult = Boolean.TRUE;
-        //remove from list of pending friend requests
-        // add users to each others friend lists (not exactly sure how we are going to implement this yet)
+
+    /**
+     * This removes a friend request from the received friend
+     * requests pending list.
+     * @param user the User to be removed the the received request
+     *             pending list
+     */
+    public void removeRequest(User user) {
+        if (this.pendingReceived.contains(user)) {
+            this.pendingReceived.remove(user);
+        }
+        this.notifyAllObservers();
     }
 
-    //Owner can reject friend request
-    public void rejectFriend() {
-        this.friendResult = Boolean.FALSE;
-        //remove from list of pending friend requests
+    /**
+     * This removes all pending received friend requests.
+     * @param list the array list of all friends that have requested
+     *             the current User.
+     */
+    public void removeAllRequests(ArrayList list) {
+        this.pendingReceived.removeAll(list);
+        this.notifyAllObservers();
+    }
+
+    /**
+     * this gets the sent pending list
+     * @return the sent pending list
+     */
+    public ArrayList<User> getPendingSent() {
+        return pendingSent;
+    }
+
+    /**
+     * this gets the received pending list
+     * @return the received pending list
+     */
+    public ArrayList<User> getPendingReceived() {
+        return pendingReceived;
+    }
+
+    public void addMyObserver(MyObserver observer) {
+        observers.add(observer);
+    }
+
+    public void notifyAllObservers() {
+        for (MyObserver observer : observers)
+            observer.update();
     }
 }

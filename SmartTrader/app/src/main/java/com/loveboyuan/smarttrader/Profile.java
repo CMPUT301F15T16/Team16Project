@@ -17,22 +17,12 @@ public class Profile {
 
     // note only firstName and lastName are necessary attributes for profile
     public Profile(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Profile(String name) {
-        setName(name);
+        setFirstName(firstName);
+        setLastName(lastName);
     }
 
     public String getName() {
         return getFirstName() + " " + getLastName();
-    }
-
-    public void setName(String name) {
-        String[] nameArray = name.split(" ");
-        setFirstName(nameArray[0]);
-        setLastName(nameArray[1]);
     }
 
     public String getFirstName() {
