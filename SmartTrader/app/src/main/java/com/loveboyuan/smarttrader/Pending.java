@@ -24,7 +24,7 @@ public class Pending {
      * @param user this is the User being accepted as a friend
      */
     public void acceptFriend(User user) {
-        FriendListController.getFriendListModel().addFriend(user);
+        FriendListController.addFriend(user);
         removeRequest(user);
         this.notifyAllObservers();
     }
@@ -36,7 +36,7 @@ public class Pending {
      * @param list this is the array list of all friend requests
      */
     public void acceptAllFriends(ArrayList list) {
-        //FriendListController.getFriendListModel().addAllFriends(list);
+        //FriendListController.addAllFriends(list);
         removeAllRequests(list);
         this.notifyAllObservers();
     }
