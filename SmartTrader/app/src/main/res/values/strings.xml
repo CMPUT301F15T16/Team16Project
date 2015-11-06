@@ -8,6 +8,7 @@
     <string name="title_activity_inventory">InventoryActivity</string>
     <string name="title_activity_item">ItemActivity</string>
     <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_usersettings">Settings</string>
     
     <string name="profile_activity_city_button">City</string>
     <string name="profile_activity_cell_button">Cell</string>
