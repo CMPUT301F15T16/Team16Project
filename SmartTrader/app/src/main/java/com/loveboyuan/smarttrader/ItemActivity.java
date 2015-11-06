@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class ItemActivity extends AppCompatActivity {
@@ -56,26 +57,52 @@ public class ItemActivity extends AppCompatActivity {
                 String category = item.getCategory();
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
+                Boolean isPrivate = item.isPrivate();
+
                 EditText nameView = (EditText) findViewById(R.id.itemNameText);
                 RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
                 RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
                 EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
 
-
+                //set name to view
                 nameView.setText(name);
-
+                //set quantity to view
                 numberPicker.setValue(quantity);
 
-                qualityRadios.check(R.id.mediumRadioButton);
-
-                privacyRadios.check(R.id.publicRadioButton);
-
-                spinner.setSelection(3);
-
+                //set description to view
                 descriptionView.setText(description);
 
+                if(quality.equals("Lightly Used")){
+                    qualityRadios.check(R.id.mediumRadioButton);
+                }else if(quality.equals("New")){
+                    qualityRadios.check(R.id.newRadioButton);
+                }else{
+                    qualityRadios.check(R.id.oldRadioButton);
+                }
 
-             //   Toast.makeText(ItemActivity.this, name, Toast.LENGTH_SHORT).show();
+                if(isPrivate == Boolean.TRUE) {
+                    privacyRadios.check(R.id.privateRadioButton);
+                }else{
+                    privacyRadios.check(R.id.publicRadioButton);
+                }
+
+                int select = 0;
+                switch (category) {
+                    case "Computer Science": select = 0 ; break;
+                    case "Mathematics": select = 1 ; break;
+                    case "French": select = 2 ; break;
+                    case "History": select = 3 ; break;
+                    case "Economics": select = 4 ; break;
+                    case "Philosophy": select = 5 ; break;
+                    case "Anthropology": select = 6 ; break;
+                    case "Legal Studies": select = 7 ; break;
+                    case "Psychology": select = 8 ; break;
+                    case "Nursing": select = 9 ; break;
+                }
+                spinner.setSelection(select);
+
+
+
 
             }
         } catch (RuntimeException exception){
@@ -152,18 +179,27 @@ public class ItemActivity extends AppCompatActivity {
     }
 
 
-
     public void goBackInventory(View v){
         this.finish();
 
     }
 
+
     public void updateItem(View v){
-        addItem(v);
         Serializable item = getIntent().getSerializableExtra("MyItem");
         Item theItem = (Item) item;
-        InventoryController.removeSerializableItem(item);
-        this.finish();
+        Inventory deleteList = new Inventory();
+       // Toast.makeText(ItemActivity.this, theItem.getName(), Toast.LENGTH_SHORT).show();
+        for (Item item1 :InventoryController.getInventoryModel().getInventory()){
+            deleteList.addItem(item1);
+        }
+        for (Item item2: deleteList.getInventory()){
+            InventoryController.removeItem(item2);
+
+        }
+
+        addItem(v);
+
     }
 
 
