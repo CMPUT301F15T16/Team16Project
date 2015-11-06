@@ -1,6 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="team16project.textbooktrader.FriendListActivity">
-    <item android:id="@+id/friend_list_activity" android:title="@string/friend_list"
-        android:orderInCategory="100" android:showAsAction="never" />
-</menu>
