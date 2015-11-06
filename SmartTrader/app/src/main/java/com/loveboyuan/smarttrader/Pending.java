@@ -35,9 +35,10 @@ public class Pending {
      * requests from the received pending list.
      * @param list this is the array list of all friend requests
      */
-    public void acceptAllFriends(ArrayList list) {
-        //FriendListController.addAllFriends(list);
-        removeAllRequests(list);
+    public void acceptAllFriends(ArrayList<User>list) {
+        for(User usr :list) {
+            FriendListController.addFriend(usr);
+        }
         this.notifyAllObservers();
     }
 

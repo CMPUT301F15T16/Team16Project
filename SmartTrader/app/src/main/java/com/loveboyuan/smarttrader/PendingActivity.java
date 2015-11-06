@@ -42,8 +42,8 @@ public class PendingActivity extends AppCompatActivity {
         final ArrayList<User> pendingSent = new ArrayList<User>(usersSent);
         final ArrayList<User> pendingReceived = new ArrayList<User>(usersReceived);
 
-        final ArrayAdapter<User> pendingSentAdapter = new ArrayAdapter<User>(this, android.R.layout.activity_list_item, pendingSent);
-        final ArrayAdapter<User> pendingReceivedAdapter = new ArrayAdapter<User>(this, android.R.layout.activity_list_item, pendingReceived);
+        final ArrayAdapter<User> pendingSentAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, pendingSent);
+        final ArrayAdapter<User> pendingReceivedAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, pendingReceived);
 
         pendingSentView.setAdapter(pendingSentAdapter);
         pendingReceivedView.setAdapter(pendingReceivedAdapter);
@@ -90,14 +90,14 @@ public class PendingActivity extends AppCompatActivity {
 
     private OnClickListener acceptAllListener = new OnClickListener() {
         public void onClick(View v) {
-            ArrayList<User> pending = PendingController.getPendingModel().getPendingReceived();
+            ArrayList<User> pending = PendingController.getPendingReceived();
             PendingController.acceptAllFriends(pending);
         }
     };
 
     private OnClickListener cancelAllListener = new OnClickListener() {
         public void onClick(View v) {
-            ArrayList<User> pending = PendingController.getPendingModel().getPendingSent();
+            ArrayList<User> pending = PendingController.getPendingSent();
             PendingController.cancelAllRequests(pending);
         }
     };

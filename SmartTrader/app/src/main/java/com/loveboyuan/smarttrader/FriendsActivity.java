@@ -65,7 +65,7 @@ public class FriendsActivity extends AppCompatActivity {
     public void addAFriend(View v){
         try {
             User friend1 = new User(1);
-            FriendListController.addFriend(friend1);
+            PendingController.addPending(friend1);
         }catch (RuntimeException exception){
 
         }
