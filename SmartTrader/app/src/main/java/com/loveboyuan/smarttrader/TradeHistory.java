@@ -12,9 +12,16 @@ public class TradeHistory {
 
 
     // TradeHistory can get any trade with index provided
-    public Trade getTrade(int i) {
+    public Trade getTrade(Trade trade) {
 
-        return trades.get(i);
+        Trade returnTrade = null;
+        for (Trade trade1 : trades) {
+            if (trade1.equals(trade)) {
+                returnTrade =  trade1;
+            }
+
+        }
+        return returnTrade;
     }
 
     // TradeHistory can add trade (in "trades")

@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, UserSettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -74,7 +76,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addDrawerItems() {
-        String[] osArray = { "Profile", "Pending" , "Inventory", "Friends", "TradeHistory" };
+        String[] osArray = {
+                "Profile", "UserSettings", "Pending" , "Inventory", "Friends", "TradeHistory" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }

@@ -5,6 +5,7 @@ package com.loveboyuan.smarttrader;
  */
 public class User {
 
+    private final int id;
     // A User has his/her personal profile
     private Profile profile;
     // A User has his/her inventory
@@ -12,6 +13,13 @@ public class User {
     // A User has his/her trade history
     private TradeHistory tradeHistory = new TradeHistory();
 
+    public User(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     // A User can get his/her inventory
     public Inventory getInventory() {

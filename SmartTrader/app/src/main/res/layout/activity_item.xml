@@ -160,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Old"
-            android:id="@+id/radioButton3"
+            android:id="@+id/oldRadioButton"
             android:layout_below="@+id/oldRadioButton"
             android:layout_alignStart="@+id/radioButton2" />
 
