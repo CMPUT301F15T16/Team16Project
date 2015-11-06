@@ -86,4 +86,8 @@ public class Item implements Serializable {
     public String getDescription() {
         return description;
     }
+
+    public boolean isPrivate() {
+        return isPrivate;
+    }
 }
