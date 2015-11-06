@@ -44,6 +44,10 @@
             android:name=".PendingActivity"
             android:label="@string/title_activity_pending" >
         </activity>
+        <activity
+            android:name=".UserSettingsActivity"
+            android:label="@string/title_activity_usersettings" >
+        </activity>
     </application>
 
 </manifest>
