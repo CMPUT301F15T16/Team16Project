@@ -172,8 +172,10 @@ public class ItemActivity extends AppCompatActivity {
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
 
             // Execute the thread
-            Thread thread = new AddThread(item);
-            thread.start();
+
+            InventoryController.addItem(item);
+          //  Thread thread = new AddThread(item);
+           // thread.start();
         }catch (RuntimeException ignored){
         }
 
@@ -189,11 +191,9 @@ public class ItemActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            try {
-                InventoryController.addItem(item);
-            } catch (RuntimeException exc){
 
-            }
+            InventoryController.addItem(item);
+
 
             // Give some time to get updated info
             try {

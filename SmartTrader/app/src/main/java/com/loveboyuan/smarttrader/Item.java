@@ -1,7 +1,5 @@
 package com.loveboyuan.smarttrader;
 
-import android.util.EventLogTags;
-
 import java.io.Serializable;
 
 /**
@@ -89,5 +87,11 @@ public class Item implements Serializable {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+
+    // for testing purpose now
+    public int getId() {
+        return 123;
     }
 }

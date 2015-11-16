@@ -15,8 +15,8 @@ public class Inventory implements Search{
 
 
     // the model needs to set address of the server
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventory/";
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventory/_search";
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
 
 
     public ArrayList<Item> getInventory() {
