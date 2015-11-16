@@ -1,6 +1,5 @@
 package com.loveboyuan.smarttrader;
 
-import android.view.View;
 
 import java.util.ArrayList;
 
@@ -13,6 +12,11 @@ public class Inventory implements Search{
     // Inventory has items It should be an arraylist of Items
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
+
+
+    // the model needs to set address of the server
+    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventory/";
+    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventory/_search";
 
 
     public ArrayList<Item> getInventory() {
@@ -40,6 +44,14 @@ public class Inventory implements Search{
         }
 
         return results;
+    }
+
+    public static String getResourceUrl() {
+        return RESOURCE_URL;
+    }
+
+    public static String getSearchUrl() {
+        return SEARCH_URL;
     }
 
     // searchByName

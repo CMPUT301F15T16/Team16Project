@@ -1,9 +1,8 @@
 package com.loveboyuan.smarttrader;
 
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,14 +13,18 @@ import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 
 public class ItemActivity extends AppCompatActivity {
 
+    // Thread that close the activity after finishing add
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,12 +171,41 @@ public class ItemActivity extends AppCompatActivity {
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
 
-            InventoryController.addItem(item);
+            // Execute the thread
+            Thread thread = new AddThread(item);
+            thread.start();
         }catch (RuntimeException ignored){
         }
 
         this.finish();
     }
+
+    class AddThread extends Thread {
+        private Item item;
+
+        public AddThread(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void run() {
+            try {
+                InventoryController.addItem(item);
+            } catch (RuntimeException exc){
+
+            }
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
 
 
     public void goBackInventory(View v){

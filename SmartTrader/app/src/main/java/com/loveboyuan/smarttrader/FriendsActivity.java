@@ -1,14 +1,13 @@
 package com.loveboyuan.smarttrader;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.net.UnknownServiceException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -45,6 +44,8 @@ public class FriendsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_friends, menu);
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
