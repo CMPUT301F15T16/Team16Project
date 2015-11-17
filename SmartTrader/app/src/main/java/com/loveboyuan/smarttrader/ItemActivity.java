@@ -39,12 +39,12 @@ public class ItemActivity extends AppCompatActivity {
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.planets_array, android.R.layout.simple_spinner_item);
-// Specify the layout to use when the list of choices appears
+        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner
+        // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-// In case of edit item in the inventory, the activity is started with message passed with. get intent!
+        // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
             Item item = (Item) getIntent().getSerializableExtra("MyItem");
 
@@ -171,10 +171,9 @@ public class ItemActivity extends AppCompatActivity {
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
 
-            // Execute the thread
-
-            //InventoryController.addItem(item);
             InventoryController.getInventoryModel().addItem(item);
+
+            // Execute the thread to add this remotely
             Thread thread = new AddThread(item);
             thread.start();
         }catch (RuntimeException ignored){

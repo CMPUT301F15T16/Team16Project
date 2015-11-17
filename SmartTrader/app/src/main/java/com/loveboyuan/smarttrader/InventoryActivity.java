@@ -56,10 +56,8 @@ public class InventoryActivity extends AppCompatActivity{
                 String category = item.getCategory();
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
-               // String quan = String.valueOf(quantity);
 
 
-               // Toast.makeText(InventoryActivity.this, quan, Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 intent.putExtra("MyItem", item);

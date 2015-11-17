@@ -8,15 +8,21 @@ import java.util.ArrayList;
  */
 public class Inventory implements Search{
 
+    static int usrID=LoginActivity.usrID;
 
     // Inventory has items It should be an arraylist of Items
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
 
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem";
+
+
     // the model needs to set address of the server
-    private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
-    private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
+    private static final String RESOURCE_URL = prefix.concat(String.valueOf(usrID).concat("/"));
+            //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
+    private static final String SEARCH_URL = prefix.concat(String.valueOf(usrID).concat("/_search"));
+            //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
 
 
     public ArrayList<Item> getInventory() {
