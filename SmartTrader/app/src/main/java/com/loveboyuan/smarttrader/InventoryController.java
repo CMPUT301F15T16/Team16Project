@@ -32,12 +32,14 @@ public class InventoryController {
     }
 
     public static void addItem(Item item) {
-//        getInventoryModel().addItem(item);
+
+
 
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getId());
+
+            HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getName());
             Log.e("url", getInventoryModel().getResourceUrl() + item.getId());
 
             StringEntity stringEntity = new StringEntity(gson.toJson(item));

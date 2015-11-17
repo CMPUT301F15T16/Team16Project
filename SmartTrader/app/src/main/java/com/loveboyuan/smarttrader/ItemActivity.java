@@ -173,7 +173,8 @@ public class ItemActivity extends AppCompatActivity {
 
             // Execute the thread
 
-           // InventoryController.addItem(item);
+            //InventoryController.addItem(item);
+            InventoryController.getInventoryModel().addItem(item);
             Thread thread = new AddThread(item);
             thread.start();
         }catch (RuntimeException ignored){
