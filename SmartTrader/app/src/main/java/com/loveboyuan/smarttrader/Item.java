@@ -92,6 +92,6 @@ public class Item implements Serializable {
 
     // for testing purpose now
     public int getId() {
-        return 123;
+        return 12345;
     }
 }

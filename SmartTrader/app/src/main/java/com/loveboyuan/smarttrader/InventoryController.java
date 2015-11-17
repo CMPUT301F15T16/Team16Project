@@ -32,20 +32,23 @@ public class InventoryController {
     }
 
     public static void addItem(Item item) {
-        getInventoryModel().addItem(item);
+//        getInventoryModel().addItem(item);
 
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
             HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getId());
+            Log.e("url", getInventoryModel().getResourceUrl() + item.getId());
 
             StringEntity stringEntity = new StringEntity(gson.toJson(item));
+            Log.e("gsonitem", gson.toJson(item).toString());
+
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
 
             HttpResponse response = httpClient.execute(addRequest);
             String status = response.getStatusLine().toString();
-            Log.i(TAG, status);
+            Log.e(TAG, status);
 
         } catch (Exception e) {
             e.printStackTrace();
