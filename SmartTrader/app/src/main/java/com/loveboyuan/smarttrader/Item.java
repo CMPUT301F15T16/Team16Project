@@ -1,5 +1,7 @@
 package com.loveboyuan.smarttrader;
 
+import android.location.Location;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ public class Item implements Serializable {
     private boolean isPrivate;
     private String description;
     private String photoPath;
+    private Location location;
 
 
 
@@ -87,6 +90,14 @@ public class Item implements Serializable {
 
     public boolean isPrivate() {
         return isPrivate;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 

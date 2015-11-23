@@ -11,15 +11,17 @@ import android.os.Bundle;
  */
 public class UserLocation implements Runnable{
 
+    private static final long TRACK_TIME = 2000;
     private Location currentlocation;
     private Context context;
     private boolean isRunning = false;
-    private static final long TRACK_TIME = 2000;
+    private LocationManager manager;
+    private LocationListener listener;
 
     public void run() {
 
-        LocationManager manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener listener = new LocationListener() {
+        manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        listener  = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 updateLocation(location);
@@ -63,9 +65,13 @@ public class UserLocation implements Runnable{
     public void setItemLocation(Item item){
 
         if (isRunning){
-            //uncomment this when item has location
-            //item.location = currentlocation;
+            item.setLocation(currentlocation);
             stopTracking();
+            try {
+                manager.removeUpdates(listener);
+            }catch (SecurityException e){
+                System.out.println("Lack Permissions to use location");
+            }
         }
 
     }
@@ -84,11 +90,9 @@ public class UserLocation implements Runnable{
         return currentlocation;
     }
 
-    public double itemDistanceFromUser(Item item){
+    public double itemDistanceFromUser(Item item) {
 
-        //return getUserLocation().distanceTo(userlocation);//TODO
-        //parameters should be item.location once item has location
-        return 0.0;
+        return getUserLocation().distanceTo(item.getLocation());
     }
 
     private void updateLocation(Location location){
