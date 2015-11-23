@@ -220,10 +220,16 @@ public class ItemActivity extends AppCompatActivity {
         Inventory deleteList = new Inventory();
        // Toast.makeText(ItemActivity.this, theItem.getName(), Toast.LENGTH_SHORT).show();
         for (Item item1 :InventoryController.getInventoryModel().getInventory()){
-            deleteList.addItem(item1);
+            if(item1.getName().equalsIgnoreCase(theItem.getName())) {
+                deleteList.addItem(item1);
+            }
         }
         for (Item item2: deleteList.getInventory()){
-            InventoryController.removeItem(item2);
+
+            InventoryController.getInventoryModel().removeItem(item2);
+            // Execute the thread to add this remotely
+            Thread thread = new RemoveThread(item2);
+            thread.start();
 
         }
 
@@ -231,5 +237,28 @@ public class ItemActivity extends AppCompatActivity {
 
     }
 
+    class RemoveThread extends Thread {
+        private Item item;
+
+        public RemoveThread(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void run() {
+
+            InventoryController.removeItem(item);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
 
 }

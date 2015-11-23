@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -60,7 +61,21 @@ public class InventoryController {
     }
 
     public static void removeItem(Item item) {
-        getInventoryModel().removeItem(item);
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+            HttpDelete deleteRequest = new HttpDelete(inventory.getResourceUrl() + item.getName());
+            deleteRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(deleteRequest);
+            String status = response.getStatusLine().toString();
+            Log.i(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

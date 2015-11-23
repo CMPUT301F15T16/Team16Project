@@ -16,6 +16,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class InventoryActivity extends AppCompatActivity{
+    // Thread that close the activity after finishing add
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +88,10 @@ public class InventoryActivity extends AppCompatActivity{
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Item item = list.get(position);
-                        InventoryController.removeItem(item);
+                        InventoryController.getInventoryModel().removeItem(item);
+                        // Execute the thread to add this remotely
+                        Thread thread = new RemoveThread(item);
+                        thread.start();
                     }
                 });
                 adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -128,5 +139,30 @@ public class InventoryActivity extends AppCompatActivity{
 
     }
 
+
+
+    class RemoveThread extends Thread {
+        private Item item;
+
+        public RemoveThread(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void run() {
+
+            InventoryController.removeItem(item);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
 
 }

@@ -15,7 +15,7 @@ public class Inventory implements Search{
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
 
-    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem";
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Inventory";
 
 
     // the model needs to set address of the server
