@@ -9,7 +9,7 @@ import android.os.Bundle;
 /**
  * Created by BSid on 15-11-19.
  */
-public class UserLocation implements Runnable{
+public class UserLocation {
 
     private static final long TRACK_TIME = 2000;
     private Location currentlocation;
@@ -18,7 +18,50 @@ public class UserLocation implements Runnable{
     private LocationManager manager;
     private LocationListener listener;
 
-    public void run() {
+
+    public void startTracking(Context context){
+        this.context = context;
+        isRunning = true;
+        init();
+    }
+
+    private void stopTracking(){
+        isRunning = false;
+        try {
+            manager.removeUpdates(listener);
+        }catch (SecurityException e){
+            System.out.println("Lack Permissions to use location");
+        }
+    }
+
+    public void setItemLocation(Item item){
+
+        if (isRunning) {
+            item.setLocation(currentlocation);
+            stopTracking();
+        }
+    }
+
+    public Location getUserLocation(){
+
+        if (locationIsCurrent()){
+            return currentlocation;
+        } else {
+            long start = System.currentTimeMillis();
+            while((System.currentTimeMillis()-start)<TRACK_TIME){
+                //wait
+            }
+            stopTracking();
+        }
+        return currentlocation;
+    }
+
+    public double itemDistanceFromUser(Item item) {
+
+        return getUserLocation().distanceTo(item.getLocation());
+    }
+
+    private void init() {
 
         manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         listener  = new LocationListener() {
@@ -49,50 +92,6 @@ public class UserLocation implements Runnable{
             System.out.println("Lack Permissions to use location");
         }
 
-    }
-
-    public void startTracking(Context context){
-        this.context = context;
-        isRunning = true;
-        run();
-    }
-
-    private void stopTracking(){
-        //TODO
-        isRunning = false;
-    }
-
-    public void setItemLocation(Item item){
-
-        if (isRunning){
-            item.setLocation(currentlocation);
-            stopTracking();
-            try {
-                manager.removeUpdates(listener);
-            }catch (SecurityException e){
-                System.out.println("Lack Permissions to use location");
-            }
-        }
-
-    }
-
-    public Location getUserLocation(){
-
-        if (locationIsCurrent()){
-            return currentlocation;
-        } else {
-            long start = System.currentTimeMillis();
-            while((System.currentTimeMillis()-start)<TRACK_TIME){
-                //wait
-            }
-            stopTracking();
-        }
-        return currentlocation;
-    }
-
-    public double itemDistanceFromUser(Item item) {
-
-        return getUserLocation().distanceTo(item.getLocation());
     }
 
     private void updateLocation(Location location){
