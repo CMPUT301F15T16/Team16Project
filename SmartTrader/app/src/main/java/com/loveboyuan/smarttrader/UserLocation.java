@@ -13,6 +13,8 @@ public class UserLocation implements Runnable{
 
     private Location currentlocation;
     private Context context;
+    private boolean isRunning = false;
+    private static final long TRACK_TIME = 2000;
 
     public void run() {
 
@@ -39,13 +41,33 @@ public class UserLocation implements Runnable{
             }
         };
 
-        //Need to check permissions before calling this function.
-        //manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,listener);
+        try {
+            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+        }catch (SecurityException e){
+            System.out.println("Lack Permissions to use location");
+        }
 
     }
 
     public void startTracking(Context context){
         this.context = context;
+        isRunning = true;
+        run();
+    }
+
+    private void stopTracking(){
+        //TODO
+        isRunning = false;
+    }
+
+    public void setItemLocation(Item item){
+
+        if (isRunning){
+            //uncomment this when item has location
+            //item.location = currentlocation;
+            stopTracking();
+        }
+
     }
 
     public Location getUserLocation(){
@@ -53,25 +75,38 @@ public class UserLocation implements Runnable{
         if (locationIsCurrent()){
             return currentlocation;
         } else {
-            Location newlocation = null;
-            currentlocation = newlocation;
-
+            long start = System.currentTimeMillis();
+            while((System.currentTimeMillis()-start)<TRACK_TIME){
+                //wait
+            }
+            stopTracking();
         }
-        return null;
+        return currentlocation;
     }
 
-    public double distanceFromUser(Location userlocation, Item item){
+    public double itemDistanceFromUser(Item item){
 
-        return userlocation.distanceTo(userlocation);//TODO
-
+        //return getUserLocation().distanceTo(userlocation);//TODO
+        //parameters should be item.location once item has location
+        return 0.0;
     }
 
     private void updateLocation(Location location){
+        if (!locationIsCurrent()){
+            if (location.getAccuracy() > currentlocation.getAccuracy()){
+                currentlocation = location;
+            }
+        }
 
     }
 
     private Boolean locationIsCurrent(){
-        return false;
+
+        if (currentlocation == null || (System.currentTimeMillis() - currentlocation.getTime())<2000) {
+            return false;
+        } else{
+            return true;
+        }
     }
 
 }
