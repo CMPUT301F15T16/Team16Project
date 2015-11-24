@@ -72,6 +72,8 @@ public class Inventory implements Search{
         observers.add(observer);
 
     }
+
+
     public void notifyAllObservers(){
         for(MyObserver observer: observers){
             observer.update();

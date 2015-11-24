@@ -140,6 +140,7 @@ public class InventoryActivity extends AppCompatActivity{
     }
 
 
+    
 
     class RemoveThread extends Thread {
         private Item item;
@@ -164,5 +165,8 @@ public class InventoryActivity extends AppCompatActivity{
             runOnUiThread(doFinishAdd);
         }
     }
+
+
+
 
 }

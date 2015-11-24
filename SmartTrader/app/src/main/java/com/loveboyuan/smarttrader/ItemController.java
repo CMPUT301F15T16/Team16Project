@@ -10,6 +10,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
+
 /**
  * Created by Administrator on 23/11/2015.
  */
@@ -24,7 +26,8 @@ public class ItemController {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        // I guess?
+        startActivityForResult(null/*activity*/, intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null /* option */);
     }
 
     //Taken from android developers website

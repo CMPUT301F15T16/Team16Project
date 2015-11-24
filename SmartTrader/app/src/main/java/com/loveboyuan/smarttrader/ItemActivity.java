@@ -1,6 +1,7 @@
 package com.loveboyuan.smarttrader;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -139,7 +140,8 @@ public class ItemActivity extends AppCompatActivity {
 
     public void addItem(View view){
         try {
-            String name, category, quality, description, photoPath;
+            String name, category, quality, description;
+            Uri photoPath;
             boolean isPrivate;
             int quantity;
 
@@ -170,7 +172,7 @@ public class ItemActivity extends AppCompatActivity {
             EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
             description = descriptionView.getText().toString();
             // photopath will be null for now
-            photoPath = "null";
+            photoPath = null;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
             UserLocation.setItemLocation(item);
