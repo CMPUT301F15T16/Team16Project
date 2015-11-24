@@ -8,9 +8,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class LoginActivity extends AppCompatActivity {
+    private static Gson gson = new Gson();
+
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
 
     public static int usrID;
     @Override
@@ -49,13 +63,58 @@ public class LoginActivity extends AppCompatActivity {
 
         usrID = Integer.parseInt(textView.getText().toString());
 
+        User user = new User(usrID);
+
+        // Execute the thread to add this remotely
+        Thread thread = new AddThread(user);
+        thread.start();
+
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
 
     }
 
+    class AddThread extends Thread {
+        private User user;
 
+        public AddThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            try {
+
+                HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getId());
+
+                StringEntity stringEntity = new StringEntity(gson.toJson(user));
+
+                addRequest.setEntity(stringEntity);
+                addRequest.setHeader("Accept", "application/json");
+
+                HttpResponse response = httpClient.execute(addRequest);
+                String status = response.getStatusLine().toString();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
 
 
 }

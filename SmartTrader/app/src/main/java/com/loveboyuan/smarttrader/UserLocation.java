@@ -12,20 +12,20 @@ import android.os.Bundle;
 public class UserLocation {
 
     private static final long TRACK_TIME = 2000;
-    private Location currentlocation;
-    private Context context;
-    private boolean isRunning = false;
-    private LocationManager manager;
-    private LocationListener listener;
+    private static Location currentlocation;
+    private static Context context;
+    private static boolean isRunning = false;
+    private static LocationManager manager;
+    private static LocationListener listener;
 
 
-    public void startTracking(Context context){
-        this.context = context;
+    public static void startTracking(Context con){
+        context = con;
         isRunning = true;
         init();
     }
 
-    private void stopTracking(){
+    private static void stopTracking(){
         isRunning = false;
         try {
             manager.removeUpdates(listener);
@@ -34,7 +34,7 @@ public class UserLocation {
         }
     }
 
-    public void setItemLocation(Item item){
+    public static void setItemLocation(Item item){
 
         if (isRunning) {
             item.setLocation(currentlocation);
@@ -42,7 +42,7 @@ public class UserLocation {
         }
     }
 
-    public Location getUserLocation(){
+    public static Location getUserLocation(){
 
         if (locationIsCurrent()){
             return currentlocation;
@@ -56,12 +56,12 @@ public class UserLocation {
         return currentlocation;
     }
 
-    public double itemDistanceFromUser(Item item) {
+    public static double itemDistanceFromUser(Item item) {
 
         return getUserLocation().distanceTo(item.getLocation());
     }
 
-    private void init() {
+    private static void init() {
 
         manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         listener  = new LocationListener() {
@@ -94,7 +94,7 @@ public class UserLocation {
 
     }
 
-    private void updateLocation(Location location){
+    private static void updateLocation(Location location){
         if (!locationIsCurrent()){
             if (location.getAccuracy() > currentlocation.getAccuracy()){
                 currentlocation = location;
@@ -103,7 +103,7 @@ public class UserLocation {
 
     }
 
-    private Boolean locationIsCurrent(){
+    private static Boolean locationIsCurrent(){
 
         if (currentlocation == null || (System.currentTimeMillis() - currentlocation.getTime())<2000) {
             return false;
