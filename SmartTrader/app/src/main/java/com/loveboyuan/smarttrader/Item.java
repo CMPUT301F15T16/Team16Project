@@ -1,6 +1,7 @@
 package com.loveboyuan.smarttrader;
 
 import android.location.Location;
+import android.net.Uri;
 
 import java.io.Serializable;
 
@@ -17,13 +18,13 @@ public class Item implements Serializable {
     private String quality;
     private boolean isPrivate;
     private String description;
-    private String photoPath;
+    private Uri photo;
 
 
 
 
 
-    public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, String photoPath){
+    public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, Uri photo){
       //  id = name;
         this.name = name;
         this.category = category;
@@ -31,7 +32,7 @@ public class Item implements Serializable {
         this.quality = quality;
         this.isPrivate = isPrivate;
         this.description = description;
-        this.photoPath = photoPath;
+        this.photo = photo;
         location = UserLocation.getUserLocation();
     }
 
@@ -56,8 +57,8 @@ public class Item implements Serializable {
         this.isPrivate = isPrivate;
     }
 
-    public void setPhotoPath(String photoPath) {
-        this.photoPath = photoPath;
+    public void setPhoto(Uri photo) {
+        this.photo = photo;
     }
 
     public String getCategory() {
