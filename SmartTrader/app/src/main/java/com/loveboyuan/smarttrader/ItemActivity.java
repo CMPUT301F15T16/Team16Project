@@ -18,6 +18,8 @@ import java.io.Serializable;
 
 
 public class ItemActivity extends AppCompatActivity {
+    private static final String TAG = "Locationlatitude";
+
 
     // Thread that close the activity after finishing add
     private Runnable doFinishAdd = new Runnable() {
@@ -172,7 +174,7 @@ public class ItemActivity extends AppCompatActivity {
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
             UserLocation.setItemLocation(item);
-
+          //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 
             InventoryController.getInventoryModel().addItem(item);

@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     };
 
     public static int usrID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

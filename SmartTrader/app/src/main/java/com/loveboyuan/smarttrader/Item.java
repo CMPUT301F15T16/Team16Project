@@ -11,14 +11,14 @@ public class Item implements Serializable {
     //final int id;
     private String name;
 
-
+    private Location location;
     private String category;
     private int quantity;
     private String quality;
     private boolean isPrivate;
     private String description;
     private String photoPath;
-    private Location location;
+
 
 
 
@@ -32,6 +32,7 @@ public class Item implements Serializable {
         this.isPrivate = isPrivate;
         this.description = description;
         this.photoPath = photoPath;
+        location = UserLocation.getUserLocation();
     }
 
 

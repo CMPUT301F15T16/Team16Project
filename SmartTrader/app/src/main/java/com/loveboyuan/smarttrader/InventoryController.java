@@ -43,6 +43,8 @@ public class InventoryController {
             HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getName());
             Log.e("url", getInventoryModel().getResourceUrl() + item.getId());
 
+
+
             StringEntity stringEntity = new StringEntity(gson.toJson(item));
             Log.e("gsonitem", gson.toJson(item).toString());
 
