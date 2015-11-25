@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addDrawerItems() {
         String[] osArray = {
-                "Profile", "UserSettings", "Pending" , "Inventory", "Friends", "TradeHistory","Login" };
+                "Profile", "UserSettings", "Pending" , "Inventory", "Friends", "TradeHistory" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
     }
