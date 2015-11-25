@@ -14,7 +14,7 @@ public class UserLocation {
     private static final long TRACK_TIME = 2000;
     private static Location currentlocation;
     private static Context context;
-    private static boolean isRunning = false;
+    private static boolean isRunning;
     private static LocationManager manager;
     private static LocationListener listener;
 
@@ -23,12 +23,14 @@ public class UserLocation {
         context = con;
         isRunning = true;
         init();
+        System.out.println("Begin tracking");
     }
 
     private static void stopTracking(){
         isRunning = false;
         try {
             manager.removeUpdates(listener);
+            System.out.println("Finish Tracking");
         }catch (SecurityException e){
             System.out.println("Lack Permissions to use location");
         }
@@ -37,7 +39,10 @@ public class UserLocation {
     public static void setItemLocation(Item item){
 
         if (isRunning) {
+            System.out.println("should be printing");
+            System.out.println("location: " + currentlocation.getLatitude());
             item.setLocation(currentlocation);
+            System.out.println("itemlocation: " + item.getLocation().getLatitude());
             stopTracking();
         }
     }
@@ -68,6 +73,7 @@ public class UserLocation {
             @Override
             public void onLocationChanged(Location location) {
                 updateLocation(location);
+                System.out.println("Location: " + location);
             }
 
             @Override
@@ -96,7 +102,7 @@ public class UserLocation {
 
     private static void updateLocation(Location location){
         if (!locationIsCurrent()){
-            if (location.getAccuracy() > currentlocation.getAccuracy()){
+            if (currentlocation == null || location.getAccuracy() > currentlocation.getAccuracy()){
                 currentlocation = location;
             }
         }
