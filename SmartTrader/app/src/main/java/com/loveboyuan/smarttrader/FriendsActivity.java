@@ -7,16 +7,44 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class FriendsActivity extends AppCompatActivity {
 
+    SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+
+        searchView = (SearchView) findViewById(R.id.friendListSearchView);
+
+        //*** setOnQueryTextFocusChangeListener ***
+        //*** setOnQueryTextListener ***
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Get the text and start the searching
+                Toast.makeText(getBaseContext(),query,Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+
+        });
+
 
         ListView friendListView = (ListView)findViewById(R.id.friendListView);
         final Collection<User> users = FriendListController.getFriendListModel().getFriendList();
@@ -72,4 +100,6 @@ public class FriendsActivity extends AppCompatActivity {
         }
 
     }
+
+
 }

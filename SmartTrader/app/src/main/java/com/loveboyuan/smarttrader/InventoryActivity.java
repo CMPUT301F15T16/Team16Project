@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,11 +24,37 @@ public class InventoryActivity extends AppCompatActivity{
         }
     };
 
+    SearchView searchView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
+
+        searchView = (SearchView) findViewById(R.id.inventorySearchView);
+
+        //*** setOnQueryTextFocusChangeListener ***
+        //*** setOnQueryTextListener ***
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Get the text and start the searching
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+
+        });
+
+
 
         // getting the list view in the ui
         ListView inventoryListView = (ListView) findViewById(R.id.inventoryListView);
@@ -64,7 +91,6 @@ public class InventoryActivity extends AppCompatActivity{
                 String category = item.getCategory();
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
-
 
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
@@ -140,7 +166,7 @@ public class InventoryActivity extends AppCompatActivity{
     }
 
 
-    
+
 
     class RemoveThread extends Thread {
         private Item item;
