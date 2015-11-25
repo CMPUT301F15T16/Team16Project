@@ -33,7 +33,7 @@ public class Item implements Serializable {
         this.isPrivate = isPrivate;
         this.description = description;
         this.photo = photo;
-        location = null;
+        this.location = null;
     }
 
 

@@ -19,4 +19,6 @@ public class FriendListController {
     static public void removeFriend(User user) {
         getFriendListModel().removeFriend(user);
     }
+
+
 }

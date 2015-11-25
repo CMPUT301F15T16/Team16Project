@@ -25,6 +25,7 @@
     <string name="pending_activity_cancel_all_button">Cancel All</string>>
     <string name="pending_activity_accept_all_button">Accept All</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_friend_search">FriendSearchActivity</string>
 
 
 </resources>

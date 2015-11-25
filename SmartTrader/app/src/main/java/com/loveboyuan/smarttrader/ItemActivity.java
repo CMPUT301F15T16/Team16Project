@@ -35,7 +35,7 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
 
-        UserLocation.startTracking(this);
+      //  UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
         NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(1000);
@@ -175,7 +175,7 @@ public class ItemActivity extends AppCompatActivity {
             photoPath = null;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
-            UserLocation.setItemLocation(item);
+         //   UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 
@@ -201,7 +201,6 @@ public class ItemActivity extends AppCompatActivity {
         public void run() {
 
             InventoryController.addItem(item);
-
 
             // Give some time to get updated info
             try {
