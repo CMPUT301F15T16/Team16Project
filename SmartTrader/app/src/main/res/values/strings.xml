@@ -9,10 +9,12 @@
     <string name="title_activity_item">ItemActivity</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_usersettings">Settings</string>
-    
+
+    <string name="profile_activity_id">ID</string>
+    <string name="profile_activity_name">Name</string>
     <string name="profile_activity_city">City</string>
     <string name="profile_activity_cell">Cell</string>
-    <string name="profile_activity_age">Age</string>
+    <string name="profile_activity_email">Email</string>
     <string name="profile_activity_gender">Gender</string>
     <string name="profile_activity_cancel">Cancel</string>
     <string name="profile_activity_save">Save</string>
