@@ -13,29 +13,17 @@ import java.util.Date;
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
- * Created by Administrator on 23/11/2015.
+ * Created by nabdulla on 23/11/2015.
  */
 public class ItemController {
     private static Item item = null;
-    private Uri fileUri;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private int MEDIA_TYPE_IMAGE = 1;
-
-
-    public void setPhoto(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        // I guess?
-        startActivityForResult(null/*activity*/, intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null /* option */);
-    }
 
     //Taken from android developers website
     //http://developer.android.com/guide/topics/media/camera.html#saving-media
-    private static Uri getOutputMediaFileUri(int type){
+    public static Uri getOutputMediaFileUri(int type){
         return Uri.fromFile(getOutputMediaFile(type));
     }
-    private static File getOutputMediaFile(int type){
+    public static File getOutputMediaFile(int type){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
