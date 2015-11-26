@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/friendListView"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/addB" />
+        android:layout_below="@+id/addB"
+        android:layout_above="@+id/searchInventoryButton" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,8 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Friends Inventory"
-        android:id="@+id/button"
-        android:layout_alignTop="@+id/textView12"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/searchInventoryButton"
+        android:onClick="searchInventory"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/addB"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
