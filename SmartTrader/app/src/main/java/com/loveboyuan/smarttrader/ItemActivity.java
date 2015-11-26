@@ -30,7 +30,7 @@ public class ItemActivity extends AppCompatActivity {
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
     private int MEDIA_TYPE_IMAGE = 1;
-    private ImageView imageView;
+    private Button imageView;
 
 
     // Thread that close the activity after finishing add
@@ -51,7 +51,7 @@ public class ItemActivity extends AppCompatActivity {
         NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(1000);
         numberPicker.setMinValue(1);
-        imageView = (ImageView) findViewById(R.id.itemIV);
+        imageView = (Button) findViewById(R.id.itemIV);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -139,11 +139,11 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+        fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
     }
-
+    /*
     //Taken from android developers website
     //http://developer.android.com/guide/topics/media/camera.html#intent-receive
     @Override
@@ -162,7 +162,7 @@ public class ItemActivity extends AppCompatActivity {
             }
         }
     }
-
+    */
 
         @Override
     public boolean onCreateOptionsMenu(Menu menu) {
