@@ -42,30 +42,18 @@ public class FriendSearchActivity extends AppCompatActivity {
         friendSearchListView.setAdapter(searchFriendAdapter);
 
 
-     /*   // we want a observer for the inventory model here. notify data change, and update the view
-        friendList.addMyObserver(new MyObserver() {
-            @Override
-            public void update() {
-                list.clear();
-                Collection<User> users1 = friendList.getFriendList();
-                list.addAll(users1);
-                searchFriendAdapter.notifyDataSetChanged();
-            }
-        });
-    */
 
-        // show inventory item and let user modify item attributes
+
         friendSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 User user = list.get(position);
 
-                int usrID = user.getMy_id();
 
 
                 Intent intent = new Intent(FriendSearchActivity.this, ProfileActivity.class);
-                intent.putExtra("USR_ID", usrID);
+                intent.putExtra("USR",  user);
                 startActivity(intent);
             }
 

@@ -1,9 +1,11 @@
 package com.loveboyuan.smarttrader;
 
+import java.io.Serializable;
+
 /**
  * Created by boyuangu on 2015-10-16.
  */
-public class User {
+public class User implements Serializable {
 
     public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User";
 

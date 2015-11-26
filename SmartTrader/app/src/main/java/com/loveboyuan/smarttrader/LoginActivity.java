@@ -26,7 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
-    public static int usrID;
+    public static User usr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +62,12 @@ public class LoginActivity extends AppCompatActivity {
 
         TextView textView = (TextView)findViewById(R.id.usrID);
 
-        usrID = Integer.parseInt(textView.getText().toString());
+        int usrID = Integer.parseInt(textView.getText().toString());
 
-        User user = new User(usrID);
+        usr = new User(usrID);
 
         // Execute the thread to add this remotely
-        Thread thread = new AddThread(user);
+        Thread thread = new AddThread(usr);
         thread.start();
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
 
-                HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getId());
+                HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getMy_id());
 
                 StringEntity stringEntity = new StringEntity(gson.toJson(user));
 

@@ -26,18 +26,30 @@ public class ProfileActivity extends AppCompatActivity {
         }
     };
 
-    static int usrID=LoginActivity.usrID;
+    static User usr=LoginActivity.usr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         TextView textView = (TextView)findViewById(R.id.profileIdView);
-        textView.setText(String.valueOf(usrID));
+        textView.setText(String.valueOf(usr.getMy_id()));
+
+        EditText profileName = (EditText) findViewById(R.id.profileNameEditText);
+        EditText profileCity = (EditText) findViewById(R.id.profileCityEditText);
+        EditText profileCell = (EditText) findViewById(R.id.profileCellEditText);
+        EditText profileEmail = (EditText) findViewById(R.id.profileEmailEditText);
+
+        profileName.setText(usr.getName());
+        profileCity.setText(usr.getCityName());
+        profileCell.setText(usr.getPhoneNumber());
+        profileEmail.setText(usr.getEmail());
+
         try {
-            int userID = getIntent().getExtras().getInt("USR_ID");
+            User user = (User) getIntent().getSerializableExtra("USR");
+            int userID = user.getMy_id();
             textView.setText(String.valueOf(userID));
-            if(userID != usrID){
+            if(userID != usr.getMy_id()){
                 //set save button invisble instead set addFriend button visible
                 Button saveButton = (Button) findViewById(R.id.profileSaveButton);
 
@@ -45,6 +57,17 @@ public class ProfileActivity extends AppCompatActivity {
 
                 addButton.setVisibility(View.VISIBLE);
                 saveButton.setVisibility(View.GONE);
+
+
+                profileName.setText(user.getName());
+                profileCity.setText(user.getCityName());
+                profileCell.setText(user.getPhoneNumber());
+                profileEmail.setText(user.getEmail());
+
+                profileName.setFocusable(false);
+                profileCity.setFocusable(false);
+                profileCell.setFocusable(false);
+                profileEmail.setFocusable(false);
 
             }
 
@@ -87,14 +110,18 @@ public class ProfileActivity extends AppCompatActivity {
         cell = profileCell.getText().toString();
         email = profileEmail.getText().toString();
 
-/*
+
+        usr.setName(name);
+        usr.setEmail(email);
+        usr.setPhoneNumber(cell);
+        usr.setCityName(city);
         profileName.setText(name);
         profileCity.setText(city);
         profileCell.setText(cell);
         profileEmail.setText(email);
-*/
 
-        User user = new User(usrID);
+
+        User user = new User(usr.getMy_id());
         user.setName(name);
         user.setCityName(city);
         user.setPhoneNumber(cell);
@@ -128,7 +155,7 @@ public class ProfileActivity extends AppCompatActivity {
 
             try {
 
-                HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getId());
+                HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getMy_id());
 
                 StringEntity stringEntity = new StringEntity(gson.toJson(user));
 

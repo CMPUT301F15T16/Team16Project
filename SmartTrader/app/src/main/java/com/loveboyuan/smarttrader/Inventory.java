@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Inventory implements Search{
 
-    static int usrID=LoginActivity.usrID;
+    static User usr=LoginActivity.usr;
 
     // Inventory has items It should be an arraylist of Items
     private ArrayList<Item> inventory = new ArrayList<Item>();
@@ -19,9 +19,9 @@ public class Inventory implements Search{
 
 
     // the model needs to set address of the server
-    private static final String RESOURCE_URL = prefix.concat(String.valueOf(usrID).concat("/"));
+    private static final String RESOURCE_URL = prefix.concat(String.valueOf(usr.getMy_id()).concat("/"));
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
-    private static final String SEARCH_URL = prefix.concat(String.valueOf(usrID).concat("/_search"));
+    private static final String SEARCH_URL = prefix.concat(String.valueOf(usr.getMy_id()).concat("/_search"));
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
 
 
