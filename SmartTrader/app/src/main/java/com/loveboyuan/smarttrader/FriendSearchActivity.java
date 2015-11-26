@@ -50,8 +50,6 @@ public class FriendSearchActivity extends AppCompatActivity {
 
                 User user = list.get(position);
 
-
-
                 Intent intent = new Intent(FriendSearchActivity.this, ProfileActivity.class);
                 intent.putExtra("USR",  user);
                 startActivity(intent);

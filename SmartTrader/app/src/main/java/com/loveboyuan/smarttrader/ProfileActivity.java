@@ -136,6 +136,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void add(View v){
+        User user = (User) getIntent().getSerializableExtra("USR");
+
+        // Pending stuff:
+        //PendingController.addPending(user);
+        FriendListController.addFriend(user);
 
 
 
