@@ -129,14 +129,24 @@
             android:layout_height="match_parent"
             android:text="@string/profile_activity_cancel"
             android:id="@+id/profileCancelButton"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:id="@+id/addFriendButton"
+            android:layout_weight="0.5"
+            android:onClick="add"
+            android:visibility="invisible"/>
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/profile_activity_save"
             android:id="@+id/profileSaveButton"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5"
+            android:onClick="save" />
     </LinearLayout>
 
 </LinearLayout>

@@ -26,8 +26,6 @@ import java.lang.reflect.Type;
 public class FriendListManager {
 
     private static final String TAG = "FriendSearch";
-    private static final String TAG2 = "FriendS";
-
     private Gson gson;
     private FriendList friendList = new FriendList();
 
@@ -102,8 +100,6 @@ public class FriendListManager {
             result.addFriend(hit.getSource());
 
         }
-
-        Log.i(TAG2, "Did I find anything?: " + result.getFriendList().get(1).toString());
 
         return result;
     }

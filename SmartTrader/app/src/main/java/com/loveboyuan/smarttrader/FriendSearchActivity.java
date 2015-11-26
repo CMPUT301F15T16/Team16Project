@@ -61,7 +61,7 @@ public class FriendSearchActivity extends AppCompatActivity {
 
                 User user = list.get(position);
 
-                int usrID = user.getId();
+                int usrID = user.getMy_id();
 
 
                 Intent intent = new Intent(FriendSearchActivity.this, ProfileActivity.class);

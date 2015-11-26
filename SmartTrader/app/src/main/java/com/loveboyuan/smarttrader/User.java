@@ -16,7 +16,6 @@ public class User {
 
     private static int id;
 
-
     private int my_id;
     // A User has his/her personal profile
     private String name;
@@ -25,9 +24,9 @@ public class User {
     private String cityName;
 
     // A User has his/her inventory
-    private Inventory inventory = new Inventory();
+  //  private Inventory inventory = new Inventory();
     // A User has his/her trade history
-    private TradeHistory tradeHistory = new TradeHistory();
+   // private TradeHistory tradeHistory = new TradeHistory();
 
     public User(int id) {
         User.id = id;
@@ -43,7 +42,7 @@ public class User {
     }
 
     // A User can get his/her inventory
-    public Inventory getInventory() {
+   /* public Inventory getInventory() {
         return inventory;
     }
 
@@ -70,10 +69,10 @@ public class User {
         return tradeHistory;
     }
 
-
+*/
     @Override
     public String toString(){
-        return String.valueOf(getMy_id());
+        return getName();
     }
 
 
