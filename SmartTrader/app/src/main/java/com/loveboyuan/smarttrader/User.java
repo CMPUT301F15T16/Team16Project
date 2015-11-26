@@ -5,13 +5,10 @@ package com.loveboyuan.smarttrader;
  */
 public class User {
 
-
     public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User";
-
 
     // the model needs to set address of the server
     private static final String RESOURCE_URL = prefix.concat("/");
-
 
     //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
     private static final String SEARCH_URL = prefix.concat("/_search");
@@ -22,7 +19,11 @@ public class User {
 
     private int my_id;
     // A User has his/her personal profile
-    private Profile profile;
+    private String name;
+    private String email;
+    private String phoneNumber;
+    private String cityName;
+
     // A User has his/her inventory
     private Inventory inventory = new Inventory();
     // A User has his/her trade history
@@ -83,4 +84,37 @@ public class User {
     public static String getSearchUrl() {
         return SEARCH_URL;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
 }
