@@ -9,7 +9,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/searchItemQuery"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/searchFriendInventory" />
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="Search"
         android:id="@+id/searchFriendInventory"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/searchItemQuery"
         android:layout_alignParentEnd="true"
         android:onClick="searchFriendsInventory"/>
 
@@ -27,14 +27,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchCategorySpinner"
-        android:layout_above="@+id/editText"
+        android:layout_above="@+id/searchItemQuery"
         android:layout_toStartOf="@+id/searchFriendInventory"
         android:layout_alignEnd="@+id/searchFriendInventory" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView2"
+        android:id="@+id/inventorySearchListView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/searchCategorySpinner" />
