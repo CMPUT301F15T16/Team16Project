@@ -55,7 +55,9 @@ public class ProfileActivity extends AppCompatActivity {
 
                 Button addButton = (Button) findViewById(R.id.addFriendButton);
 
+
                 addButton.setVisibility(View.VISIBLE);
+
                 saveButton.setVisibility(View.GONE);
 
 
@@ -71,7 +73,19 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
 
+
         }catch (RuntimeException e){
+
+        }
+
+        try{
+            String ard = getIntent().getStringExtra("ARD");
+            if(ard.equals("ard")){
+                Button addButton = (Button) findViewById(R.id.addFriendButton);
+                addButton.setVisibility(View.GONE);
+
+            }
+        }catch (RuntimeException e2){
 
         }
     }

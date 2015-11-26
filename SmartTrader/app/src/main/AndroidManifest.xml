@@ -59,6 +59,10 @@
             android:name=".FriendSearchActivity"
             android:label="@string/title_activity_friend_search" >
         </activity>
+        <activity
+            android:name=".SearchInventoryActivity"
+            android:label="@string/title_activity_search_inventory" >
+        </activity>
     </application>
 
 </manifest>

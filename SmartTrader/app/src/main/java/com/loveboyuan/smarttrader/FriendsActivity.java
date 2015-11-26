@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,31 +21,8 @@ public class FriendsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
-/*
-
-        searchView = (SearchView) findViewById(R.id.friendListSearchView);
-
-        //*** setOnQueryTextFocusChangeListener ***
-        //*** setOnQueryTextListener ***
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
 
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Get the text and start the searching
-                Toast.makeText(getBaseContext(),query,Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-
-
-        });
-
-*/
         ListView friendListView = (ListView)findViewById(R.id.friendListView);
         final Collection<User> users = FriendListController.getFriendListModel().getFriendList();
         final ArrayList<User> friendList = new ArrayList<User>(users);
@@ -62,6 +40,18 @@ public class FriendsActivity extends AppCompatActivity {
             }
         });
 
+
+        friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = friendList.get(position);
+                Intent intent = new Intent(FriendsActivity.this, ProfileActivity.class);
+                intent.putExtra("USR",  user);
+                intent.putExtra("ARD", "ard");
+                startActivity(intent);
+
+            }
+        });
 
     }
 
