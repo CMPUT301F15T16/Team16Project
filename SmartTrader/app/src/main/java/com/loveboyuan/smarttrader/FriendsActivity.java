@@ -88,5 +88,10 @@ public class FriendsActivity extends AppCompatActivity {
 
     }
 
+    public void searchInventory(View v){
+
+        Intent intent = new Intent(this, SearchInventoryActivity.class);
+        startActivity(intent);
+    }
 
 }
