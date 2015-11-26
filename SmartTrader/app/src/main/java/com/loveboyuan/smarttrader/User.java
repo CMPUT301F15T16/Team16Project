@@ -18,6 +18,9 @@ public class User {
     //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
 
     private static int id;
+
+
+    private int my_id;
     // A User has his/her personal profile
     private Profile profile;
     // A User has his/her inventory
@@ -27,8 +30,13 @@ public class User {
 
     public User(int id) {
         User.id = id;
+        my_id = id;
     }
 
+
+    public int getMy_id() {
+        return my_id;
+    }
     public static int getId() {
         return id;
     }
@@ -64,7 +72,7 @@ public class User {
 
     @Override
     public String toString(){
-        return String.valueOf(getId());
+        return String.valueOf(getMy_id());
     }
 
 

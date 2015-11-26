@@ -257,7 +257,6 @@ public class ItemActivity extends AppCompatActivity {
             InventoryController.removeItem(item);
 
 
-            // Give some time to get updated info
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

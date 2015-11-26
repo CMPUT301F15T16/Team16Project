@@ -22,9 +22,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
-/**
- * Created by boyuangu on 2015-11-25.
- */
+
 public class FriendListManager {
 
     private static final String TAG = "FriendSearch";
@@ -42,9 +40,6 @@ public class FriendListManager {
     public FriendList searchFriends(String searchString, String field) {
         FriendList result = new FriendList();
 
-        /**
-         * Creates a search request from a search string and a field
-         */
 
         HttpPost searchRequest = new HttpPost(friendList.getSearchUrl());
 
@@ -108,7 +103,7 @@ public class FriendListManager {
 
         }
 
-        Log.i(TAG2, "Did I find anything?: " + result.getFriendList().get(0).toString());
+        Log.i(TAG2, "Did I find anything?: " + result.getFriendList().get(1).toString());
 
         return result;
     }

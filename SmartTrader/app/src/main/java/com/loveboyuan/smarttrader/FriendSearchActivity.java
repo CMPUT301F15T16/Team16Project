@@ -42,7 +42,7 @@ public class FriendSearchActivity extends AppCompatActivity {
         friendSearchListView.setAdapter(searchFriendAdapter);
 
 
-        // we want a observer for the inventory model here. notify data change, and update the view
+     /*   // we want a observer for the inventory model here. notify data change, and update the view
         friendList.addMyObserver(new MyObserver() {
             @Override
             public void update() {
@@ -52,7 +52,7 @@ public class FriendSearchActivity extends AppCompatActivity {
                 searchFriendAdapter.notifyDataSetChanged();
             }
         });
-
+    */
 
         // show inventory item and let user modify item attributes
         friendSearchListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,14 +102,27 @@ public class FriendSearchActivity extends AppCompatActivity {
 
         }
 
-
         @Override
         public void run(){
             list.clear();
             list.addAll(friendListManager.searchFriends(search, null).getFriendList());
+            notifyUpdated();
+
         }
 
     }
+
+    public void notifyUpdated() {
+        // Thread to update adapter after an operation
+        Runnable doUpdateGUIList = new Runnable() {
+            public void run() {
+                searchFriendAdapter.notifyDataSetChanged();
+            }
+        };
+
+        runOnUiThread(doUpdateGUIList);
+    }
+
 
 
 }
