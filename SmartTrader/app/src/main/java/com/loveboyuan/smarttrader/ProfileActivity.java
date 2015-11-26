@@ -4,15 +4,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    static int usrID=LoginActivity.usrID;
     public static String USR_ID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        TextView textView = (TextView)findViewById(R.id.profileIdView);
+        textView.setText(String.valueOf(usrID));
     }
 
     @Override
