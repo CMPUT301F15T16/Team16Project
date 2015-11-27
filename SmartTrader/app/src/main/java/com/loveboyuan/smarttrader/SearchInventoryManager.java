@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-11-26.
@@ -28,8 +29,11 @@ import java.lang.reflect.Type;
 public class SearchInventoryManager {
 
     private static final String TAG = "InventorySearch";
+    private static final String TAG2 = "MyAddress";
     private Gson gson;
     private Inventory inventory = new Inventory();
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Inventory";
+
 
 
     public SearchInventoryManager(String search) {
@@ -40,66 +44,75 @@ public class SearchInventoryManager {
     public Inventory searchInventory(String searchString, String field) {
         Inventory result = new Inventory();
 
+        ArrayList<User> friends = FriendListController.getFriendListModel().getFriendList();
 
-        HttpPost searchRequest = new HttpPost(inventory.getSearchUrl());
-
-        String[] fields = null;
-        if (field != null) {
-            throw new UnsupportedOperationException("Not implemented!");
-        }
-
-        SimpleSearchCommand command = new SimpleSearchCommand(searchString);
-
-        String query = gson.toJson(command);
-        Log.i(TAG, "Json command: " + query);
-
-        StringEntity stringEntity = null;
-        try {
-            stringEntity = new StringEntity(query);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-
-        searchRequest.setHeader("Accept", "application/json");
-        searchRequest.setEntity(stringEntity);
-
-        HttpClient httpClient = new DefaultHttpClient();
-
-        HttpResponse response = null;
-        try {
-            response = httpClient.execute(searchRequest);
-        } catch (ClientProtocolException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        /**
-         * Parses the response of a search
-         */
-        Type searchResponseType = new TypeToken<SearchResponse<Item>>() {
-        }.getType();
-
-        SearchResponse<Item> esResponse;
-        try {
-            esResponse = gson.fromJson(
-                    new InputStreamReader(response.getEntity().getContent()),
-                    searchResponseType);
-        } catch (JsonIOException e) {
-            throw new RuntimeException(e);
-        } catch (JsonSyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalStateException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Extract the movies from the esResponse and put them in result
+        for(User user : friends) {
 
 
-        for(SearchHit<Item> hit : esResponse.getHits().getHits()){
-            result.addItem(hit.getSource());
+            HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(user.getMy_id())).concat("/"));
+            Log.i(TAG2, "Json command: " + searchRequest);
+
+
+            String[] fields = null;
+            if (field != null) {
+                throw new UnsupportedOperationException("Not implemented!");
+            }
+
+            SimpleSearchCommand command = new SimpleSearchCommand(searchString);
+
+            String query = gson.toJson(command);
+            Log.i(TAG, "Json command: " + query);
+
+            StringEntity stringEntity = null;
+            try {
+                stringEntity = new StringEntity(query);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+
+            searchRequest.setHeader("Accept", "application/json");
+            searchRequest.setEntity(stringEntity);
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            HttpResponse response = null;
+            try {
+                response = httpClient.execute(searchRequest);
+            } catch (ClientProtocolException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            /**
+             * Parses the response of a search
+             */
+            Type searchResponseType = new TypeToken<SearchResponse<Item>>() {
+            }.getType();
+
+            SearchResponse<Item> esResponse;
+            try {
+                esResponse = gson.fromJson(
+                        new InputStreamReader(response.getEntity().getContent()),
+                        searchResponseType);
+            } catch (JsonIOException e) {
+                throw new RuntimeException(e);
+            } catch (JsonSyntaxException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalStateException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Extract the movies from the esResponse and put them in result
+
+
+            for (SearchHit<Item> hit : esResponse.getHits().getHits()) {
+                result.addItem(hit.getSource());
+
+            }
+
 
         }
 

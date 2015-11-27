@@ -63,6 +63,10 @@
             android:name=".SearchInventoryActivity"
             android:label="@string/title_activity_search_inventory" >
         </activity>
+        <activity
+            android:name=".ImageViewActivity"
+            android:label="@string/title_activity_image_view" >
+        </activity>
     </application>
 
 </manifest>
