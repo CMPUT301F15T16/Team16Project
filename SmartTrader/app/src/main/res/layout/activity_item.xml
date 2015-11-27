@@ -194,7 +194,7 @@
         android:clickable="false"
         android:longClickable="true"
         android:layout_above="@+id/descriptionText"
-        android:src="@drawable/book_icon"
+        android:src="@drawable/camera_icon"
         android:layout_alignParentEnd="true" />
 
     <Button
