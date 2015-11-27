@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class SelectInventoryItemActivity extends AppCompatActivity {
+    static User usr=LoginActivity.usr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
