@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 public class TradeActivity extends AppCompatActivity {
 
@@ -13,6 +14,8 @@ public class TradeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_trade);
         Item item = (Item) getIntent().getSerializableExtra("ownerItem");
 
+        TextView ownerItemTextView = (TextView) findViewById(R.id.ownerItemTextView);
+        ownerItemTextView.setText(item.getName());
 
 
     }
@@ -30,7 +33,10 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void offerItem(View view){
+        Item item = (Item) getIntent().getSerializableExtra("ownerItem");
+
         Intent intent = new Intent(this, SelectInventoryItemActivity.class);
+        intent.putExtra("NeedBack",item );
         startActivity(intent);
 
     }

@@ -15,22 +15,55 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Owner Item"
-        android:id="@+id/textView15"
-        android:layout_below="@+id/textView14"
+        android:text="Borrower Items"
+        android:id="@+id/offerButton"
+        android:onClick="offerItem"
+        android:layout_below="@+id/ownerItemTextView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="42dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="offered Item"
-        android:id="@+id/offerButton"
+        android:text="Owner Item"
+        android:id="@+id/button"
+        android:layout_below="@+id/textView14"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Propose Trade"
+        android:id="@+id/button2"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="offerItem"/>
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/ownerItemTextView"
+        android:layout_below="@+id/button"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/button2" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView2"
+        android:layout_below="@+id/offerButton"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/button2" />
 </RelativeLayout>

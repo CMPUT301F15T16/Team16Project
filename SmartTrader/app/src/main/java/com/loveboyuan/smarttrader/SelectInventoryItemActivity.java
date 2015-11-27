@@ -1,5 +1,6 @@
 package com.loveboyuan.smarttrader;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -7,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -28,9 +30,9 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(listView.isItemChecked(position)) {
+                if (listView.isItemChecked(position)) {
                     listView.setItemChecked(position, true);
-                }else{
+                } else {
                     listView.setItemChecked(position, false);
 
                 }
@@ -38,6 +40,24 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
 
 
         });
+
+
+        Button button = (Button) findViewById(R.id.gobackButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(SelectInventoryItemActivity.this, TradeActivity.class);
+                Item item = (Item) getIntent().getSerializableExtra("NeedBack");
+
+                intent.putExtra("ownerItem",item );
+                startActivity(intent);
+
+
+            }
+        });
+
+
 
 
     }
@@ -63,4 +83,7 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }
