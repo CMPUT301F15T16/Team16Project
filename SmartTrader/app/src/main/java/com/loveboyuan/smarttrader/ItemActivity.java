@@ -26,6 +26,7 @@ import java.io.Serializable;
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private Uri fileUri;
     private int MEDIA_TYPE_IMAGE = 1;
     private ImageView imageView;
@@ -169,22 +170,26 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        //fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
+       // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     //Taken from android developers website
     //http://developer.android.com/guide/topics/media/camera.html#intent-receive
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
-                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                imageView.setImageBitmap(bitmap);
-                Toast.makeText(this, "Image saved to:\n" +
-                        data.getData(), Toast.LENGTH_LONG).show();
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                imageView.setImageBitmap(imageBitmap);
+                //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                //imageView.setImageBitmap(bitmap);
+                //Toast.makeText(this, "Image saved to:\n" +
+                //        data.getData(), Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
