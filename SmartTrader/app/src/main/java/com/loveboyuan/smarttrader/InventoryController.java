@@ -41,7 +41,7 @@ public class InventoryController {
         try {
 
             HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getName());
-            Log.e("url", getInventoryModel().getResourceUrl() + item.getId());
+            Log.e("url", getInventoryModel().getResourceUrl() + item.getName());
 
 
 

@@ -9,9 +9,12 @@ import java.io.Serializable;
  * Created by boyuangu on 2015-10-16.
  */
 public class Item implements Serializable {
+
+    static User usr=LoginActivity.usr;
+
     //final int id;
     private String name;
-
+    private int ownerID;
     private Location location;
     private String category;
     private int quantity;
@@ -34,6 +37,7 @@ public class Item implements Serializable {
         this.description = description;
         this.photo = photo;
         this.location = null;
+        this.ownerID = usr.getMy_id();
     }
 
 
@@ -101,10 +105,7 @@ public class Item implements Serializable {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-
-    // for testing purpose now
-    public int getId() {
-        return 12345;
+    public int getOwnerID() {
+        return ownerID;
     }
 }

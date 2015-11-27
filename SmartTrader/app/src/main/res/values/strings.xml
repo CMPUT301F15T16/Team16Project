@@ -29,6 +29,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_friend_search">FriendSearchActivity</string>
     <string name="title_activity_search_inventory">SearchInventoryActivity</string>
+    <string name="title_activity_image_view">ImageViewActivity</string>
 
 
 </resources>
