@@ -1,5 +1,6 @@
 package com.loveboyuan.smarttrader;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -13,41 +14,28 @@ import java.util.Date;
 import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 /**
- * Created by Administrator on 23/11/2015.
+ * Created by nabdulla on 23/11/2015.
  */
 public class ItemController {
     private static Item item = null;
-    private Uri fileUri;
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private int MEDIA_TYPE_IMAGE = 1;
-
-
-    public void setPhoto(){
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        // I guess?
-        startActivityForResult(null/*activity*/, intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE, null /* option */);
-    }
 
     //Taken from android developers website
     //http://developer.android.com/guide/topics/media/camera.html#saving-media
-    private static Uri getOutputMediaFileUri(int type){
-        return Uri.fromFile(getOutputMediaFile(type));
+    public static Uri getOutputMediaFileUri(int type, Context context){
+        return Uri.fromFile(getOutputMediaFile(type, context));
     }
-    private static File getOutputMediaFile(int type){
+    public static File getOutputMediaFile(int type, Context context){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+        File mediaStorageDir = new File(context.getFilesDir(), "Smart Trader");
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                Log.d("MyCameraApp", "failed to create directory");
+                Log.d("Smart Trader", "failed to create directory");
                 return null;
             }
         }

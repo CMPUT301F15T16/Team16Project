@@ -66,7 +66,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/categorySpinner"
         android:layout_below="@+id/numberPicker"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/textView7" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -183,6 +184,15 @@
         android:layout_alignEnd="@+id/descriptionText"
         android:onClick="updateItem"
         android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/itemIV"
+        android:layout_below="@+id/privacyRadioGroup"
+        android:layout_alignParentEnd="true"
+        android:longClickable="true" />
 
 
 </RelativeLayout>

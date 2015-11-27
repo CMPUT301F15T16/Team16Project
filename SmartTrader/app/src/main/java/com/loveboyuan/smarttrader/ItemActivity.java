@@ -1,8 +1,11 @@
 package com.loveboyuan.smarttrader;
 
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,16 +13,24 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.Serializable;
+
+import static android.support.v4.app.ActivityCompat.startActivityForResult;
 
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+    private Uri fileUri;
+    private int MEDIA_TYPE_IMAGE = 1;
+    private Button imageView;
 
 
     // Thread that close the activity after finishing add
@@ -40,6 +51,7 @@ public class ItemActivity extends AppCompatActivity {
         NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
         numberPicker.setMaxValue(1000);
         numberPicker.setMinValue(1);
+        imageView = (Button) findViewById(R.id.itemIV);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -48,6 +60,14 @@ public class ItemActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                setPhoto();
+                return true;
+            }
+        });
 
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
@@ -115,11 +135,39 @@ public class ItemActivity extends AppCompatActivity {
 
 
     }
-
+    //Taken from android developers website
+    //http://developer.android.com/guide/topics/media/camera.html#manifest
+    public void setPhoto(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+    }
+    /*
+    //Taken from android developers website
+    //http://developer.android.com/guide/topics/media/camera.html#intent-receive
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                // Image captured and saved to fileUri specified in the Intent
+                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                imageView.setImageBitmap(bitmap);
+                Toast.makeText(this, "Image saved to:\n" +
+                        data.getData(), Toast.LENGTH_LONG).show();
+            } else if (resultCode == RESULT_CANCELED) {
+                // User cancelled the image capture
+            } else {
+                // Image capture failed, advise user
+            }
+        }
+    }
+    */
+
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_item, menu);
+            getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 
