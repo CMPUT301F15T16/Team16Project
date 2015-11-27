@@ -1,5 +1,7 @@
 package com.loveboyuan.smarttrader;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -10,6 +12,9 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 
 
 /**
@@ -78,6 +83,22 @@ public class InventoryController {
         }
 
 
+    }
+
+    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
+    public static String convertBitmapToString(Bitmap src)
+    {
+        ByteArrayOutputStream os=new ByteArrayOutputStream();
+        src.compress(android.graphics.Bitmap.CompressFormat.PNG, 100,
+                (OutputStream) os);
+        return os.toString();
+    }
+    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
+    public static Bitmap getBitMapFromString(String src)
+    {
+        Log.i("b=", "" + src.getBytes().length);//returns 12111 as a length.
+        return BitmapFactory.decodeByteArray(src.getBytes(), 0, src.getBytes
+                ().length);
     }
 
 }

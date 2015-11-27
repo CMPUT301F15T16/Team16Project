@@ -3,10 +3,12 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 
@@ -27,7 +31,8 @@ public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
-    private Uri fileUri;
+    private String photo = null;
+    private Bitmap bitmap;
     private int MEDIA_TYPE_IMAGE = 1;
     private ImageView imageView;
 
@@ -92,6 +97,11 @@ public class ItemActivity extends AppCompatActivity {
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
                 Boolean isPrivate = item.isPrivate();
+                photo = item.getPhoto();
+                if (!photo.isEmpty() || !(photo == null)) {
+                    bitmap = getBitMapFromString(photo);
+                    imageView.setImageBitmap(bitmap);
+                }
 
                 EditText nameView = (EditText) findViewById(R.id.itemNameText);
                 RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
@@ -184,8 +194,10 @@ public class ItemActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
                 Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                imageView.setImageBitmap(imageBitmap);
+                bitmap = (Bitmap) extras.get("data");
+                imageView.setImageBitmap(bitmap);
+                photo = convertBitmapToString(bitmap);
+
                 //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
                 //imageView.setImageBitmap(bitmap);
                 //Toast.makeText(this, "Image saved to:\n" +
@@ -224,7 +236,7 @@ public class ItemActivity extends AppCompatActivity {
     public void addItem(View view){
         try {
             String name, category, quality, description;
-            Uri photoPath;
+            String photoPath;
             boolean isPrivate;
             int quantity;
 
@@ -254,10 +266,9 @@ public class ItemActivity extends AppCompatActivity {
             // description
             EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
             description = descriptionView.getText().toString();
-            // photopath will be null for now
-            photoPath = null;
+            photoPath = photo;
 
-            Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
+            Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
          //   UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
@@ -359,6 +370,21 @@ public class ItemActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+
+    public String convertBitmapToString(Bitmap src)
+    {
+        ByteArrayOutputStream os=new ByteArrayOutputStream();
+        src.compress(android.graphics.Bitmap.CompressFormat.PNG, 100,
+                (OutputStream) os);
+        return os.toString();
+    }
+    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
+    public Bitmap getBitMapFromString(String src)
+    {
+        Log.i("b=", "" + src.getBytes().length);//returns 12111 as a length.
+        return BitmapFactory.decodeByteArray(src.getBytes(), 0, src.getBytes
+                ().length);
     }
 
 
