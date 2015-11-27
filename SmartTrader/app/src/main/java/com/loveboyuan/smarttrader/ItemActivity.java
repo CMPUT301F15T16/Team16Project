@@ -3,10 +3,12 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,13 +22,17 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-    private Uri fileUri;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private String photo = null;
+    private Bitmap bitmap;
     private int MEDIA_TYPE_IMAGE = 1;
     private ImageView imageView;
 
@@ -91,6 +97,11 @@ public class ItemActivity extends AppCompatActivity {
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
                 Boolean isPrivate = item.isPrivate();
+                photo = item.getPhoto();
+                if (!photo.isEmpty() || !(photo == null)) {
+                    bitmap = InventoryController.StringToBitMap(photo);
+                    imageView.setImageBitmap(bitmap);
+                }
 
                 EditText nameView = (EditText) findViewById(R.id.itemNameText);
                 RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
@@ -169,22 +180,28 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        //fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
+       // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
     //Taken from android developers website
     //http://developer.android.com/guide/topics/media/camera.html#intent-receive
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
-                Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                Bundle extras = data.getExtras();
+                bitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(bitmap);
-                Toast.makeText(this, "Image saved to:\n" +
-                        data.getData(), Toast.LENGTH_LONG).show();
+                photo = InventoryController.convertBitMapToString(bitmap);
+
+                //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+                //imageView.setImageBitmap(bitmap);
+                //Toast.makeText(this, "Image saved to:\n" +
+                //        data.getData(), Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
@@ -219,7 +236,7 @@ public class ItemActivity extends AppCompatActivity {
     public void addItem(View view){
         try {
             String name, category, quality, description;
-            Uri photoPath;
+            String photoPath;
             boolean isPrivate;
             int quantity;
 
@@ -249,10 +266,9 @@ public class ItemActivity extends AppCompatActivity {
             // description
             EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
             description = descriptionView.getText().toString();
-            // photopath will be null for now
-            photoPath = null;
+            photoPath = photo;
 
-            Item item = new Item(name, category, quantity, quality, isPrivate, description, photoPath);
+            Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
          //   UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
@@ -352,7 +368,6 @@ public class ItemActivity extends AppCompatActivity {
 
         intent.putExtra("ownerItem",item );
         startActivity(intent);
-
 
     }
 

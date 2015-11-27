@@ -21,13 +21,13 @@ public class Item implements Serializable {
     private String quality;
     private boolean isPrivate;
     private String description;
-    private Uri photo;
+    private String photo;
 
 
 
 
 
-    public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, Uri photo){
+    public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, String photo){
       //  id = name;
         this.name = name;
         this.category = category;
@@ -61,7 +61,7 @@ public class Item implements Serializable {
         this.isPrivate = isPrivate;
     }
 
-    public void setPhoto(Uri photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -101,6 +101,8 @@ public class Item implements Serializable {
     public Location getLocation() {
         return location;
     }
+
+    public String getPhoto() {return photo;}
 
     public void setLocation(Location location) {
         this.location = location;
