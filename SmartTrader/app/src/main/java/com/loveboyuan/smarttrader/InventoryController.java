@@ -2,6 +2,7 @@ package com.loveboyuan.smarttrader;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -85,20 +86,25 @@ public class InventoryController {
 
     }
 
-    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
-    public static String convertBitmapToString(Bitmap src)
-    {
-        ByteArrayOutputStream os=new ByteArrayOutputStream();
-        src.compress(android.graphics.Bitmap.CompressFormat.PNG, 100,
-                (OutputStream) os);
-        return os.toString();
+    //Taken from http://androidapplicationdeveloper.weebly.com/android-tutorial/how-to-convert-bitmap-to-string-and-string-to-bitmap
+    public static String convertBitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] arr=baos.toByteArray();
+        String result=Base64.encodeToString(arr, Base64.DEFAULT);
+        return result;
     }
-    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
-    public static Bitmap getBitMapFromString(String src)
-    {
-        Log.i("b=", "" + src.getBytes().length);//returns 12111 as a length.
-        return BitmapFactory.decodeByteArray(src.getBytes(), 0, src.getBytes
-                ().length);
+
+    //Taken from http://androidapplicationdeveloper.weebly.com/android-tutorial/how-to-convert-bitmap-to-string-and-string-to-bitmap
+    public static Bitmap StringToBitMap(String image){
+        try{
+            byte [] encodeByte=Base64.decode(image,Base64.DEFAULT);
+            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
 }

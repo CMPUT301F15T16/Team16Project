@@ -99,7 +99,7 @@ public class ItemActivity extends AppCompatActivity {
                 Boolean isPrivate = item.isPrivate();
                 photo = item.getPhoto();
                 if (!photo.isEmpty() || !(photo == null)) {
-                    bitmap = getBitMapFromString(photo);
+                    bitmap = InventoryController.StringToBitMap(photo);
                     imageView.setImageBitmap(bitmap);
                 }
 
@@ -196,7 +196,7 @@ public class ItemActivity extends AppCompatActivity {
                 Bundle extras = data.getExtras();
                 bitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(bitmap);
-                photo = convertBitmapToString(bitmap);
+                photo = InventoryController.convertBitMapToString(bitmap);
 
                 //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
                 //imageView.setImageBitmap(bitmap);
@@ -369,22 +369,6 @@ public class ItemActivity extends AppCompatActivity {
         intent.putExtra("ownerItem",item );
         startActivity(intent);
 
-
-    }
-
-    public String convertBitmapToString(Bitmap src)
-    {
-        ByteArrayOutputStream os=new ByteArrayOutputStream();
-        src.compress(android.graphics.Bitmap.CompressFormat.PNG, 100,
-                (OutputStream) os);
-        return os.toString();
-    }
-    //Taken from https://groups.google.com/forum/#!topic/android-developers/6ixPu5cpzSY
-    public Bitmap getBitMapFromString(String src)
-    {
-        Log.i("b=", "" + src.getBytes().length);//returns 12111 as a length.
-        return BitmapFactory.decodeByteArray(src.getBytes(), 0, src.getBytes
-                ().length);
     }
 
 
