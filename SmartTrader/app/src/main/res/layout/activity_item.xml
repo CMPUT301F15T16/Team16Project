@@ -185,14 +185,15 @@
         android:onClick="updateItem"
         android:visibility="invisible"/>
 
-    <Button
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/itemIV"
+        android:id="@+id/imageView"
+        android:layout_above="@+id/textView8"
+        android:layout_alignEnd="@+id/privacyRadioGroup"
+        android:layout_toEndOf="@+id/categorySpinner"
         android:layout_below="@+id/privacyRadioGroup"
-        android:layout_alignParentEnd="true"
-        android:longClickable="true" />
+        android:layout_alignStart="@+id/textView7" />
 
 
 </RelativeLayout>
