@@ -3,6 +3,7 @@ package com.loveboyuan.smarttrader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,7 +51,20 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
                 Intent intent = new Intent(SelectInventoryItemActivity.this, TradeActivity.class);
                 Item item = (Item) getIntent().getSerializableExtra("NeedBack");
 
-                intent.putExtra("ownerItem",item );
+                intent.putExtra("ownerItem", item);
+
+
+                Inventory passItems = new Inventory();
+                SparseBooleanArray checked = listView.getCheckedItemPositions();
+
+                for (int i = 0; i < listView.getAdapter().getCount(); i++) {
+                    if (checked.get(i)) {
+                        passItems.getInventory().add(list.get(i));
+                    }
+                }
+
+                intent.putExtra("PASSITEMS",passItems);
+
                 startActivity(intent);
 
 

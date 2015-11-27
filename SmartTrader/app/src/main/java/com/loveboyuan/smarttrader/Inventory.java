@@ -1,12 +1,13 @@
 package com.loveboyuan.smarttrader;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-10-16.
  */
-public class Inventory implements Search{
+public class Inventory implements Search, Serializable{
 
     static User usr=LoginActivity.usr;
 

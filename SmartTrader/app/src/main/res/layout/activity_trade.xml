@@ -62,7 +62,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView2"
+        android:id="@+id/borrowerItemsListView"
         android:layout_below="@+id/offerButton"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/button2" />
