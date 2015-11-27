@@ -49,8 +49,8 @@ public class SearchInventoryManager {
         for(User user : friends) {
 
 
-            HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(user.getMy_id())).concat("/"));
-            Log.i(TAG2, "Json command: " + searchRequest);
+            HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(user.getMy_id())).concat("/_search"));
+            Log.i(TAG2, "Json command: " + prefix.concat(String.valueOf(user.getMy_id())).concat("/_search"));
 
 
             String[] fields = null;
