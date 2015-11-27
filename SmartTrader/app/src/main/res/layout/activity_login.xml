@@ -10,9 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usrID"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/textView13"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/imageView"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -20,6 +20,26 @@
         android:text="Login"
         android:id="@+id/loginButton"
         android:layout_alignParentBottom="true"
+        android:onClick="login"
+        android:layout_below="@+id/usrID"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/usrID"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/book_icon"
         android:layout_centerHorizontal="true"
-        android:onClick="login"/>
+        android:layout_above="@+id/textView13"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter your user ID"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:id="@+id/textView13"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>
