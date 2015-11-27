@@ -95,6 +95,7 @@ public class InventoryActivity extends AppCompatActivity{
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 intent.putExtra("MyItem", item);
+                intent.putExtra("OTH", "others");
                 startActivity(intent);
 
             }

@@ -67,6 +67,10 @@
             android:name=".ImageViewActivity"
             android:label="@string/title_activity_image_view" >
         </activity>
+        <activity
+            android:name=".SelectInventoryItemActivity"
+            android:label="@string/title_activity_select_inventory_item" >
+        </activity>
     </application>
 
 </manifest>

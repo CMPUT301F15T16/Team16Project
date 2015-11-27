@@ -40,5 +40,6 @@ tools:context="com.loveboyuan.smarttrader.ItemActivity">
         android:layout_above="@+id/inventoryListView"
         android:layout_alignEnd="@+id/textView2"
         android:onClick="addItem"/>
+
 </RelativeLayout>
 

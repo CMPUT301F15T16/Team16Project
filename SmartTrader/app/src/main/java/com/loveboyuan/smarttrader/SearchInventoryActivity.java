@@ -63,6 +63,8 @@ public class SearchInventoryActivity extends AppCompatActivity {
                 Item item = list.get(position);
 
                 Intent intent = new Intent(SearchInventoryActivity.this, ItemActivity.class);
+                intent.putExtra("MyItem", item);
+                intent.putExtra("OTH", "others");
                 startActivity(intent);
             }
 
@@ -79,6 +81,7 @@ public class SearchInventoryActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_search_inventory, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -22,8 +22,6 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 
-import static android.support.v4.app.ActivityCompat.startActivityForResult;
-
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
@@ -140,6 +138,31 @@ public class ItemActivity extends AppCompatActivity {
         } catch (RuntimeException exception){
         }
 
+        try{
+            String s = getIntent().getStringExtra("OTH");
+            if(s.equals("others")){
+                EditText nameView = (EditText) findViewById(R.id.itemNameText);
+                RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
+                RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
+                EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
+
+                nameView.setFocusable(false);
+                qualityRadios.setEnabled(false);
+                privacyRadios.setEnabled(false);
+                descriptionView.setFocusable(false);
+                Button updateButton = (Button) findViewById(R.id.updateButton);
+                updateButton.setVisibility(View.GONE);
+                spinner.setEnabled(false);
+                Button tradeButton = (Button) findViewById(R.id.tradeButton);
+                tradeButton.setVisibility(View.VISIBLE);
+
+            }
+
+
+
+        }catch (RuntimeException e){
+
+        }
 
     }
     //Taken from android developers website
@@ -321,5 +344,17 @@ public class ItemActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
+
+
+    public void startTradeActivity(View v){
+        Intent intent = new Intent(this, TradeActivity.class);
+        Item item = (Item) getIntent().getSerializableExtra("MyItem");
+
+        intent.putExtra("ownerItem",item );
+        startActivity(intent);
+
+
+    }
+
 
 }
