@@ -25,12 +25,8 @@ public class ItemController {
         return Uri.fromFile(getOutputMediaFile(type, context));
     }
     public static File getOutputMediaFile(int type, Context context){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(context.getFilesDir(), "Smart Trader");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){

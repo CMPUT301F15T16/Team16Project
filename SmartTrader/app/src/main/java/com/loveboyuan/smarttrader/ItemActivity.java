@@ -68,7 +68,14 @@ public class ItemActivity extends AppCompatActivity {
                 return true;
             }
         });
+        /*
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        */
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
             Item item = (Item) getIntent().getSerializableExtra("MyItem");
