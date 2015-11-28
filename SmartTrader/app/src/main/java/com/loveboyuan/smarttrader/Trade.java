@@ -8,6 +8,8 @@ import java.util.ArrayList;
 public class Trade {
 
     // A Trade has a borrower(the person proposed the trade)
+
+    private String tradeID;
     private int borrowerID;
     // A Trade has an owner(the person receives a trade request)
     private int ownerID;
@@ -19,12 +21,18 @@ public class Trade {
     private boolean tradeResult;
 
 
+    private String tradeState;
+
+
+
     // Constructor! A Trade has owner, trade for item, borrower and trade using items(what the borrower uses to trade).
     public Trade(int owner, Item oItem, int borrower, ArrayList<Item> bItems) {
+        this.tradeID = String.valueOf(borrower).concat(oItem.getName());
         this.ownerID = owner;
         this.oItem = oItem;
         this.borrowerID = borrower;
         this.bItems = bItems;
+        this.tradeState = "Initialized";
 
     }
 
@@ -84,6 +92,14 @@ public class Trade {
     public void editBItems(ArrayList<Item> bItems) {
         this.bItems = bItems;
 
+    }
+
+    public String getTradeState() {
+        return tradeState;
+    }
+
+    public void setTradeState(String tradeState) {
+        this.tradeState = tradeState;
     }
 
 }

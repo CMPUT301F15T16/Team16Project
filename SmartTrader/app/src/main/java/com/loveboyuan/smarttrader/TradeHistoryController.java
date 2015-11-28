@@ -51,7 +51,6 @@ public class TradeHistoryController {
 
             HttpResponse response = httpClient.execute(addRequest);
             String status = response.getStatusLine().toString();
-           // Log.e(TAG, status);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -101,9 +101,6 @@ public class TradeActivity extends AppCompatActivity {
 
 
     }
-    // views including a lot of details
-    // This activity is opened with information passing in!
-
 
 
     public void offerItem(View view){

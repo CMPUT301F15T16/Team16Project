@@ -31,6 +31,7 @@
     <string name="title_activity_search_inventory">SearchInventoryActivity</string>
     <string name="title_activity_image_view">ImageViewActivity</string>
     <string name="title_activity_select_inventory_item">SelectInventoryItemActivity</string>
+    <string name="title_activity_current_trade">CurrentTradeActivity</string>
 
 
 </resources>
