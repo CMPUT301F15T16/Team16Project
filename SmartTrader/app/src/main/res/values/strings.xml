@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Smart Trader</string>
 
+    <string name="splash_activity_title">Smart Trader</string>
+
+    <string name="login_activity_button">LOGIN</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_trade_history">TradeHistoryActivity</string>
@@ -32,6 +36,7 @@
     <string name="title_activity_image_view">ImageViewActivity</string>
     <string name="title_activity_select_inventory_item">SelectInventoryItemActivity</string>
     <string name="title_activity_current_trade">CurrentTradeActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 
 </resources>
