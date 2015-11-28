@@ -3,12 +3,9 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,8 +19,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 
 
@@ -173,6 +168,8 @@ public class ItemActivity extends AppCompatActivity {
                 spinner.setEnabled(false);
                 Button tradeButton = (Button) findViewById(R.id.tradeButton);
                 tradeButton.setVisibility(View.VISIBLE);
+                Button cancelButton = (Button) findViewById(R.id.cancelButton);
+                cancelButton.setVisibility(View.GONE);
 
             }
 
