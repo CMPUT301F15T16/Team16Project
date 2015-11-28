@@ -100,6 +100,8 @@ public class FriendListManager {
             result.addFriend(hit.getSource());
 
         }
+     //  Log.i(TAG, "Json command: " + result.getFriendList().size());
+
 
         return result;
     }

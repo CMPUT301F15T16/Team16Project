@@ -16,9 +16,16 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.util.ArrayList;
+
 
 public class LoginActivity extends AppCompatActivity {
     private static Gson gson = new Gson();
+    final ArrayList<User>searchId = new ArrayList<User>();
+    private FriendListManager friendListManager = new FriendListManager("");
+    private static final String TAG = "FriendSearch";
+
+
 
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -57,22 +64,34 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // The user press the login button
-    public void login(View v){
+    public void login(View v) throws InterruptedException {
 
 
         TextView textView = (TextView)findViewById(R.id.usrID);
 
         int usrID = Integer.parseInt(textView.getText().toString());
 
-        usr = new User(usrID);
+        // I want to search server to see if its a new user or old user
+        String searchString = String.valueOf(usrID);
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
 
-        // Execute the thread to add this remotely
-        Thread thread = new AddThread(usr);
-        thread.start();
+        Thread.sleep(500);
+
+
+        if (searchId.size()!=0){
+            usr = searchId.get(0);
+
+        }else{
+            usr = new User(usrID);
+
+            // Execute the thread to add this remotely
+            Thread thread = new AddThread(usr);
+            thread.start();
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
 
     }
 
@@ -116,6 +135,26 @@ public class LoginActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
+
+
+    class SearchThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchThread(String search){
+            this.search = search;
+
+        }
+
+        @Override
+        public void run(){
+            searchId.clear();
+            searchId.addAll(friendListManager.searchFriends(search, null).getFriendList());
+        }
+
+    }
+
 
 
 }
