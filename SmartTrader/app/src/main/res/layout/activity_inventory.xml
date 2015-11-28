@@ -14,32 +14,25 @@ tools:context="com.loveboyuan.smarttrader.ItemActivity">
     android:text="Inventory"
     android:id="@+id/textView2"
     android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true"
-    android:layout_toStartOf="@+id/inventorySearchView"
-    android:layout_alignBottom="@+id/inventorySearchView" />
+    android:layout_alignParentStart="true" />
 
-<SearchView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/inventorySearchView"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentEnd="true" />
+
 
 <ListView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/inventoryListView"
-    android:layout_below="@+id/textView2"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/addButton" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/addButton"
-        android:layout_above="@+id/inventoryListView"
-        android:layout_alignEnd="@+id/textView2"
-        android:onClick="addItem"/>
+        android:onClick="addItem"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/inventoryListView" />
 
 </RelativeLayout>
 

@@ -15,7 +15,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 
 
 /**
@@ -107,4 +106,8 @@ public class InventoryController {
         }
     }
 
+    public static void clear() {
+        inventory = null;
+
+    }
 }

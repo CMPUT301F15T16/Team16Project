@@ -27,6 +27,8 @@ import java.util.ArrayList;
  * Created by boyuangu on 2015-11-26.
  */
 public class SearchInventoryManager {
+    static User usr=LoginActivity.usr;
+
 
     private static final String TAG = "InventorySearch";
     private static final String TAG2 = "MyAddress";
@@ -117,5 +119,80 @@ public class SearchInventoryManager {
         }
 
         return result;
+    }
+
+    public Inventory searchOwnInventory(String searchString, String field) {
+        Inventory result = new Inventory();
+
+
+        HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(usr.getMy_id())).concat("/_search"));
+
+
+        String[] fields = null;
+        if (field != null) {
+            throw new UnsupportedOperationException("Not implemented!");
+        }
+
+        SimpleSearchCommand command = new SimpleSearchCommand(searchString);
+
+        String query = gson.toJson(command);
+        Log.i(TAG, "Json command: " + query);
+
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(query);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        searchRequest.setHeader("Accept", "application/json");
+        searchRequest.setEntity(stringEntity);
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpResponse response = null;
+        try {
+            response = httpClient.execute(searchRequest);
+        } catch (ClientProtocolException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        /**
+         * Parses the response of a search
+         */
+        Type searchResponseType = new TypeToken<SearchResponse<Item>>() {
+        }.getType();
+
+        SearchResponse<Item> esResponse;
+        try {
+            esResponse = gson.fromJson(
+                    new InputStreamReader(response.getEntity().getContent()),
+                    searchResponseType);
+        } catch (JsonIOException e) {
+            throw new RuntimeException(e);
+        } catch (JsonSyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalStateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Extract the movies from the esResponse and put them in result
+
+
+        for (SearchHit<Item> hit : esResponse.getHits().getHits()) {
+            result.addItem(hit.getSource());
+
+        }
+
+
+
+
+        return result;
+
+
     }
 }

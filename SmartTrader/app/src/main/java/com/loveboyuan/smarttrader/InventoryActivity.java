@@ -11,21 +11,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class InventoryActivity extends AppCompatActivity{
     // Thread that close the activity after finishing add
+    private static final String TAG = "InventorySearch";
+
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
             finish();
         }
     };
     static User usr=LoginActivity.usr;
+    private SearchInventoryManager searchInventoryManager = new SearchInventoryManager("");
 
-    SearchView searchView;
+    private Inventory pulledInventory = new Inventory();
 
 
     @Override
@@ -33,32 +35,30 @@ public class InventoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        searchView = (SearchView) findViewById(R.id.inventorySearchView);
-
-        //*** setOnQueryTextFocusChangeListener ***
-        //*** setOnQueryTextListener ***
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // Get the text and start the searching
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-
-
-        });
-
-
-
+        InventoryController.clear();
         // getting the list view in the ui
+
         ListView inventoryListView = (ListView) findViewById(R.id.inventoryListView);
+
+        // We want to pull from server what items the user has and add it to inventoryController
+
+        // So search first
+        String searchString = "*";
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for(Item item: pulledInventory.getInventory()){
+
+            InventoryController.getInventoryModel().addItem(item);
+        }
+
         // items contains all items in the inventory
         Collection<Item> items = InventoryController.getInventoryModel().getInventory();
         // list contains items
@@ -87,11 +87,7 @@ public class InventoryActivity extends AppCompatActivity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Item item = list.get(position);
-                String name = item.getName();
-                String quality = item.getQuality();
-                String category = item.getCategory();
-                String description = item.getDescription();
-                int quantity = item.getQuantity();
+
 
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
@@ -194,6 +190,28 @@ public class InventoryActivity extends AppCompatActivity{
 
             runOnUiThread(doFinishAdd);
         }
+    }
+
+
+
+    class SearchThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchThread(String search){
+            this.search = search;
+
+        }
+
+        @Override
+        public void run(){
+            ArrayList<Item>items = searchInventoryManager.searchOwnInventory(search, null).getInventory();
+            for(Item item: items ) {
+                pulledInventory.addItem(item);
+            }
+        }
+
     }
 
 
