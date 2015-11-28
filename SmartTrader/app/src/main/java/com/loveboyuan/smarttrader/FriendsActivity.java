@@ -14,13 +14,37 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class FriendsActivity extends AppCompatActivity {
+    private FriendListManager friendListManager = new FriendListManager("");
+    FriendList pulledFriendList = new FriendList();
 
-   // SearchView searchView;
+
+    // SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+        FriendListController.clear();
+
+        // We want to pull from server what friends the user has and add it to friendsController
+
+        // So search first
+        String searchString = "*";
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for(User user: pulledFriendList.getFriendList()){
+
+            FriendListController.getFriendListModel().addFriend(user);
+        }
 
 
         ListView friendListView = (ListView)findViewById(R.id.friendListView);
@@ -92,6 +116,28 @@ public class FriendsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SearchInventoryActivity.class);
         startActivity(intent);
+    }
+
+
+
+    class SearchThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchThread(String search){
+            this.search = search;
+
+        }
+
+        @Override
+        public void run(){
+            ArrayList<User>users = friendListManager.searchOwnFriends(search, null).getFriendList();
+            for(User user: users ) {
+                pulledFriendList.addFriend(user);
+            }
+        }
+
     }
 
 }

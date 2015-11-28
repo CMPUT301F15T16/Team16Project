@@ -154,8 +154,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Pending stuff:
         //PendingController.addPending(user);
-        FriendListController.addFriend(user);
+        FriendListController.getFriendListModel().addFriend(user);
 
+        Thread thread = new AddFThread(user);
+        thread.start();
 
 
     }
@@ -175,6 +177,49 @@ public class ProfileActivity extends AppCompatActivity {
             try {
 
                 HttpPost addRequest = new HttpPost(User.getResourceUrl() + user.getMy_id());
+
+                StringEntity stringEntity = new StringEntity(gson.toJson(user));
+
+                addRequest.setEntity(stringEntity);
+                addRequest.setHeader("Accept", "application/json");
+
+                HttpResponse response = httpClient.execute(addRequest);
+                String status = response.getStatusLine().toString();
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
+
+    class AddFThread extends Thread {
+        private User user;
+
+        public AddFThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+
+            HttpClient httpClient = new DefaultHttpClient();
+
+            try {
+
+                HttpPost addRequest = new HttpPost(("http://cmput301.softwareprocess.es:8080/cmput301f15t16/" +
+                        "Friends").concat(String.valueOf(usr.getMy_id())).concat("/"));
 
                 StringEntity stringEntity = new StringEntity(gson.toJson(user));
 
