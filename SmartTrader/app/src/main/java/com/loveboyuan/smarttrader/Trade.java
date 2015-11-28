@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public class Trade {
 
     // A Trade has a borrower(the person proposed the trade)
-    private User borrower;
+    private int borrowerID;
     // A Trade has an owner(the person receives a trade request)
-    private User owner;
+    private int ownerID;
     // A Trade has an owner Item(what the borrower wants)
     private Item oItem;
     // A Trade has a list of borrower Items(what borrowers wish to give up for owner item)
@@ -20,22 +20,22 @@ public class Trade {
 
 
     // Constructor! A Trade has owner, trade for item, borrower and trade using items(what the borrower uses to trade).
-    public Trade(User owner, Item oItem, User borrower, ArrayList<Item> bItems) {
-        this.owner = owner;
+    public Trade(int owner, Item oItem, int borrower, ArrayList<Item> bItems) {
+        this.ownerID = owner;
         this.oItem = oItem;
-        this.borrower = borrower;
+        this.borrowerID = borrower;
         this.bItems = bItems;
 
     }
 
     // Trade can get the owner of the trade
-    public User getOwner() {
-        return owner;
+    public int getOwner() {
+        return ownerID;
     }
 
     // Trade can get the borrower of the trade
-    public User getBorrower() {
-        return borrower;
+    public int getBorrower() {
+        return borrowerID;
     }
 
     // Trade can get borrower items
@@ -71,7 +71,7 @@ public class Trade {
 
         ArrayList<Item>items  = new ArrayList<Item>();
         items.add(oItem);
-        return new Trade(borrower, null, owner, items);
+        return new Trade(borrowerID, null, ownerID, items);
 
     }
 

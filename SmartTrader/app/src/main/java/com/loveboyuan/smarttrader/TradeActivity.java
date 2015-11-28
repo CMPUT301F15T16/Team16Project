@@ -5,12 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class TradeActivity extends AppCompatActivity {
+    static User usr=LoginActivity.usr;
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,57 @@ public class TradeActivity extends AppCompatActivity {
 
         }
 
+
+
+        Button tradeProposeButton = (Button) findViewById(R.id.tradeProposeButton);
+        tradeProposeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Here I should create the trade based on what i have in the views
+                // I should push this trade to the server for both parties
+                try {
+                    Inventory selected = (Inventory) getIntent().getSerializableExtra("PASSITEMS");
+
+                    Item item = (Item) getIntent().getSerializableExtra("ownerItem");
+                    Trade trade = new Trade(item.getOwnerID(), item, usr.getMy_id(), selected.getInventory());
+
+                    TradeHistoryController.getTradeHistory().addTrade(trade);
+
+                    // Execute the thread to add this remotely
+                    Thread thread = new AddThread(trade);
+                    thread.start();
+
+                }catch (RuntimeException e){
+
+                }
+            }
+        });
+
+    }
+
+
+    class AddThread extends Thread {
+        private Trade trade;
+
+        public AddThread(Trade trade) {
+            this.trade = trade;
+        }
+
+        @Override
+        public void run() {
+
+            TradeHistoryController.addTradeToServer(trade);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
     }
 
 
