@@ -72,14 +72,21 @@ public class ItemActivity extends AppCompatActivity {
                 return true;
             }
         });
-        /*
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(photo == null) {
+                    Toast.makeText(ItemActivity.this,"Please long click to edit item image",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intent = new Intent(ItemActivity.this,ImageViewActivity.class);
+                    intent.putExtra("Item Photo",photo);
+                    startActivity(intent);
+                }
             }
         });
-        */
+
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
             Item item = (Item) getIntent().getSerializableExtra("MyItem");
@@ -98,7 +105,7 @@ public class ItemActivity extends AppCompatActivity {
                 int quantity = item.getQuantity();
                 Boolean isPrivate = item.isPrivate();
                 photo = item.getPhoto();
-                if (!photo.isEmpty() || !(photo == null)) {
+                if (!(photo == null)) {
                     bitmap = InventoryController.StringToBitMap(photo);
                     imageView.setImageBitmap(bitmap);
                 }
@@ -192,16 +199,11 @@ public class ItemActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             if (resultCode == RESULT_OK) {
-                // Image captured and saved to fileUri specified in the Intent
                 Bundle extras = data.getExtras();
                 bitmap = (Bitmap) extras.get("data");
                 imageView.setImageBitmap(bitmap);
                 photo = InventoryController.convertBitMapToString(bitmap);
 
-                //Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-                //imageView.setImageBitmap(bitmap);
-                //Toast.makeText(this, "Image saved to:\n" +
-                //        data.getData(), Toast.LENGTH_LONG).show();
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {

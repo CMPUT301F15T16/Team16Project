@@ -1,9 +1,12 @@
 package com.loveboyuan.smarttrader;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class ImageViewActivity extends AppCompatActivity {
 
@@ -11,6 +14,11 @@ public class ImageViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_view);
+        Intent intent = getIntent();
+        String photo = intent.getExtras().getString("Item Photo");
+        Bitmap bitmap = InventoryController.StringToBitMap(photo);
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        imageView.setImageBitmap(bitmap);
     }
 
     @Override
