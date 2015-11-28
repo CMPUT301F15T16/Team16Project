@@ -127,8 +127,8 @@
         android:text="Cancel"
         android:id="@+id/cancelButton"
         android:onClick="goBackInventory"
-        android:layout_alignTop="@+id/addButton"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/textView8" />
 
     <Button
         android:layout_width="wrap_content"

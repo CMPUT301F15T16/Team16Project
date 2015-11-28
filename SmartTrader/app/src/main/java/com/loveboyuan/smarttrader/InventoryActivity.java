@@ -23,6 +23,7 @@ public class InventoryActivity extends AppCompatActivity{
             finish();
         }
     };
+    static User usr=LoginActivity.usr;
 
     SearchView searchView;
 
@@ -95,7 +96,9 @@ public class InventoryActivity extends AppCompatActivity{
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 intent.putExtra("MyItem", item);
-                intent.putExtra("OTH", "others");
+                if(item.getOwnerID() != usr.getMy_id()) {
+                    intent.putExtra("OTH", "others");
+                }
                 startActivity(intent);
 
             }
