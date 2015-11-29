@@ -53,11 +53,13 @@ public class TradeActivity extends AppCompatActivity {
             Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
             // if we get the trade, that means we can edit the trade. it has two sides which side we are in ?
             // borrower? or owner? How could we tell?
+            Button proposeTradeButton = (Button) findViewById(R.id.tradeProposeButton);
             if(trade.getOItem().getOwnerID() == usr.getMy_id()){
                 // that means im the owner
-
+                proposeTradeButton.setVisibility(View.GONE);
             }else{
                 // that means im the borrower
+                proposeTradeButton.setVisibility(View.GONE);
 
             }
 

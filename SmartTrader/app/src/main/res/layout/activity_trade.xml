@@ -50,7 +50,7 @@
         android:id="@+id/ownerItemTextView"
         android:layout_below="@+id/button"
         android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/tradeProposeButton" />
+        android:layout_toStartOf="@+id/button8" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -86,6 +86,24 @@
         android:id="@+id/button5"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Decline"
+        android:id="@+id/button8"
+        android:layout_alignTop="@+id/ownerItemTextView"
+        android:layout_alignEnd="@+id/tradeProposeButton"
+        android:visibility="gone"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept"
+        android:id="@+id/button9"
+        android:layout_above="@+id/button8"
+        android:layout_alignStart="@+id/button8"
         android:visibility="gone"/>
 
 </RelativeLayout>
