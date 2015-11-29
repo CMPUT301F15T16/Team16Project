@@ -24,20 +24,45 @@ public class TradeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade);
-        Item item = (Item) getIntent().getSerializableExtra("ownerItem");
-
         TextView ownerItemTextView = (TextView) findViewById(R.id.ownerItemTextView);
-        ownerItemTextView.setText(item.getName());
+
+        // Here is because origin Trade button on item being pressed
+        try {
+            Item item = (Item) getIntent().getSerializableExtra("ownerItem");
+            ownerItemTextView.setText(item.getName());
+        }catch (RuntimeException e){
+
+        }
 
         ListView listView = (ListView) findViewById(R.id.borrowerItemsListView);
 
+
+        // Here its getting back the borrower items!
         try{
             Inventory selected = (Inventory) getIntent().getSerializableExtra("PASSITEMS");
             ArrayList<Item> items = selected.getInventory();
             final ArrayList<Item> list = new ArrayList<Item>(items);
             final ArrayAdapter<Item> inventoryAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, list);
             listView.setAdapter(inventoryAdapter);
-        }catch (RuntimeException e){
+        }catch (RuntimeException e2){
+
+        }
+
+        // Here is Trade View, come from tradeHistory!
+        try{
+            Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+            // if we get the trade, that means we can edit the trade. it has two sides which side we are in ?
+            // borrower? or owner? How could we tell?
+            if(trade.getOItem().getOwnerID() == usr.getMy_id()){
+                // that means im the owner
+
+            }else{
+                // that means im the borrower
+
+            }
+
+
+        }catch (RuntimeException e3){
 
         }
 
