@@ -114,4 +114,7 @@ public class Trade implements Serializable{
 
     }
 
+    public void setTradeResult(Boolean tradeResult) {
+        this.tradeResult = tradeResult;
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,12 +55,30 @@ public class TradeActivity extends AppCompatActivity {
             // if we get the trade, that means we can edit the trade. it has two sides which side we are in ?
             // borrower? or owner? How could we tell?
             Button proposeTradeButton = (Button) findViewById(R.id.tradeProposeButton);
+            Button acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
+            Button declineTradeButton = (Button) findViewById(R.id.declineTradeButton);
+            Button deleteTradeButton = (Button) findViewById(R.id.deleteTradeButton);
+
+            EditText ownerCommentView = (EditText) findViewById(R.id.ownerCommentEditText);
+
+
+            ownerItemTextView.setText(trade.getOItem().getName());
+
+            final ArrayList<Item> list = (ArrayList<Item>) trade.getBItems();
+            final ArrayAdapter<Item> inventoryAdapter = new ArrayAdapter<Item>(this, android.R.layout.simple_list_item_1, list);
+            listView.setAdapter(inventoryAdapter);
+
             if(trade.getOItem().getOwnerID() == usr.getMy_id()){
                 // that means im the owner
                 proposeTradeButton.setVisibility(View.GONE);
+                acceptTradeButton.setVisibility(View.VISIBLE);
+                declineTradeButton.setVisibility(View.VISIBLE);
+               // ownerCommentView.setVisibility(View.VISIBLE);
+
             }else{
                 // that means im the borrower
                 proposeTradeButton.setVisibility(View.GONE);
+                deleteTradeButton.setVisibility(View.VISIBLE);
 
             }
 
@@ -122,12 +141,6 @@ public class TradeActivity extends AppCompatActivity {
     }
 
 
-    // The user will be able to initialize or edit the trade details here!
-    public void editTrade(View view){
-
-
-
-    }
 
 
     public void offerItem(View view){
@@ -136,6 +149,41 @@ public class TradeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SelectInventoryItemActivity.class);
         intent.putExtra("NeedBack",item );
         startActivity(intent);
+
+    }
+
+
+    public void accept(View view){
+        // Change the trade status to in-progress, enable complete button Emails should be sent!
+        Button completeTradeButton = (Button) findViewById(R.id.completeTradeButton);
+        Button acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
+        Button declineTradeButton = (Button) findViewById(R.id.declineTradeButton);
+
+        completeTradeButton.setVisibility(View.VISIBLE);
+        acceptTradeButton.setVisibility(View.GONE);
+        declineTradeButton.setVisibility(View.GONE);
+
+        Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+        trade.setTradeState("inProgress");
+
+    }
+
+
+    public void decline(View view){
+        Button completeTradeButton = (Button) findViewById(R.id.completeTradeButton);
+        Button acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
+        Button declineTradeButton = (Button) findViewById(R.id.declineTradeButton);
+
+        completeTradeButton.setVisibility(View.VISIBLE);
+        acceptTradeButton.setVisibility(View.GONE);
+        declineTradeButton.setVisibility(View.GONE);
+
+        Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+        trade.setTradeState("complete");
+        trade.setTradeResult(Boolean.FALSE);
+
+
+        
 
     }
 }
