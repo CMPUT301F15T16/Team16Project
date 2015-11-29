@@ -26,9 +26,20 @@ public class User implements Serializable {
     private String cityName;
 
 
+
+    public String esId;
+
+
     public User(int id) {
         User.id = id;
         my_id = id;
+    }
+    public String getEsId() {
+        return esId;
+    }
+
+    public void setEsId(String esId) {
+        this.esId = esId;
     }
 
 

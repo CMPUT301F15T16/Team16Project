@@ -1,5 +1,7 @@
 package com.loveboyuan.smarttrader;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -17,8 +20,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.util.ArrayList;
+
 public class ProfileActivity extends AppCompatActivity {
     private static Gson gson = new Gson();
+    private FriendListManager friendListManager = new FriendListManager("");
+    FriendList pulledFriendList = new FriendList();
+
 
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -83,6 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
             if(ard.equals("ard")){
                 Button addButton = (Button) findViewById(R.id.addFriendButton);
                 addButton.setVisibility(View.GONE);
+                Button cancelButton = (Button)findViewById(R.id.profileCancelButton);
+                cancelButton.setVisibility(View.GONE);
+                Button deleteButton = (Button) findViewById(R.id.deleteFriendButton);
+                deleteButton.setVisibility(View.VISIBLE);
 
             }
         }catch (RuntimeException e2){
@@ -154,10 +166,39 @@ public class ProfileActivity extends AppCompatActivity {
 
         // Pending stuff:
         //PendingController.addPending(user);
-        FriendListController.getFriendListModel().addFriend(user);
+        if(checkUserNotAdded(user)) {
+            FriendListController.getFriendListModel().addFriend(user);
 
-        Thread thread = new AddFThread(user);
-        thread.start();
+            Thread thread = new AddFThread(user);
+            thread.start();
+        }else{
+            Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    private boolean checkUserNotAdded(User user) {
+        // So search first
+        pulledFriendList.getFriendList().clear();
+
+        String searchString = "*";
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for(User user1: pulledFriendList.getFriendList()){
+            if(user1.getMy_id()==user.getMy_id()){
+                return false;
+            }
+        }
+
+        return true;
 
 
     }
@@ -246,4 +287,96 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+
+
+    public void deleteFriend(View view){
+        User user = (User) getIntent().getSerializableExtra("USR");
+       // FriendListController.getFriendListModel().removeFriend(user);
+
+        // I want to search my server friendlist
+        pulledFriendList.getFriendList().clear();
+
+        String searchString = "*";
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(final User user1: pulledFriendList.getFriendList()){
+            if(user1.getMy_id()==user.getMy_id()){
+                AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
+                adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                     //   FriendListController.getFriendListModel().removeFriend(user1);
+                        Thread thread = new RemoveThread(user1);
+                        thread.start();
+                    }
+                });
+                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                adb.show();
+
+
+
+
+            }
+        }
+
+
+
+
+
+    }
+
+    class SearchThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchThread(String search){
+            this.search = search;
+
+        }
+
+        @Override
+        public void run(){
+            ArrayList<User> users = friendListManager.searchOwnFriends(search, null).getFriendList();
+            for(User user: users ) {
+                pulledFriendList.addFriend(user);
+            }
+        }
+
+    }
+
+    class RemoveThread extends Thread {
+        private User user;
+
+        public RemoveThread(User user) {
+            this.user = user;
+        }
+
+        @Override
+        public void run() {
+
+            FriendListController.removeFriend(user);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
 }

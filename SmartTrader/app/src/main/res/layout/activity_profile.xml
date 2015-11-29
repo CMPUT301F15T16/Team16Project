@@ -143,6 +143,15 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="delete Friend"
+            android:id="@+id/deleteFriendButton"
+            android:layout_weight="0.5"
+            android:onClick="deleteFriend"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:text="@string/profile_activity_save"
             android:id="@+id/profileSaveButton"
             android:layout_weight="0.5"

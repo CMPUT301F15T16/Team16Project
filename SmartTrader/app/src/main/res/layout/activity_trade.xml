@@ -22,8 +22,7 @@
         android:id="@+id/offerButton"
         android:onClick="offerItem"
         android:layout_below="@+id/ownerItemTextView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -39,15 +38,9 @@
         android:text="Propose Trade"
         android:id="@+id/tradeProposeButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/borrowerItemsListView" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cancel"
-        android:id="@+id/button3"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,4 +59,14 @@
         android:layout_below="@+id/offerButton"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/tradeProposeButton" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ownerCommentEditText"
+        android:layout_alignTop="@+id/tradeProposeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/tradeProposeButton" />
+
 </RelativeLayout>

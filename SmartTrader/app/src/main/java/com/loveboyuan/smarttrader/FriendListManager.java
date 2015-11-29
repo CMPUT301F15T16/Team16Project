@@ -113,7 +113,7 @@ public class FriendListManager {
         FriendList result = new FriendList();
         User usr=LoginActivity.usr;
 
-        
+
         String searchURL = ("http://cmput301.softwareprocess.es:8080/cmput301f15t16/Friends")
                 .concat(String.valueOf(usr.getMy_id())).concat("/_search");
         HttpPost searchRequest = new HttpPost(searchURL);
@@ -174,7 +174,10 @@ public class FriendListManager {
 
 
         for(SearchHit<User> hit : esResponse.getHits().getHits()){
-            result.addFriend(hit.getSource());
+            User user = hit.getSource();
+            user.setEsId(hit.get_id());
+            result.addFriend(user);
+
 
         }
 

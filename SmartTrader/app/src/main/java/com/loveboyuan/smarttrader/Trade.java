@@ -9,6 +9,7 @@ public class Trade {
 
     // A Trade has a borrower(the person proposed the trade)
 
+    private String _id;
     private String tradeID;
     private int borrowerID;
     // A Trade has an owner(the person receives a trade request)
@@ -20,8 +21,10 @@ public class Trade {
     // A Trade has a trade result(showing if the trade is successful or not)
     private boolean tradeResult;
 
+    private String ownerComments;
 
     private String tradeState;
+
 
 
 
@@ -33,6 +36,7 @@ public class Trade {
         this.borrowerID = borrower;
         this.bItems = bItems;
         this.tradeState = "Initialized";
+        this._id= tradeID;
 
     }
 
@@ -100,6 +104,13 @@ public class Trade {
 
     public void setTradeState(String tradeState) {
         this.tradeState = tradeState;
+    }
+    public String get_id() {
+        return _id;
+    }
+    @Override
+    public String toString(){
+        return get_id();
     }
 
 }

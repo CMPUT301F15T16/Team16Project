@@ -56,7 +56,7 @@ public class TradeHistoryController {
             e.printStackTrace();
         }
 
-
+/*
         try {
 
             HttpPost addRequest = new HttpPost(resourseURL2);
@@ -76,7 +76,7 @@ public class TradeHistoryController {
             e.printStackTrace();
         }
 
-
+*/
     }
 
 
