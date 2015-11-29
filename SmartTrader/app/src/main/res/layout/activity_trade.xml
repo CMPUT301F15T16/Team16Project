@@ -67,6 +67,25 @@
         android:layout_alignTop="@+id/tradeProposeButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/tradeProposeButton" />
+        android:layout_toStartOf="@+id/tradeProposeButton"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Trade"
+        android:id="@+id/button3"
+        android:layout_below="@+id/borrowerItemsListView"
+        android:layout_alignEnd="@+id/tradeProposeButton"
+        android:visibility="invisible"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complete"
+        android:id="@+id/button5"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

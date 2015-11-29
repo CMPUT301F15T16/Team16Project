@@ -22,7 +22,8 @@ public class TradeHistoryController {
 
     static public TradeHistory getTradeHistory() {
         if (tradeHistory == null) {
-            return new TradeHistory();
+            tradeHistory = new TradeHistory();
+            return tradeHistory;
 
         } else {
             return tradeHistory;
@@ -56,7 +57,7 @@ public class TradeHistoryController {
             e.printStackTrace();
         }
 
-/*
+
         try {
 
             HttpPost addRequest = new HttpPost(resourseURL2);
@@ -76,19 +77,20 @@ public class TradeHistoryController {
             e.printStackTrace();
         }
 
-*/
+
+    }
+
+
+
+
+    public static void removeTradeFromServer(Trade trade) {
     }
 
 
 
-
-
-    public void removeTrade(Trade trade) {
-    }
-
-
-    public void editTrade(Trade trade){
-
+    public static void clear() {
+        tradeHistory = null;
 
     }
+
 }

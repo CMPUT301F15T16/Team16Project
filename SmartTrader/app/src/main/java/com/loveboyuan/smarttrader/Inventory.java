@@ -41,17 +41,7 @@ public class Inventory implements Search, Serializable{
 
     }
 
-    public ArrayList<Item> searchByCategory(String category){
-        ArrayList<Item> results = new ArrayList<Item>();
-        int i;
-        for(i = 0; i<inventory.size(); i++){
-            if (category.equals(inventory.get(i).getCategory())){
-                results.add(inventory.get(i));
-            }
-        }
 
-        return results;
-    }
 
     public static String getResourceUrl() {
         return RESOURCE_URL;
@@ -61,13 +51,7 @@ public class Inventory implements Search, Serializable{
         return SEARCH_URL;
     }
 
-    // searchByName
 
-
-    // searchByQuality
-
-
-    // searchByWhatEver
 
     public void addMyObserver(MyObserver observer){
         observers.add(observer);

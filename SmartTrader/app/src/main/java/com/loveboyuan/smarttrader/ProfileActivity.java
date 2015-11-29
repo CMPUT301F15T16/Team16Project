@@ -330,8 +330,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
-
     }
 
     class SearchThread extends Thread {

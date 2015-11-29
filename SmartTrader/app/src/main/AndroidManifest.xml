@@ -80,10 +80,6 @@
             android:name=".SelectInventoryItemActivity"
             android:label="@string/title_activity_select_inventory_item" >
         </activity>
-        <activity
-            android:name=".CurrentTradeActivity"
-            android:label="@string/title_activity_current_trade" >
-        </activity>
     </application>
 
 </manifest>

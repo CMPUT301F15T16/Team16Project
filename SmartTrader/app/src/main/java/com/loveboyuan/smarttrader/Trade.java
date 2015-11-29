@@ -1,15 +1,15 @@
 package com.loveboyuan.smarttrader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-10-16.
  */
-public class Trade {
+public class Trade implements Serializable{
 
     // A Trade has a borrower(the person proposed the trade)
 
-    private String _id;
     private String tradeID;
     private int borrowerID;
     // A Trade has an owner(the person receives a trade request)
@@ -36,7 +36,6 @@ public class Trade {
         this.borrowerID = borrower;
         this.bItems = bItems;
         this.tradeState = "Initialized";
-        this._id= tradeID;
 
     }
 
@@ -105,12 +104,14 @@ public class Trade {
     public void setTradeState(String tradeState) {
         this.tradeState = tradeState;
     }
-    public String get_id() {
-        return _id;
+
+    public String getTradeID() {
+        return tradeID;
     }
     @Override
     public String toString(){
-        return get_id();
+        return getTradeID();
+
     }
 
 }

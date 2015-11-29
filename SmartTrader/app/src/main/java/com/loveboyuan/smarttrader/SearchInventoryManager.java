@@ -111,7 +111,10 @@ public class SearchInventoryManager {
 
 
             for (SearchHit<Item> hit : esResponse.getHits().getHits()) {
-                result.addItem(hit.getSource());
+                if(!hit.getSource().isPrivate()) {
+                    // if the item is not private, it can be searched by other users
+                    result.addItem(hit.getSource());
+                }
 
             }
 
