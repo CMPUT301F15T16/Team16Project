@@ -325,8 +325,6 @@ public class ProfileActivity extends AppCompatActivity {
                 adb.show();
 
 
-
-
             }
         }
 
