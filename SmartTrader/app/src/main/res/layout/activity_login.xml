@@ -24,7 +24,6 @@
         android:layout_below="@+id/usrID"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/usrID"
-        android:background="#7ABA7A"
         android:textSize="24sp"/>
 
     <ImageView

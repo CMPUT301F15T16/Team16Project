@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Toast.makeText(this, "Slide to the Right to Browse Options", Toast.LENGTH_LONG).show();
 
     }
 
