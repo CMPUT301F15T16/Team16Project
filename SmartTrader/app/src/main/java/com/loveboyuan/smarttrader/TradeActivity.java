@@ -1,5 +1,7 @@
 package com.loveboyuan.smarttrader;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -183,7 +185,45 @@ public class TradeActivity extends AppCompatActivity {
         trade.setTradeResult(Boolean.FALSE);
 
 
+        // ask owner if wants to initialize a counter trade
+        AlertDialog.Builder adb = new AlertDialog.Builder(TradeActivity.this);
+        adb.setPositiveButton("Initialize Counter Trade", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              //Create a new trade object and push it to the server
+                // Happily, I dont need to go to other intent
+
+
+            }
+        });
+        adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        adb.show();
+
         
 
     }
+
+
+
+    public void update(View view){
+
+    }
+
+
+    public void delete(View view){
+
+    }
+
+
+
+    public void complete(View view){
+
+
+    }
+
 }

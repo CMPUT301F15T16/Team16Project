@@ -150,7 +150,12 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void run(){
             searchId.clear();
-            searchId.addAll(friendListManager.searchFriends(search, null).getFriendList());
+            try {
+                searchId.addAll(friendListManager.searchFriends(search, null).getFriendList());
+            }catch (RuntimeException e){
+
+
+            }
         }
 
     }

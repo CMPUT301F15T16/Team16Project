@@ -111,4 +111,14 @@
         android:visibility="gone"
         android:onClick="accept"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update"
+        android:id="@+id/updateTradeButton"
+        android:layout_above="@+id/tradeProposeButton"
+        android:layout_alignEnd="@+id/tradeProposeButton"
+        android:visibility="gone"
+        android:onClick="update"/>
+
 </RelativeLayout>

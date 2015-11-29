@@ -16,11 +16,20 @@ public class Inventory implements Search, Serializable{
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
 
+
+    private int inventoryId;
+    public Inventory() {
+
+         setInventoryId(usr.getMy_id());
+    }
+
+
+
     public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Inventory";
 
 
     // the model needs to set address of the server
-    private static final String RESOURCE_URL = prefix.concat(String.valueOf(usr.getMy_id()).concat("/"));
+    private static final String RESOURCE_URL = prefix.concat("/");
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
     private static final String SEARCH_URL = prefix.concat(String.valueOf(usr.getMy_id()).concat("/_search"));
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
@@ -42,7 +51,13 @@ public class Inventory implements Search, Serializable{
     }
 
 
+    public int getInventoryId() {
+        return inventoryId;
+    }
 
+    public void setInventoryId(int inventoryId) {
+        this.inventoryId = inventoryId;
+    }
     public static String getResourceUrl() {
         return RESOURCE_URL;
     }
