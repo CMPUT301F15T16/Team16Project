@@ -15,28 +15,32 @@ public class Pending {
     private ArrayList<User> pendingReceived = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/PendingSent";
+    public static String prefix2 = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/PendingReceived";
 
-    /**
-     * Accepts the friend request and adds them to the current
-     * User friend list. It also removes the pending friend request
-     * from the received pending list.
-     * @param user this is the User being accepted as a friend
-     */
-    public void acceptFriend(User user) {
-        FriendListController.getFriendListModel().addFriend(user);
-        removeRequest(user);
-        this.notifyAllObservers();
+    static User usr=LoginActivity.usr;
+
+    // the model needs to set address of the server
+    private static final String RESOURCE_URL_S = prefix.concat("/");
+    private static final String RESOURCE_URL_R = prefix2.concat("/");
+    private static final String SEARCH_URL_S = prefix.concat("/_search");
+    private static final String SEARCH_URL_R = prefix2.concat("/_search");
+
+
+    private int pendingSentId;
+    private int pendingReceivedId;
+    public Pending() {
     }
 
+
     /**
-     * This accepts all friend requests in Pending and adds them all
-     * to the current User friend list. It also removes all of the friend
-     * requests from the received pending list.
-     * @param list this is the array list of all friend requests
+     * This adds a user to the sent pending list. This is invoked when the
+     * current User requests a friend.
+     * @param user us the User that has been requested as a friend
      */
-    public void acceptAllFriends(ArrayList<User>list) {
-        for(User usr :list) {
-            FriendListController.getFriendListModel().addFriend(usr);
+    public void addPendingSent(User user) {
+        if (!this.pendingSent.contains(user)) {
+            this.pendingSent.add(user);
         }
         this.notifyAllObservers();
     }
@@ -46,9 +50,9 @@ public class Pending {
      * current User requests a friend.
      * @param user us the User that has been requested as a friend
      */
-    public void addPending(User user) {
-        if (!this.pendingSent.contains(user)) {
-            this.pendingSent.add(user);
+    public void addPendingReceived(User user) {
+        if (!this.pendingReceived.contains(user)) {
+            this.pendingReceived.add(user);
         }
         this.notifyAllObservers();
     }
@@ -68,18 +72,6 @@ public class Pending {
     }
 
     /**
-     * This removes all pending sent friend requests
-     * @param list the array list of sent friend
-     *             requests to be removed from sent
-     *             pending list
-     */
-    public void cancelAllRequests(ArrayList list) {
-        this.pendingSent.removeAll(list);
-        this.notifyAllObservers();
-    }
-
-
-    /**
      * This removes a friend request from the received friend
      * requests pending list.
      * @param user the User to be removed the the received request
@@ -89,16 +81,6 @@ public class Pending {
         if (this.pendingReceived.contains(user)) {
             this.pendingReceived.remove(user);
         }
-        this.notifyAllObservers();
-    }
-
-    /**
-     * This removes all pending received friend requests.
-     * @param list the array list of all friends that have requested
-     *             the current User.
-     */
-    public void removeAllRequests(ArrayList list) {
-        this.pendingReceived.removeAll(list);
         this.notifyAllObservers();
     }
 
@@ -125,5 +107,34 @@ public class Pending {
     public void notifyAllObservers() {
         for (MyObserver observer : observers)
             observer.update();
+    }
+
+    public int getPendingSentId() {
+        return pendingSentId;
+    }
+    public int getPendingReceivedId() {
+        return pendingReceivedId;
+    }
+
+    public void setPendingSentId(int pendingSentId) {
+        this.pendingSentId = pendingSentId;
+    }
+
+    public void setPendingReceivedId(int pendingReceivedId) {
+        this.pendingReceivedId = pendingReceivedId;
+    }
+
+    public static String getSearchUrlS() {
+        return SEARCH_URL_S;
+    }
+    public static String getSearchUrlR() {
+        return SEARCH_URL_R;
+    }
+
+    public static String getResourceUrlS() {
+        return RESOURCE_URL_S;
+    }
+    public static String getResourceUrlR() {
+        return RESOURCE_URL_R;
     }
 }

@@ -26,11 +26,63 @@ import java.util.Collection;
  */
 
 public class PendingActivity extends AppCompatActivity {
+    private PendingManager pendingManager = new PendingManager("");
+    Pending pulledSent =null;
+    Pending pulledReceived =null;
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
+
+    static User usr=LoginActivity.usr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending);
+
+        PendingController.clear();
+
+        String searchString = String.valueOf(usr.getMy_id());
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if(pulledSent != null) {
+            for (User user : pulledSent.getPendingSent()) {
+
+                PendingController.getPendingModel().addPendingSent(user);
+            }
+        }else{
+            // else we need to make sure we create a new pending sent list and push it to the server
+
+            Pending pendingS = new Pending();
+            pendingS.setPendingSentId(usr.getMy_id());
+            Thread thread = new AddSThread(pendingS);
+            thread.start();
+
+        }
+
+        if(pulledReceived != null) {
+            for (User user : pulledReceived.getPendingSent()) {
+
+                PendingController.getPendingModel().addPendingReceived(user);
+            }
+        }else{
+            // else we need to make sure we create a new pending received list and push it to the server
+
+            Pending pendingR = new Pending();
+            pendingR.setPendingReceivedId(usr.getMy_id());
+            Thread thread = new AddRThread(pendingR);
+            thread.start();
+
+        }
 
 
         ListView pendingSentView = (ListView) findViewById(R.id.pendingSentView);
@@ -49,22 +101,16 @@ public class PendingActivity extends AppCompatActivity {
         pendingReceivedView.setAdapter(pendingReceivedAdapter);
 
 
-        Button acceptAll = (Button)findViewById(R.id.acceptAllFriendsButton);
-        acceptAll.setOnClickListener(acceptAllListener);
-
-        Button cancelAll = (Button)findViewById(R.id.cancelAllRequestsButton);
-        cancelAll.setOnClickListener(cancelAllListener);
-
 
         PendingController.getPendingModel().addMyObserver(new MyObserver() {
             @Override
             public void update() {
                 pendingSent.clear();
                 pendingReceived.clear();
-                Collection<User> userSent = PendingController.getPendingSent();
-                Collection<User> userReceived = PendingController.getPendingReceived();
-                userSent.addAll(userSent);
-                userReceived.addAll(userReceived);
+                Collection<User> userSent = PendingController.getPendingModel().getPendingSent();
+                Collection<User> userReceived = PendingController.getPendingModel().getPendingReceived();
+                pendingSent.addAll(userSent);
+                pendingReceived.addAll(userReceived);
                 pendingSentAdapter.notifyDataSetChanged();
                 pendingReceivedAdapter.notifyDataSetChanged();
             }
@@ -73,7 +119,10 @@ public class PendingActivity extends AppCompatActivity {
         pendingSentView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = pendingSent.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
+                intent.putExtra("USR",  user);
+                intent.putExtra("ARD", "ard");
                 startActivity(intent);
             }
         });
@@ -81,49 +130,89 @@ public class PendingActivity extends AppCompatActivity {
         pendingReceivedView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                User user = pendingReceived.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
+                intent.putExtra("USR",  user);
+                intent.putExtra("ARD", "ard");
                 startActivity(intent);
             }
         });
     }
 
+    class SearchThread extends Thread {
+        // TODO: Implement search thread
 
-    private OnClickListener acceptAllListener = new OnClickListener() {
-        public void onClick(View v) {
-            ArrayList<User> pending = PendingController.getPendingReceived();
-            PendingController.acceptAllFriends(pending);
+        private String search;
+
+        public SearchThread(String search){
+            this.search = search;
+
         }
-    };
 
-    private OnClickListener cancelAllListener = new OnClickListener() {
-        public void onClick(View v) {
-            ArrayList<User> pending = PendingController.getPendingSent();
-            PendingController.cancelAllRequests(pending);
+
+        @Override
+        public void run() {
+            //  try {
+            pulledSent = pendingManager.searchOwnPendingSent(search, null);
+            pulledReceived = pendingManager.searchOwnPendingReceived(search, null);
+            //     }catch (RuntimeException e){
+
+
+            //  }
         }
-    };
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_pending, menu);
-        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, UserSettingsActivity.class);
-            startActivity(intent);
-            return true;
+    class AddSThread extends Thread {
+        private Pending pendingS;
+
+        public AddSThread(Pending pending) {
+            this.pendingS = pending;
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        public void run() {
+
+            PendingController.addPendingSent(pendingS);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
     }
+
+    class AddRThread extends Thread {
+        private Pending pendingR;
+
+        public AddRThread(Pending pending) {
+            this.pendingR = pending;
+        }
+
+        @Override
+        public void run() {
+
+            PendingController.addPendingReceived(pendingR);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
+
+
+
 }

@@ -1,4 +1,14 @@
 package com.loveboyuan.smarttrader;
+import android.util.Log;
+
+import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.util.ArrayList;
 
 
@@ -9,90 +19,83 @@ import java.util.ArrayList;
  */
 public class PendingController {
     private static Pending pending = null;
+    private static Gson gson = new Gson();
+    static User usr=LoginActivity.usr;
 
-    /**
-     * Gets the Pending model.
-     * @return this is the Pending model
-     */
+
+    private static final String TAG = "PendingController";
+
+
     static public Pending getPendingModel() {
         if (null == pending)
             pending = new Pending();
         return pending;
     }
 
-    /**
-     * Accesses addPending from the Pending model
-     * @param user the User to be added to the sent pending list
-     */
-    static public void addPending(User user) {
-        getPendingModel().addPending(user);
+
+    public static void clear() {
+        pending = null;
     }
 
-    /**
-     * Accesses removeRequest from the Pending model
-     * @param user the User to be removed from the received pending list
-     */
-    static public void removeRequest(User user) {
-        getPendingModel().removeRequest(user);
+    public static void addPendingSent(Pending pending) {
+
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+
+            pending.setPendingSentId(usr.getMy_id());
+            HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrlS() + pending.getPendingSentId());
+
+
+
+            StringEntity stringEntity = new StringEntity(gson.toJson(pending));
+
+
+
+            addRequest.setEntity(stringEntity);
+            addRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(addRequest);
+            String status = response.getStatusLine().toString();
+            Log.e(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    /**
-     * Accesses cancelRequest from the Pending model
-     * @param user the User to be removed from the sent pending list
-     */
-    static public void cancelRequest(User user) {
-        getPendingModel().cancelRequest(user);
+
+    public static void addPendingReceived(Pending pending) {
+
+
+        HttpClient httpClient = new DefaultHttpClient();
+
+        try {
+
+            pending.setPendingReceivedId(usr.getMy_id());
+            HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrlR() + pending.getPendingReceivedId());
+
+
+
+            StringEntity stringEntity = new StringEntity(gson.toJson(pending));
+
+
+
+            addRequest.setEntity(stringEntity);
+            addRequest.setHeader("Accept", "application/json");
+
+            HttpResponse response = httpClient.execute(addRequest);
+            String status = response.getStatusLine().toString();
+            Log.e(TAG, status);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
-    /**
-     * Accesses acceptFriend from the Pending model
-     * @param user the User to be accepted as a friend
-     *             and removed from the received pending list
-     */
-    static public void acceptFriend(User user) {
-        getPendingModel().acceptFriend(user);
-    }
 
-    /**
-     * Accesses acceptAllFriend from the Pending model
-     * @param list the array list of Users to be added to the
-     *             current User friend list and to be removed from
-     *             the sent pending list
-     */
-    static public void acceptAllFriends(ArrayList list) {
-        getPendingModel().acceptAllFriends(list);
-    }
-
-    /**
-     * Accesses cancelAllRequests from the Pending model
-     * @param list the array list of Users to be removed
-     *             form the sent friend requests
-     */
-    static public void cancelAllRequests(ArrayList list) {
-        getPendingModel().cancelAllRequests(list);
-    }
-
-    /**
-     * Accesses removeAllRequests from the Pending model
-     * @param list the array list of Users to be removed
-     *             form the received friend requests
-     */
-    static public void removeAllRequests(ArrayList list) {
-        getPendingModel().removeAllRequests(list);
-    }
-
-    /**
-     * Accesses getPendingSent from the Pending model
-     */
-    static public ArrayList<User> getPendingSent() {
-        return getPendingModel().getPendingSent();
-    }
-
-    /**
-     * Accesses getPendingReceived from the Pending model
-     */
-    static public ArrayList getPendingReceived() {
-        return getPendingModel().getPendingReceived();
-    }
 
 }
