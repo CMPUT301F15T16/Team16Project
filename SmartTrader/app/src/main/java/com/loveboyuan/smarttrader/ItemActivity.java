@@ -3,6 +3,9 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -44,11 +47,8 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
 
-      //  UserLocation.startTracking(this);
+        UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        numberPicker.setMaxValue(1000);
-        numberPicker.setMinValue(1);
         imageView = (ImageView) findViewById(R.id.itemIV);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
@@ -112,7 +112,6 @@ public class ItemActivity extends AppCompatActivity {
                 //set name to view
                 nameView.setText(name);
                 //set quantity to view
-                numberPicker.setValue(quantity);
 
                 //set description to view
                 descriptionView.setText(description);
@@ -264,7 +263,8 @@ public class ItemActivity extends AppCompatActivity {
             photoPath = photo;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
-         //   UserLocation.setItemLocation(item);
+
+            UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 

@@ -49,15 +49,12 @@ public class UserLocation {
 
     public static Location getUserLocation(){
 
-        if (locationIsCurrent()){
-            return currentlocation;
-        } else {
             long start = System.currentTimeMillis();
             while((System.currentTimeMillis()-start)<TRACK_TIME){
                 //wait
             }
             stopTracking();
-        }
+
         return currentlocation;
     }
 
@@ -101,19 +98,23 @@ public class UserLocation {
     }
 
     private static void updateLocation(Location location){
-        if (!locationIsCurrent()){
-            if (currentlocation == null || location.getAccuracy() > currentlocation.getAccuracy()){
+        if (locationIsCurrent(location)){
+            if (location.getAccuracy() > currentlocation.getAccuracy()){
                 currentlocation = location;
             }
+        } else {
+            currentlocation = location;
         }
 
     }
 
-    private static Boolean locationIsCurrent(){
+    private static Boolean locationIsCurrent(Location location){
 
-        if (currentlocation == null || (System.currentTimeMillis() - currentlocation.getTime())<2000) {
+        if (currentlocation == null || (location.getTime()-currentlocation.getTime())>5000) {
+            System.out.println("locating not Current(time)");
             return false;
         } else{
+            System.out.println("location current(time) ") ;
             return true;
         }
     }
