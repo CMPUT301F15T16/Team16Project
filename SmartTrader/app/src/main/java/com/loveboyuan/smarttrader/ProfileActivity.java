@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,11 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        ListView fakeActionBar = (ListView)findViewById(R.id.listView2);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generateProfileActionBar());
+        fakeActionBar.setAdapter(adapter);
+
         TextView textView = (TextView)findViewById(R.id.profileIdView);
         textView.setText(String.valueOf(usr.getMy_id()));
 
@@ -266,6 +272,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private ArrayList<DrawerListEntry> generateProfileActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Profile"));
+
+        return drawerListEntries;
     }
 
 

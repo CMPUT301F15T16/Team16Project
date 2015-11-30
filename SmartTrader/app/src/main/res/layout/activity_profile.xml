@@ -11,8 +11,18 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
+        android:layout_height="48dp">
+
+        <ListView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView2"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.18">
+        android:layout_weight="0.16">
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +42,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.18"
+        android:layout_weight="0.16"
         android:orientation="horizontal">
 
         <TextView
@@ -54,7 +64,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.18"
+        android:layout_weight="0.16"
         android:orientation="horizontal">
 
         <TextView
@@ -75,7 +85,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.18"
+        android:layout_weight="0.16"
         android:orientation="horizontal">
 
         <TextView
@@ -98,7 +108,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.18"
+        android:layout_weight="0.16"
         android:orientation="horizontal">
 
         <TextView
