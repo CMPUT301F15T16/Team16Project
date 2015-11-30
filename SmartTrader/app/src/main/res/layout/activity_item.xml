@@ -222,7 +222,7 @@
             android:layout_alignParentEnd="true"
             android:layout_row="10"
             android:layout_column="0" />
-<<<<<<< HEAD
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -253,7 +253,6 @@
             android:id="@+id/longitude"
             android:layout_row="14"
             android:layout_column="0" />
-=======
 
         <Button
             android:layout_width="wrap_content"
@@ -261,7 +260,7 @@
             android:text="Delete Photo"
             android:id="@+id/btnPhotoDelete"
             android:clickable="true" />
->>>>>>> 974f690228db49cf9336b6e758841533be98c5c7
+
     </TableLayout>
     </ScrollView>
     <Button
