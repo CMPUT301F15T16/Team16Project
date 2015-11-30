@@ -1,6 +1,7 @@
 package com.loveboyuan.smarttrader;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class ItemActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private int MEDIA_TYPE_IMAGE = 1;
     private ImageView imageView;
+    private View.OnClickListener update;
+    private View.OnClickListener add;
 
 
     // Thread that close the activity after finishing add
@@ -41,6 +44,16 @@ public class ItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        update = new View.OnClickListener(){
+            public void onClick(View v){
+                updateItem(v);
+            }
+        };
+        add = new View.OnClickListener(){
+            public void onClick(View v){
+                addItem(v);
+            }
+        };
 
 
         UserLocation.startTracking(this);
@@ -80,14 +93,11 @@ public class ItemActivity extends AppCompatActivity {
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
             Item item = (Item) getIntent().getSerializableExtra("MyItem");
-
             String name = item.getName();
             if(!name.equals("")) {
-                Button addButton = (Button) findViewById(R.id.addButton);
-
-                Button updateButton = (Button) findViewById(R.id.updateButton);
-                addButton.setVisibility(View.GONE);
-                updateButton.setVisibility(View.VISIBLE);
+                Button updateButton = (Button) findViewById(R.id.addButton);
+                updateButton.setText("Save");
+                updateButton.setOnClickListener(update);
 
                 String quality = item.getQuality();
                 String category = item.getCategory();
