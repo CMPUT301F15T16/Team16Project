@@ -147,6 +147,15 @@
             android:text="add"
             android:id="@+id/addFriendButton"
             android:layout_weight="0.5"
+            android:onClick="addFriend"
+            android:visibility="invisible"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="add"
+            android:id="@+id/requestFriendButton"
+            android:layout_weight="0.5"
             android:onClick="add"
             android:visibility="invisible"/>
 
