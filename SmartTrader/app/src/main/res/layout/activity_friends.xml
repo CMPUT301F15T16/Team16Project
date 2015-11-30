@@ -9,12 +9,20 @@
                 tools:context="com.loveboyuan.smarttrader.FriendsActivity">
 
     <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:id="@+id/friendsActionBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
+
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/friendListView"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/addB"
-        android:layout_above="@+id/searchInventoryButton"/>
+        android:layout_below="@+id/friendsActionBar"
+        android:layout_above="@+id/addB"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -22,7 +30,10 @@
         android:id="@+id/addB"
         android:text="Add"
         android:onClick="addFriend"
-        android:layout_below="@+id/friendsActionBar"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="#FF9E00"
+        android:layout_above="@+id/searchInventoryButton"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/friendListView"/>
 
@@ -32,16 +43,11 @@
         android:text="Friends Inventory"
         android:id="@+id/searchInventoryButton"
         android:onClick="searchInventory"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="#6599FF"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/addB"
-        android:layout_alignParentStart="true" />
-
-    <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:id="@+id/friendsActionBar"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignEnd="@+id/addB"/>
 
 </RelativeLayout>
