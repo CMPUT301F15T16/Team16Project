@@ -231,28 +231,14 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void deleteFriend(View view){
-        User user = (User) getIntent().getSerializableExtra("USR");
-       // FriendListController.getFriendListModel().removeFriend(user);
+        final User user = (User) getIntent().getSerializableExtra("USR");
 
-        // I want to search my server friendlist
-        pulledFriendList.getFriendList().clear();
 
-        String searchString = "*";
-        SearchThread searchThread = new SearchThread(searchString);
-        searchThread.start();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for(final User user1: pulledFriendList.getFriendList()){
-            if(user1.getMy_id()==user.getMy_id()){
-                AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
-                adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
+        adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                     //   FriendListController.getFriendListModel().removeFriend(user1);
+                        FriendListController.getFriendListModel().removeFriend(user);
                         Thread thread = new AddThread1(FriendListController.getFriendListModel());
                         thread.start();
                     }
@@ -264,10 +250,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
                 adb.show();
-
-
-            }
-        }
 
 
 
@@ -326,6 +308,8 @@ public class ProfileActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
+    
+
 
     class AddThread2 extends Thread {
         private Pending pending;
