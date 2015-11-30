@@ -37,7 +37,7 @@ public class InventoryController {
 
     }
 
-    public static void addItem(Item item) {
+    public static void addInventory(Inventory inventory) {
 
 
 
@@ -45,13 +45,11 @@ public class InventoryController {
 
         try {
 
-            HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + item.getName());
-            Log.e("url", getInventoryModel().getResourceUrl() + item.getName());
+            HttpPost addRequest = new HttpPost(getInventoryModel().getResourceUrl() + inventory.getInventoryId());
 
 
 
-            StringEntity stringEntity = new StringEntity(gson.toJson(item));
-            Log.e("gsonitem", gson.toJson(item).toString());
+            StringEntity stringEntity = new StringEntity(gson.toJson(inventory));
 
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
@@ -67,11 +65,12 @@ public class InventoryController {
 
     }
 
-    public static void removeItem(Item item) {
+
+    public static void removeInventory(Inventory inventory) {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-            HttpDelete deleteRequest = new HttpDelete(inventory.getResourceUrl() + item.getName());
+            HttpDelete deleteRequest = new HttpDelete(getInventoryModel().getResourceUrl() + inventory.getInventoryId());
             deleteRequest.setHeader("Accept", "application/json");
 
             HttpResponse response = httpClient.execute(deleteRequest);
@@ -110,4 +109,7 @@ public class InventoryController {
         inventory = null;
 
     }
+
+
+
 }
