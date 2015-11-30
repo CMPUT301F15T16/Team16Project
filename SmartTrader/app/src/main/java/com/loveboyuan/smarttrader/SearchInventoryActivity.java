@@ -127,7 +127,12 @@ public class SearchInventoryActivity extends AppCompatActivity {
         @Override
         public void run(){
             list.clear();
-            list.addAll(searchInventoryManager.searchInventory(search, null).getInventory());
+            for(Item item: searchInventoryManager.searchInventory(search, null).getInventory()){
+                if(!item.isPrivate()){
+                    list.add(item);
+                }
+            }
+
             notifyUpdated();
 
         }

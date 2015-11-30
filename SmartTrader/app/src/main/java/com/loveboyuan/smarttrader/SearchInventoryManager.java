@@ -180,7 +180,6 @@ public class SearchInventoryManager {
             throw new RuntimeException(e);
         }
 
-        // Extract the movies from the esResponse and put them in result
 
 
         for (SearchHit<Inventory> hit : esResponse.getHits().getHits()) {
