@@ -104,6 +104,7 @@ public class InventoryActivity extends AppCompatActivity{
 
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
+                item.setLocation(null);
                 intent.putExtra("MyItem", item);
 
                 // This is to check if the user is browsing other people's inventory
