@@ -323,7 +323,7 @@ public class ProfileActivity extends AppCompatActivity {
                         final User user = (User) getIntent().getSerializableExtra("USR");
 
                         FriendListController.getFriendListModel().removeFriend(user);
-                        FriendListController.clear();
+                      //  FriendListController.clear();
                         Thread thread = new AddThread1(FriendListController.getFriendListModel());
                         thread.start();
                     }

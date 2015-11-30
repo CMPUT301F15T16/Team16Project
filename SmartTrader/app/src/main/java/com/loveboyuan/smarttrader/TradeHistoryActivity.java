@@ -6,13 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 public class TradeHistoryActivity extends AppCompatActivity {
-    static User usr=LoginActivity.usr;
+    static User usr = LoginActivity.usr;
     private SearchTradeHistoryManager searchTradeHistoryManager = new SearchTradeHistoryManager("");
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
@@ -20,23 +21,32 @@ public class TradeHistoryActivity extends AppCompatActivity {
         }
     };
     Collection<Trade> trades = TradeHistoryController.getTradeHistory().getTrades();
-    // list contains items
+
     final ArrayList<Trade> list = new ArrayList<Trade>(trades);
+
+    ArrayAdapter<Trade>tradeHistoryAdapter;
+
+
     private TradeHistory pulledTradeHistory = new TradeHistory();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_history);
 
-        ListView fakeActionBar = (ListView)findViewById(R.id.tradeHistoryActionBar);
+        ListView fakeActionBar = (ListView) findViewById(R.id.tradeHistoryActionBar);
         final DrawerListAdapter adapter = new DrawerListAdapter(this,
                 generateTradeHistoryActionBar());
         fakeActionBar.setAdapter(adapter);
 
         TradeHistoryController.clear();
 
+
+        tradeHistoryAdapter = new ArrayAdapter<Trade>(this, android.R.layout.simple_list_item_1, list);
+
         ListView tradeHistoryListView = (ListView) findViewById(R.id.tradeHistoryListView);
+        tradeHistoryListView.setAdapter(tradeHistoryAdapter);
 
         String searchString = "*";
         SearchThread searchThread = new SearchThread(searchString);
@@ -48,19 +58,15 @@ public class TradeHistoryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for(Trade trade: pulledTradeHistory.getTrades()){
+        for (Trade trade : pulledTradeHistory.getTrades()) {
 
             TradeHistoryController.getTradeHistory().addTrade(trade);
         }
 
 
-
-
-
         // inventoryAdapter is an array Adapter to fit data in the list view
-        final ArrayAdapter<Trade> tradeHistoryAdapter = new ArrayAdapter<Trade>(this, android.R.layout.simple_list_item_1, list);
+        //   final ArrayAdapter<Trade> tradeHistoryAdapter = new ArrayAdapter<Trade>(this, android.R.layout.simple_list_item_1, list);
         // inventoryListView set inventoryAdapter as its adaptor
-        tradeHistoryListView.setAdapter(tradeHistoryAdapter);
 
 
         // we want a observer for the inventory model here. notify data change, and update the view
@@ -96,10 +102,7 @@ public class TradeHistoryActivity extends AppCompatActivity {
         });
 
 
-
-
     }
-
 
 
     private ArrayList<DrawerListEntry> generateTradeHistoryActionBar() {
@@ -111,57 +114,115 @@ public class TradeHistoryActivity extends AppCompatActivity {
     }
 
 
-
-
-
     class SearchThread extends Thread {
         // TODO: Implement search thread
 
         private String search;
 
-        public SearchThread(String search){
+        public SearchThread(String search) {
             this.search = search;
 
         }
 
         @Override
-        public void run(){
+        public void run() {
             ArrayList<Trade> trades = searchTradeHistoryManager.searchOwnTradeHistory(search, null).getTrades();
-            for(Trade trade: trades) {
+            for (Trade trade : trades) {
                 pulledTradeHistory.addTrade(trade);
             }
         }
 
     }
 
-    public void asOwner(View view){
+    public void asOwner(View view) {
 
-        
+        Button borrowerButton = (Button) findViewById(R.id.asBorrowerButton);
+        Button ownerButton = (Button) findViewById(R.id.asOwnerButton);
 
+        ownerButton.setVisibility(View.GONE);
+        borrowerButton.setVisibility(View.VISIBLE);
+
+        list.clear();
+        for (Trade trade : TradeHistoryController.getTradeHistory().getTrades()) {
+            if (trade.getOwner() == usr.getMy_id()) {
+                list.add(trade);
+
+                tradeHistoryAdapter.notifyDataSetChanged();
+
+            }
+
+        }
+
+
+    }
+
+
+    public void asBorrower(View view) {
+        Button borrowerButton = (Button) findViewById(R.id.asBorrowerButton);
+        Button ownerButton = (Button) findViewById(R.id.asOwnerButton);
+
+        ownerButton.setVisibility(View.VISIBLE);
+        borrowerButton.setVisibility(View.GONE);
+
+
+        list.clear();
+        for (Trade trade : TradeHistoryController.getTradeHistory().getTrades()) {
+            if (trade.getBorrower() == usr.getMy_id()) {
+                list.add(trade);
+
+                tradeHistoryAdapter.notifyDataSetChanged();
+
+            }
+
+        }
 
 
     }
 
 
-    public void asBorrower(View view){
+    public void current(View view) {
+        Button currentButton = (Button) findViewById(R.id.currentButton);
+        Button pastButton = (Button) findViewById(R.id.pastButton);
 
+        pastButton.setVisibility(View.VISIBLE);
+        currentButton.setVisibility(View.GONE);
+
+
+        list.clear();
+        for (Trade trade : TradeHistoryController.getTradeHistory().getTrades()) {
+            if (trade.getTradeState().equals("Initialized")) {
+                list.add(trade);
+
+                tradeHistoryAdapter.notifyDataSetChanged();
+
+            }
+
+        }
 
 
     }
 
+    public void past(View view) {
+        Button currentButton = (Button) findViewById(R.id.currentButton);
+        Button pastButton = (Button) findViewById(R.id.pastButton);
 
-    public void current(View view){
+        currentButton.setVisibility(View.VISIBLE);
+        pastButton.setVisibility(View.GONE);
 
+
+        list.clear();
+        for (Trade trade : TradeHistoryController.getTradeHistory().getTrades()) {
+            if (trade.getTradeState().equals("complete")) {
+                list.add(trade);
+
+                tradeHistoryAdapter.notifyDataSetChanged();
+
+            }
+
+        }
 
 
     }
-
-    public void past(View view){
-
-
-
-    }
-
 
 
 }
