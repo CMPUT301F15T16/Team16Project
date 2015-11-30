@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by brenn_000 on 11/29/2015.
@@ -29,8 +32,8 @@ public class PendingManager {
     static User usr=LoginActivity.usr;
 
 
-    private static final String TAGS = "PendingSentSearch";
-    private static final String TAGR = "PendingReceivedSearch";
+    private static final String TAGS = "PendingSent";
+    static final String TAGR = "SearchSent";
     private Gson gson;
     private Pending pending = new Pending();
 
@@ -40,12 +43,12 @@ public class PendingManager {
     }
 
 
-    public Pending searchOwnPendingSent(String searchString, String field) {
-        Pending result = null;
+    public Pending searchPending(String searchString, String field) {
+        Pending result = new Pending();
         User usr=LoginActivity.usr;
 
 
-        String searchURL =Pending.getSearchUrlS();
+        String searchURL =Pending.getSearchUrl();
         HttpPost searchRequest = new HttpPost(searchURL);
 
         String[] fields = null;
@@ -104,12 +107,18 @@ public class PendingManager {
         for(SearchHit<Pending> hit : esResponse.getHits().getHits()){
 
 
-            if(hit.getSource().getPendingSentId() == usr.getMy_id()){
-
-                result = hit.getSource();
-                return result;
+            if (hit.getSource().getPendingSentId() == usr.getMy_id()){
+                ArrayList<User> users = hit.getSource().getPendingSent();
+                for(User user : users) {
+                    result.addPendingSent(user);
+                }
             }
-
+            else if (hit.getSource().getPendingReceivedId() == usr.getMy_id()) {
+                ArrayList<User> users = hit.getSource().getPendingReceived();
+                for(User user : users) {
+                    result.addPendingReceived(user);
+                }
+            }
 
 
         }
@@ -118,12 +127,12 @@ public class PendingManager {
         return result;
     }
 
-    public Pending searchOwnPendingReceived(String searchString, String field) {
-        Pending result = null;
+    public Pending searchOwnSent(String searchString, String field) {
+        Pending result = new Pending();
         User usr=LoginActivity.usr;
 
 
-        String searchURL =Pending.getSearchUrlR();
+        String searchURL = Pending.getSearchUrl();
         HttpPost searchRequest = new HttpPost(searchURL);
 
         String[] fields = null;
@@ -178,20 +187,20 @@ public class PendingManager {
             throw new RuntimeException(e);
         }
 
+        // Extract the movies from the esResponse and put them in result
+
 
         for(SearchHit<Pending> hit : esResponse.getHits().getHits()){
 
 
-            if(hit.getSource().getPendingReceivedId() == usr.getMy_id()){
+            if(hit.getSource().getPendingSentId() == usr.getMy_id()){
 
                 result = hit.getSource();
                 return result;
             }
-
-
         }
-
 
         return result;
     }
+
 }

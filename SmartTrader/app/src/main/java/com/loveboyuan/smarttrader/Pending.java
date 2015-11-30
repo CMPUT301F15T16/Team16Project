@@ -15,18 +15,17 @@ public class Pending {
     private ArrayList<User> pendingReceived = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
-    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/PendingSent";
-    public static String prefix2 = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/PendingReceived";
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Pending";
 
     static User usr=LoginActivity.usr;
 
     // the model needs to set address of the server
-    private static final String RESOURCE_URL_S = prefix.concat("/");
-    private static final String RESOURCE_URL_R = prefix2.concat("/");
-    private static final String SEARCH_URL_S = prefix.concat("/_search");
-    private static final String SEARCH_URL_R = prefix2.concat("/_search");
+    private static final String RESOURCE_URL = prefix.concat("/");
+    //private static final String RESOURCE_URL_R = prefix2.concat("/");
+    private static final String SEARCH_URL = prefix.concat("/_search");
+    //private static final String SEARCH_URL_R = prefix2.concat("/_search");
 
-
+    private int pendingId;
     private int pendingSentId;
     private int pendingReceivedId;
     public Pending() {
@@ -116,6 +115,10 @@ public class Pending {
         return pendingReceivedId;
     }
 
+    public int getPendingId() {
+        return pendingId;
+    }
+
     public void setPendingSentId(int pendingSentId) {
         this.pendingSentId = pendingSentId;
     }
@@ -124,17 +127,16 @@ public class Pending {
         this.pendingReceivedId = pendingReceivedId;
     }
 
-    public static String getSearchUrlS() {
-        return SEARCH_URL_S;
-    }
-    public static String getSearchUrlR() {
-        return SEARCH_URL_R;
+    public void setPendingId(int pendingId) {
+        this.pendingId = pendingId;
     }
 
-    public static String getResourceUrlS() {
-        return RESOURCE_URL_S;
+    public static String getSearchUrl() {
+        return SEARCH_URL;
     }
-    public static String getResourceUrlR() {
-        return RESOURCE_URL_R;
+
+    public static String getResourceUrl() {
+        return RESOURCE_URL;
     }
+
 }

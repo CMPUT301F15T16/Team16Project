@@ -27,8 +27,8 @@ import java.util.Collection;
 
 public class PendingActivity extends AppCompatActivity {
     private PendingManager pendingManager = new PendingManager("");
-    Pending pulledSent =null;
-    Pending pulledReceived =null;
+    Pending pulledList =null;
+    //Pending pulledReceived =null;
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
             finish();
@@ -58,32 +58,29 @@ public class PendingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        if(pulledSent != null) {
-            for (User user : pulledSent.getPendingSent()) {
+        if(pulledList != null) {
+            for (User user : pulledList.getPendingSent()) {
 
                 PendingController.getPendingModel().addPendingSent(user);
             }
         }else{
             // else we need to make sure we create a new pending sent list and push it to the server
 
-            Pending pendingS = new Pending();
-            pendingS.setPendingSentId(usr.getMy_id());
-            Thread thread = new AddSThread(pendingS);
+            Pending pending = new Pending();
+            Thread thread = new AddThread(pending);
             thread.start();
 
         }
 
-        if(pulledReceived != null) {
-            for (User user : pulledReceived.getPendingSent()) {
+        if(pulledList != null) {
+            for (User user : pulledList.getPendingReceived()) {
 
                 PendingController.getPendingModel().addPendingReceived(user);
             }
         }else{
             // else we need to make sure we create a new pending received list and push it to the server
-
-            Pending pendingR = new Pending();
-            pendingR.setPendingReceivedId(usr.getMy_id());
-            Thread thread = new AddRThread(pendingR);
+            Pending pending = new Pending();
+            Thread thread = new AddThread(pending);
             thread.start();
 
         }
@@ -125,7 +122,6 @@ public class PendingActivity extends AppCompatActivity {
                 User user = pendingSent.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
                 intent.putExtra("USR",  user);
-                intent.putExtra("ARD", "ard");
                 startActivity(intent);
             }
         });
@@ -135,8 +131,7 @@ public class PendingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = pendingReceived.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
-                intent.putExtra("USR",  user);
-                intent.putExtra("ARD", "ard");
+                intent.putExtra("USRFriend",  user);
                 startActivity(intent);
             }
         });
@@ -155,53 +150,24 @@ public class PendingActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            //  try {
-            pulledSent = pendingManager.searchOwnPendingSent(search, null);
-            pulledReceived = pendingManager.searchOwnPendingReceived(search, null);
-            //     }catch (RuntimeException e){
+            pulledList = pendingManager.searchPending(search, null);
 
-
-            //  }
         }
 
     }
 
 
-    class AddSThread extends Thread {
-        private Pending pendingS;
+    class AddThread extends Thread {
+        private Pending pending;
 
-        public AddSThread(Pending pending) {
-            this.pendingS = pending;
+        public AddThread(Pending pending) {
+            this.pending = pending;
         }
 
         @Override
         public void run() {
 
-            PendingController.addPendingSent(pendingS);
-
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
-    }
-
-    class AddRThread extends Thread {
-        private Pending pendingR;
-
-        public AddRThread(Pending pending) {
-            this.pendingR = pending;
-        }
-
-        @Override
-        public void run() {
-
-            PendingController.addPendingReceived(pendingR);
+            PendingController.addPending(pending);
 
 
             // Give some time to get updated info

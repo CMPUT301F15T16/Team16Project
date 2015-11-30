@@ -37,15 +37,14 @@ public class PendingController {
         pending = null;
     }
 
-    public static void addPendingSent(Pending pending) {
+    public static void addPending(Pending pending) {
 
 
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
 
-            pending.setPendingSentId(usr.getMy_id());
-            HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrlS() + pending.getPendingSentId());
+            HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrl() + pending.getPendingId());
 
 
 
@@ -65,37 +64,5 @@ public class PendingController {
         }
 
     }
-
-
-    public static void addPendingReceived(Pending pending) {
-
-
-        HttpClient httpClient = new DefaultHttpClient();
-
-        try {
-
-            pending.setPendingReceivedId(usr.getMy_id());
-            HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrlR() + pending.getPendingReceivedId());
-
-
-
-            StringEntity stringEntity = new StringEntity(gson.toJson(pending));
-
-
-
-            addRequest.setEntity(stringEntity);
-            addRequest.setHeader("Accept", "application/json");
-
-            HttpResponse response = httpClient.execute(addRequest);
-            String status = response.getStatusLine().toString();
-            Log.e(TAG, status);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
 
 }

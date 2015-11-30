@@ -24,8 +24,9 @@ import java.util.ArrayList;
 public class ProfileActivity extends AppCompatActivity {
     private static Gson gson = new Gson();
     private FriendListManager friendListManager = new FriendListManager("");
+    private PendingManager pendingManager = new PendingManager("");
     FriendList pulledFriendList = new FriendList();
-    Pending pendingSent = new Pending();
+    Pending pulledList = new Pending();
 
 
     private Runnable doFinishAdd = new Runnable() {
@@ -58,6 +59,41 @@ public class ProfileActivity extends AppCompatActivity {
         profileCell.setText(usr.getPhoneNumber());
         profileEmail.setText(usr.getEmail());
 
+
+        try {
+            User user = (User) getIntent().getSerializableExtra("USRFriend");
+            int userID = user.getMy_id();
+            textView.setText(String.valueOf(userID));
+            if(userID != usr.getMy_id()){
+                //set save button invisble instead set addFriend button visible
+                Button saveButton = (Button) findViewById(R.id.profileSaveButton);
+
+                Button addButton = (Button) findViewById(R.id.addFriendButton);
+
+
+                addButton.setVisibility(View.VISIBLE);
+
+                saveButton.setVisibility(View.GONE);
+
+
+                profileName.setText(user.getName());
+                profileCity.setText(user.getCityName());
+                profileCell.setText(user.getPhoneNumber());
+                profileEmail.setText(user.getEmail());
+
+                profileName.setFocusable(false);
+                profileCity.setFocusable(false);
+                profileCell.setFocusable(false);
+                profileEmail.setFocusable(false);
+
+            }
+
+
+        }catch (RuntimeException e){
+
+        }
+
+
         try {
             User user = (User) getIntent().getSerializableExtra("USR");
             int userID = user.getMy_id();
@@ -66,7 +102,7 @@ public class ProfileActivity extends AppCompatActivity {
                 //set save button invisble instead set addFriend button visible
                 Button saveButton = (Button) findViewById(R.id.profileSaveButton);
 
-                Button addButton = (Button) findViewById(R.id.addFriendButton);
+                Button addButton = (Button) findViewById(R.id.requestFriendButton);
 
 
                 addButton.setVisibility(View.VISIBLE);
@@ -149,15 +185,27 @@ public class ProfileActivity extends AppCompatActivity {
         User user = (User) getIntent().getSerializableExtra("USR");
 
 
-        // Pending stuff:
-        //PendingController.addPending(user);
-        if(checkUserNotAdded(user)) {
-            FriendListController.getFriendListModel().addFriend(user);
-/*
         if(checkUserNotSent(user)) {
             PendingController.getPendingModel().addPendingSent(user);
-            PendingController.getPendingModel().addPendingReceived(user);
-*/
+            PendingController.getPendingModel().addPendingReceived(usr);
+            PendingController.getPendingModel().setPendingId(usr.getMy_id() + ',' + user.getMy_id());
+            PendingController.getPendingModel().setPendingSentId(usr.getMy_id());
+            PendingController.getPendingModel().setPendingReceivedId(user.getMy_id());
+
+            Thread thread = new AddThread2(PendingController.getPendingModel());
+            thread.start();
+        }else{
+            Toast.makeText(ProfileActivity.this, "Friend! Already Requested", Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    public void addFriend(View v){
+        User user = (User) getIntent().getSerializableExtra("USRFriend");
+
+        if(checkUserNotAdded(user)) {
+            FriendListController.getFriendListModel().addFriend(user);
 
             Thread thread = new AddThread1(FriendListController.getFriendListModel());
             thread.start();
@@ -195,11 +243,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private boolean checkUserNotSent(User user) {
         // So search first
-        pendingSent.getPendingSent().clear();
+
+        pulledList.getPendingSent().clear();
 
         String searchString = "*";
-        SearchThread searchThread = new SearchThread(searchString);
-        searchThread.start();
+        SearchSentThread searchSentThread = new SearchSentThread(searchString);
+        searchSentThread.start();
 
         try {
             Thread.sleep(500);
@@ -207,7 +256,7 @@ public class ProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for(User user1: pendingSent.getPendingSent()){
+        for(User user1: pulledList.getPendingSent()){
             if(user1.getMy_id()==user.getMy_id()){
                 return false;
             }
@@ -321,6 +370,26 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
+    class SearchSentThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchSentThread(String search){
+            this.search = search;
+
+        }
+
+        @Override
+        public void run(){
+            ArrayList<User> users = pendingManager.searchOwnSent(search, null).getPendingSent();
+            for(User user: users ) {
+                pulledList.addPendingSent(user);
+            }
+        }
+
+    }
+
 
     class AddThread1 extends Thread {
         private FriendList friendList;
@@ -356,8 +425,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            PendingController.addPendingSent(pending);
-            PendingController.addPendingReceived(pending);
+            PendingController.addPending(pending);
 
 
             // Give some time to get updated info
