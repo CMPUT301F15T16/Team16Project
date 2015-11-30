@@ -3,6 +3,9 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +27,6 @@ import java.io.Serializable;
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String photo = null;
     private Bitmap bitmap;
@@ -45,11 +47,8 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
 
-      //  UserLocation.startTracking(this);
+        UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        numberPicker.setMaxValue(1000);
-        numberPicker.setMinValue(1);
         imageView = (ImageView) findViewById(R.id.itemIV);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
@@ -113,7 +112,6 @@ public class ItemActivity extends AppCompatActivity {
                 //set name to view
                 nameView.setText(name);
                 //set quantity to view
-                numberPicker.setValue(quantity);
 
                 //set description to view
                 descriptionView.setText(description);
@@ -184,9 +182,6 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
-       // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
@@ -237,7 +232,7 @@ public class ItemActivity extends AppCompatActivity {
             String name, category, quality, description;
             String photoPath;
             boolean isPrivate;
-            int quantity;
+            Integer quantity;
 
 
             // name
@@ -247,8 +242,10 @@ public class ItemActivity extends AppCompatActivity {
             Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
             category = spinner.getSelectedItem().toString();
             // quantity
-            NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-            quantity = numberPicker.getValue();
+            EditText quantityfield = (EditText) findViewById(R.id.quantityEdit);
+            quantity = Integer.valueOf(quantityfield.getText().toString());
+            if (quantity == null) quantity = 1;
+            System.out.println("Quantity " + quantity);
             // quality
             RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
             RadioButton qualityRadio = (RadioButton) findViewById(qualityRadios.getCheckedRadioButtonId());
@@ -268,7 +265,8 @@ public class ItemActivity extends AppCompatActivity {
             photoPath = photo;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
-         //   UserLocation.setItemLocation(item);
+
+            UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 
