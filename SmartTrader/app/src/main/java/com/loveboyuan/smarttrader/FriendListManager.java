@@ -110,12 +110,11 @@ public class FriendListManager {
 
 
     public FriendList searchOwnFriends(String searchString, String field) {
-        FriendList result = new FriendList();
+        FriendList result = null;
         User usr=LoginActivity.usr;
 
 
-        String searchURL = ("http://cmput301.softwareprocess.es:8080/cmput301f15t16/Friends")
-                .concat(String.valueOf(usr.getMy_id())).concat("/_search");
+        String searchURL = FriendList.getSearchUrl();
         HttpPost searchRequest = new HttpPost(searchURL);
 
         String[] fields = null;
@@ -152,10 +151,10 @@ public class FriendListManager {
         /**
          * Parses the response of a search
          */
-        Type searchResponseType = new TypeToken<SearchResponse<User>>() {
+        Type searchResponseType = new TypeToken<SearchResponse<FriendList>>() {
         }.getType();
 
-        SearchResponse<User> esResponse;
+        SearchResponse<FriendList> esResponse;
         try {
             esResponse = gson.fromJson(
                     new InputStreamReader(response.getEntity().getContent()),
@@ -173,10 +172,15 @@ public class FriendListManager {
         // Extract the movies from the esResponse and put them in result
 
 
-        for(SearchHit<User> hit : esResponse.getHits().getHits()){
-            User user = hit.getSource();
-            user.setEsId(hit.get_id());
-            result.addFriend(user);
+        for(SearchHit<FriendList> hit : esResponse.getHits().getHits()){
+
+
+            if(hit.getSource().getFriendListId() == usr.getMy_id()){
+
+                result = hit.getSource();
+                return result;
+            }
+
 
 
         }

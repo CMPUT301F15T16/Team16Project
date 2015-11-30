@@ -31,7 +31,7 @@ public class Inventory implements Search, Serializable{
     // the model needs to set address of the server
     private static final String RESOURCE_URL = prefix.concat("/");
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
-    private static final String SEARCH_URL = prefix.concat(String.valueOf(usr.getMy_id()).concat("/_search"));
+    private static final String SEARCH_URL = prefix.concat("/_search");
             //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
 
 

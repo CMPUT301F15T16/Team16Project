@@ -9,6 +9,7 @@ public class FriendList {
 
     public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User";
 
+    static User usr=LoginActivity.usr;
 
     // the model needs to set address of the server
     private static final String RESOURCE_URL = prefix.concat("/");
@@ -19,6 +20,15 @@ public class FriendList {
     //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
     private ArrayList<User> friendList = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
+
+
+
+    private int friendListId;
+    public FriendList() {
+
+    }
+
+
 
     public void addFriend(User user) {
         if (!this.friendList.contains(user)) {
@@ -45,6 +55,15 @@ public class FriendList {
     public void notifyAllObservers() {
         for (MyObserver observer : observers)
             observer.update();
+    }
+
+
+    public int getFriendListId() {
+        return friendListId;
+    }
+
+    public void setFriendListId(int friendListId) {
+        this.friendListId = friendListId;
     }
 
     public static String getSearchUrl() {

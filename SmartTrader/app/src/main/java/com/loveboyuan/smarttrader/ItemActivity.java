@@ -275,8 +275,8 @@ public class ItemActivity extends AppCompatActivity {
             InventoryController.getInventoryModel().addItem(item);
 
             // Execute the thread to add this remotely
-            Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
-            thread1.start();
+           // Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
+           // thread1.start();
             Thread thread = new AddThread(InventoryController.getInventoryModel());
             thread.start();
         }catch (RuntimeException ignored){
@@ -308,7 +308,7 @@ public class ItemActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-    
+
 
 
     public void goBackInventory(View v){
@@ -335,29 +335,6 @@ public class ItemActivity extends AppCompatActivity {
 
         addItem(v);
 
-    }
-
-    class RemoveThread extends Thread {
-        private Inventory inventory;
-
-        public RemoveThread(Inventory inventory) {
-            this.inventory = inventory;
-        }
-
-        @Override
-        public void run() {
-
-            InventoryController.removeInventory(inventory);
-
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
     }
 
 

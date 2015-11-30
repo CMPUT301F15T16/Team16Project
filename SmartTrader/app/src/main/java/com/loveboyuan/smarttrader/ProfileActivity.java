@@ -312,7 +312,7 @@ public class ProfileActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                      //   FriendListController.getFriendListModel().removeFriend(user1);
-                        Thread thread = new RemoveThread(user1);
+                        Thread thread = new AddThread1(FriendListController.getFriendListModel());
                         thread.start();
                     }
                 });
@@ -352,17 +352,17 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    class RemoveThread extends Thread {
-        private User user;
 
-        public RemoveThread(User user) {
-            this.user = user;
+    class AddThread1 extends Thread {
+        private FriendList friendList;
+
+        public AddThread1(FriendList friendList) {
+            this.friendList = friendList;
         }
 
         @Override
         public void run() {
-
-            FriendListController.removeFriend(user);
+            FriendListController.addFriendList(friendList);
 
 
             // Give some time to get updated info
@@ -375,4 +375,5 @@ public class ProfileActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
+
 }

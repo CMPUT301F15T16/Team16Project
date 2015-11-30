@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -65,24 +64,6 @@ public class InventoryController {
 
     }
 
-
-    public static void removeInventory(Inventory inventory) {
-        HttpClient httpClient = new DefaultHttpClient();
-
-        try {
-            HttpDelete deleteRequest = new HttpDelete(getInventoryModel().getResourceUrl() + inventory.getInventoryId());
-            deleteRequest.setHeader("Accept", "application/json");
-
-            HttpResponse response = httpClient.execute(deleteRequest);
-            String status = response.getStatusLine().toString();
-            Log.i(TAG, status);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
     //Taken from http://androidapplicationdeveloper.weebly.com/android-tutorial/how-to-convert-bitmap-to-string-and-string-to-bitmap
     public static String convertBitMapToString(Bitmap bitmap){
