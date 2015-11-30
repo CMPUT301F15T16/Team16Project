@@ -36,6 +36,11 @@ public class SearchInventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_inventory);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.searchInventoryActionBar);
+        final DrawerListAdapter actionBarAdapter = new DrawerListAdapter(this,
+                generateSearchInventoryActionBar());
+        fakeActionBar.setAdapter(actionBarAdapter);
+
         Spinner spinner = (Spinner) findViewById(R.id.searchCategorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.planets_array, android.R.layout.simple_spinner_item);
@@ -113,6 +118,13 @@ public class SearchInventoryActivity extends AppCompatActivity {
 
     }
 
+    private ArrayList<DrawerListEntry> generateSearchInventoryActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Searcrh"));
+
+        return drawerListEntries;
+    }
 
     class SearchThread extends Thread {
         // TODO: Implement search thread

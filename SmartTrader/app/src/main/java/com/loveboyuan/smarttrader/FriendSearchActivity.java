@@ -35,6 +35,11 @@ public class FriendSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_search);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.friendSearchActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this,
+                generateFriendSearchActionBar());
+        fakeActionBar.setAdapter(adapter);
+
         ListView friendSearchListView = (ListView) findViewById(R.id.friendSearchListView);
 
         searchFriendAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1, list);
@@ -76,6 +81,14 @@ public class FriendSearchActivity extends AppCompatActivity {
         searchThread.start();
 
 
+    }
+
+    private ArrayList<DrawerListEntry> generateFriendSearchActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Search"));
+
+        return drawerListEntries;
     }
 
     class SearchThread extends Thread {
