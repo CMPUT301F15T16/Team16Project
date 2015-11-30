@@ -20,8 +20,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.Serializable;
-
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
@@ -118,8 +116,8 @@ public class ItemActivity extends AppCompatActivity {
             String name = item.getName();
             if(!name.equals("")) {
                 Button updateButton = (Button) findViewById(R.id.addButton);
-                EditText lat = (EditText) findViewById(R.id.latitude);
-                EditText longit = (EditText) findViewById(R.id.longitude);
+                lat = (EditText) findViewById(R.id.latitude);
+                longit = (EditText) findViewById(R.id.longitude);
                 updateButton.setText("Save");
                 updateButton.setOnClickListener(update);
                 lat.setText(String.valueOf(item.getLocation().getLatitude()));
@@ -299,8 +297,9 @@ public class ItemActivity extends AppCompatActivity {
             photoPath = photo;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
-
+         //   if (lat.getText().toString().equals("")) {
             UserLocation.setItemLocation(item);
+       //     }
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 
@@ -350,16 +349,17 @@ public class ItemActivity extends AppCompatActivity {
 
 
     public void updateItem(View v){
-        Serializable item = getIntent().getSerializableExtra("MyItem");
-        Item theItem = (Item) item;
-        Location loc = theItem.getLocation();
+        Item item = (Item)getIntent().getSerializableExtra("MyItem");
+
+        Location loc = (Location) getIntent().getExtras().get("Location");
+
         loc.setLatitude(Double.valueOf(lat.getText().toString()));
         loc.setLongitude(Double.valueOf(longit.getText().toString()));
-        theItem.setLocation(loc);
+        item.setLocation(loc);
         Inventory deleteList = new Inventory();
        // Toast.makeText(ItemActivity.this, theItem.getName(), Toast.LENGTH_SHORT).show();
         for (Item item1 :InventoryController.getInventoryModel().getInventory()){
-            if(item1.getName().equalsIgnoreCase(theItem.getName())) {
+            if(item1.getName().equalsIgnoreCase(item.getName())) {
                 deleteList.addItem(item1);
             }
         }
