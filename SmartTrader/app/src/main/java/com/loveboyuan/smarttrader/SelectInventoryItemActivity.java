@@ -24,6 +24,12 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_inventory_item);
 
+        ListView fakeActionBar = (ListView) findViewById(R.id.tradeHistoryActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this,
+                generateSelectInventoryItemActionBar());
+        fakeActionBar.setAdapter(adapter);
+
+
         final ListView listView = (ListView)findViewById(R.id.selectListView);
         Collection<Item> items = InventoryController.getInventoryModel().getInventory();
         final ArrayList<Item> list = new ArrayList<Item>(items);
@@ -100,6 +106,11 @@ public class SelectInventoryItemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private ArrayList<DrawerListEntry> generateSelectInventoryItemActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
 
+        drawerListEntries.add(new DrawerListEntry("Select"));
 
+        return drawerListEntries;
+    }
 }

@@ -139,6 +139,8 @@
             android:layout_height="match_parent"
             android:text="@string/profile_activity_cancel"
             android:id="@+id/profileCancelButton"
+            android:textColor="#FFFFFF"
+            android:background="#6599FF"
             android:layout_weight="0.5" />
 
         <Button
@@ -173,6 +175,8 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_activity_save"
             android:id="@+id/profileSaveButton"
+            android:textColor="#FFFFFF"
+            android:background="#FF0000"
             android:layout_weight="0.5"
             android:onClick="save" />
     </LinearLayout>

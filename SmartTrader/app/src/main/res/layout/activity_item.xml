@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:text="Trade"
         android:id="@+id/tradeButton"
+        android:textColor="#FFFFFF"
+        android:background="#FF0000"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/addButton"
         android:visibility="invisible"
@@ -270,21 +272,27 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:text="Cancel"
-        android:id="@+id/cancelButton"
-        android:onClick="goBackInventory"
+        android:text="Add"
+        android:id="@+id/addButton"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="#FF9E00"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/textView8" />
+        android:layout_alignEnd="@+id/descriptionText"
+        android:onClick="addItem"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:text="Add"
-        android:id="@+id/addButton"
+        android:text="Cancel"
+        android:id="@+id/cancelButton"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:background="#6599FF"
+        android:onClick="goBackInventory"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/descriptionText"
-        android:onClick="addItem"/>
+        android:layout_alignEnd="@+id/textView8" />
 
 
 </LinearLayout>
