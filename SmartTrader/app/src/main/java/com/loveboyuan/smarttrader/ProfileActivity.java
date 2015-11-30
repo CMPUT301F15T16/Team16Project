@@ -230,7 +230,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
     public void deleteFriend(View view){
         User user = (User) getIntent().getSerializableExtra("USR");
        // FriendListController.getFriendListModel().removeFriend(user);
