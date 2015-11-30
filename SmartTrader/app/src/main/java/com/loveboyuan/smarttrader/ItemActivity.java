@@ -4,7 +4,6 @@ package com.loveboyuan.smarttrader;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -58,7 +58,7 @@ public class ItemActivity extends AppCompatActivity {
         };
 
 
-        UserLocation.startTracking(this);
+       // UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
         imageView = (ImageView) findViewById(R.id.itemIV);
         Button deletePhotoBtn = (Button) findViewById(R.id.btnPhotoDelete);
@@ -109,7 +109,7 @@ public class ItemActivity extends AppCompatActivity {
         try {
             Item item = (Item)getIntent().getExtras().getSerializable("MyItem");
 
-            Location location = (Location) getIntent().getExtras().get("Location");
+          //  Location location = (Location) getIntent().getExtras().get("Location");
 
          //   item.setLocation(location);
 
@@ -135,7 +135,15 @@ public class ItemActivity extends AppCompatActivity {
                     imageView.setImageBitmap(bitmap);
                 }
 
+
+                TextView textView = (TextView) findViewById(R.id.quantityEdit);
+                textView.setText(String.valueOf(quantity));
+           //     textView.setEnabled(false);
+           //     textView.setFocusable(false);
+
+
                 EditText nameView = (EditText) findViewById(R.id.itemNameText);
+
                 RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
                 RadioGroup privacyRadios = (RadioGroup) findViewById(R.id.privacyRadioGroup);
                 EditText descriptionView = (EditText) findViewById(R.id.descriptionText);
@@ -193,13 +201,20 @@ public class ItemActivity extends AppCompatActivity {
                 qualityRadios.setEnabled(false);
                 privacyRadios.setEnabled(false);
                 descriptionView.setFocusable(false);
+                Button addButton = (Button) findViewById(R.id.addButton);
+                addButton.setVisibility(View.GONE);
                 Button updateButton = (Button) findViewById(R.id.updateButton);
                 updateButton.setVisibility(View.GONE);
                 spinner.setEnabled(false);
                 Button tradeButton = (Button) findViewById(R.id.tradeButton);
                 tradeButton.setVisibility(View.VISIBLE);
+                Button deletePhotoButton = (Button) findViewById(R.id.btnPhotoDelete);
+                deletePhotoButton.setVisibility(View.GONE);
+
                 Button cancelButton = (Button) findViewById(R.id.cancelButton);
                 cancelButton.setVisibility(View.GONE);
+              //  Button saveButton = (Button) findViewById(R.id.s);
+
 
             }
 

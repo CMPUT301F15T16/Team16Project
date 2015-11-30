@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-11-26.
@@ -46,13 +45,10 @@ public class SearchInventoryManager {
     public Inventory searchInventory(String searchString, String field) {
         Inventory result = new Inventory();
 
-        ArrayList<User> friends = FriendListController.getFriendListModel().getFriendList();
-
-        for(User user : friends) {
 
 
-            HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(user.getMy_id())).concat("/_search"));
-            Log.i(TAG2, "Json command: " + prefix.concat(String.valueOf(user.getMy_id())).concat("/_search"));
+
+            HttpPost searchRequest = new HttpPost(prefix.concat("/_search"));
 
 
             String[] fields = null;
@@ -89,10 +85,10 @@ public class SearchInventoryManager {
             /**
              * Parses the response of a search
              */
-            Type searchResponseType = new TypeToken<SearchResponse<Item>>() {
+            Type searchResponseType = new TypeToken<SearchResponse<Inventory>>() {
             }.getType();
 
-            SearchResponse<Item> esResponse;
+            SearchResponse<Inventory> esResponse;
             try {
                 esResponse = gson.fromJson(
                         new InputStreamReader(response.getEntity().getContent()),
@@ -110,19 +106,20 @@ public class SearchInventoryManager {
             // Extract the movies from the esResponse and put them in result
 
 
-            for (SearchHit<Item> hit : esResponse.getHits().getHits()) {
-                if(!hit.getSource().isPrivate()) {
+            for (SearchHit<Inventory> hit : esResponse.getHits().getHits()) {
+                if(isFriend(hit.getSource().getInventoryId())) {
                     // if the item is not private, it can be searched by other users
-                    result.addItem(hit.getSource());
+                    result.getInventory().addAll(hit.getSource().getInventory());
                 }
 
             }
 
 
-        }
+
 
         return result;
     }
+
 
     public Inventory searchOwnInventory(String searchString, String field) {
         Inventory result =null;
@@ -197,9 +194,20 @@ public class SearchInventoryManager {
 
 
 
-
         return result;
 
 
+    }
+
+
+    private boolean isFriend(int inventoryId) {
+
+        for(User user: FriendListController.getFriendListModel().getFriendList()){
+            if(user.getMy_id()== inventoryId){
+                return true;
+            }
+        }
+
+        return false;
     }
 }

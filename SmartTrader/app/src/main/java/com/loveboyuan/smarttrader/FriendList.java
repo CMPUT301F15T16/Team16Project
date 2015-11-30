@@ -39,9 +39,16 @@ public class FriendList {
     }
 
     public void removeFriend(User user) {
-        if (this.friendList.contains(user)) {
+     /*   if (this.friendList.contains(user)) {
             this.friendList.remove(user);
+        }*/
+        for (User user1 : getFriendList()){
+            if (user1.getName().equals(user.getName())){
+
+                removeFriend(user1);
+            }
         }
+
         this.notifyAllObservers();
     }
 
