@@ -1,9 +1,9 @@
 package com.loveboyuan.smarttrader;
 
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -92,7 +92,12 @@ public class ItemActivity extends AppCompatActivity {
 
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
-            Item item = (Item) getIntent().getSerializableExtra("MyItem");
+            Item item = (Item)getIntent().getExtras().getSerializable("MyItem");
+
+            Location location = (Location) getIntent().getExtras().get("Location");
+
+            item.setLocation(location);
+
             String name = item.getName();
             if(!name.equals("")) {
                 Button updateButton = (Button) findViewById(R.id.addButton);
@@ -153,6 +158,7 @@ public class ItemActivity extends AppCompatActivity {
 
             }
         } catch (RuntimeException exception){
+            //Toast.makeText(ItemActivity.this, "not working "+exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         try{
