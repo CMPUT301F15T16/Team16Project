@@ -275,7 +275,9 @@ public class ItemActivity extends AppCompatActivity {
             InventoryController.getInventoryModel().addItem(item);
 
             // Execute the thread to add this remotely
-            Thread thread = new AddThread(item);
+            Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
+            thread1.start();
+            Thread thread = new AddThread(InventoryController.getInventoryModel());
             thread.start();
         }catch (RuntimeException ignored){
         }
@@ -283,17 +285,18 @@ public class ItemActivity extends AppCompatActivity {
         this.finish();
     }
 
-    class AddThread extends Thread {
-        private Item item;
 
-        public AddThread(Item item) {
-            this.item = item;
+    class AddThread extends Thread {
+        private Inventory inventory;
+
+        public AddThread(Inventory inventory) {
+            this.inventory = inventory;
         }
 
         @Override
         public void run() {
+            InventoryController.addInventory(inventory);
 
-            InventoryController.addItem(item);
 
             // Give some time to get updated info
             try {
@@ -305,7 +308,7 @@ public class ItemActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-
+    
 
 
     public void goBackInventory(View v){
@@ -327,9 +330,6 @@ public class ItemActivity extends AppCompatActivity {
         for (Item item2: deleteList.getInventory()){
 
             InventoryController.getInventoryModel().removeItem(item2);
-            // Execute the thread to add this remotely
-            Thread thread = new RemoveThread(item2);
-            thread.start();
 
         }
 
@@ -338,16 +338,16 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     class RemoveThread extends Thread {
-        private Item item;
+        private Inventory inventory;
 
-        public RemoveThread(Item item) {
-            this.item = item;
+        public RemoveThread(Inventory inventory) {
+            this.inventory = inventory;
         }
 
         @Override
         public void run() {
 
-            InventoryController.removeItem(item);
+            InventoryController.removeInventory(inventory);
 
 
             try {

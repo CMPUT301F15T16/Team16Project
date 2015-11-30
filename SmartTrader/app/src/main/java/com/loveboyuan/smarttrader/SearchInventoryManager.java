@@ -125,10 +125,10 @@ public class SearchInventoryManager {
     }
 
     public Inventory searchOwnInventory(String searchString, String field) {
-        Inventory result = new Inventory();
+        Inventory result =null;
 
 
-        HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(usr.getMy_id())).concat("/_search"));
+        HttpPost searchRequest = new HttpPost(prefix.concat("/_search"));
 
 
         String[] fields = null;
@@ -165,10 +165,10 @@ public class SearchInventoryManager {
         /**
          * Parses the response of a search
          */
-        Type searchResponseType = new TypeToken<SearchResponse<Item>>() {
+        Type searchResponseType = new TypeToken<SearchResponse<Inventory>>() {
         }.getType();
 
-        SearchResponse<Item> esResponse;
+        SearchResponse<Inventory> esResponse;
         try {
             esResponse = gson.fromJson(
                     new InputStreamReader(response.getEntity().getContent()),
@@ -186,8 +186,12 @@ public class SearchInventoryManager {
         // Extract the movies from the esResponse and put them in result
 
 
-        for (SearchHit<Item> hit : esResponse.getHits().getHits()) {
-            result.addItem(hit.getSource());
+        for (SearchHit<Inventory> hit : esResponse.getHits().getHits()) {
+            if(hit.getSource().getInventoryId() == usr.getMy_id()){
+
+                result = hit.getSource();
+                return result;
+            }
 
         }
 
