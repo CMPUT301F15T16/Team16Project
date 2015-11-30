@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -102,27 +100,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void save(View v){
         EditText profileName = (EditText) findViewById(R.id.profileNameEditText);
@@ -169,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
         if(checkUserNotAdded(user)) {
             FriendListController.getFriendListModel().addFriend(user);
 
-            Thread thread = new AddFThread(user);
+            Thread thread = new AddThread1(FriendListController.getFriendListModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -245,47 +222,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-    class AddFThread extends Thread {
-        private User user;
-
-        public AddFThread(User user) {
-            this.user = user;
-        }
-
-        @Override
-        public void run() {
-
-            HttpClient httpClient = new DefaultHttpClient();
-
-            try {
-
-                HttpPost addRequest = new HttpPost(("http://cmput301.softwareprocess.es:8080/cmput301f15t16/" +
-                        "Friends").concat(String.valueOf(usr.getMy_id())).concat("/"));
-
-                StringEntity stringEntity = new StringEntity(gson.toJson(user));
-
-                addRequest.setEntity(stringEntity);
-                addRequest.setHeader("Accept", "application/json");
-
-                HttpResponse response = httpClient.execute(addRequest);
-                String status = response.getStatusLine().toString();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
-    }
 
 
 
@@ -331,6 +267,8 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
+
+
 
     class SearchThread extends Thread {
         // TODO: Implement search thread

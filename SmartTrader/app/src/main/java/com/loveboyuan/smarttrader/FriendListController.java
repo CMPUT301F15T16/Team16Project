@@ -16,6 +16,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 public class FriendListController {
     private static FriendList friendList = null;
     private static Gson gson = new Gson();
+    static User usr=LoginActivity.usr;
+
 
     private static final String TAG = "FriendListController";
 
@@ -40,6 +42,7 @@ public class FriendListController {
 
         try {
 
+            friendList.setFriendListId(usr.getMy_id());
             HttpPost addRequest = new HttpPost(getFriendListModel().getResourceUrl() + friendList.getFriendListId());
 
 

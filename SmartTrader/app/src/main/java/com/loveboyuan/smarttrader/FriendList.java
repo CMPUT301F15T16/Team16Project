@@ -7,7 +7,8 @@ import java.util.ArrayList;
 public class FriendList {
 
 
-    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User";
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Friends";
+    public static String prefix2 = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User/_search";
 
     static User usr=LoginActivity.usr;
 
@@ -73,5 +74,9 @@ public class FriendList {
     public static String getResourceUrl() {
         return RESOURCE_URL;
     }
+    public static String getSearchUrl2() {
+        return prefix2;
+    }
+
 
 }

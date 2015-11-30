@@ -41,7 +41,7 @@ public class FriendListManager {
         FriendList result = new FriendList();
 
 
-        HttpPost searchRequest = new HttpPost(friendList.getSearchUrl());
+        HttpPost searchRequest = new HttpPost(friendList.getSearchUrl2());
 
         String[] fields = null;
         if (field != null) {

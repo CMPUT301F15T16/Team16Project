@@ -130,8 +130,12 @@ public class FriendsActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            pulledFriendList = friendListManager.searchOwnFriends(search, null);
+          //  try {
+                pulledFriendList = friendListManager.searchOwnFriends(search, null);
+       //     }catch (RuntimeException e){
 
+
+          //  }
         }
 
     }
