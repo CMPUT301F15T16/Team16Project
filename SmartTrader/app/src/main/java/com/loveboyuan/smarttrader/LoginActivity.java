@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -39,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ListView fakeActionBar = (ListView)findViewById(R.id.listView);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generateLoginActionBar());
+        fakeActionBar.setAdapter(adapter);
     }
 
     @Override
@@ -93,6 +98,15 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
+    }
+
+    // used to fill in the fake LoginActionBar
+    private ArrayList<DrawerListEntry> generateLoginActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Login"));
+
+        return drawerListEntries;
     }
 
     class AddThread extends Thread {
