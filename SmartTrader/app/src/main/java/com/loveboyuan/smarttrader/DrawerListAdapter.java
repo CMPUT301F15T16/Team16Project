@@ -13,6 +13,9 @@ import java.util.ArrayList;
 /**
  * Created by jiahui on 11/29/15.
  */
+
+// Based on http://hmkcode.com/android-custom-listview-titles-icons-counter/
+// but changed extensively
 public class DrawerListAdapter extends ArrayAdapter<DrawerListEntry> {
     private final Context context;
     private final ArrayList<DrawerListEntry> drawerListEntryArrayList;
