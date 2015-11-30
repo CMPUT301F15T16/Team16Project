@@ -214,7 +214,7 @@ public class PendingActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-    
+
     private ArrayList<DrawerListEntry> generatePendingActionBar() {
         ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
 

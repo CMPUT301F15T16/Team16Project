@@ -14,7 +14,7 @@
         android:id="@+id/friendListView"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/addB"
-        android:layout_above="@+id/searchInventoryButton" />
+        android:layout_above="@+id/searchInventoryButton"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -22,19 +22,9 @@
         android:id="@+id/addB"
         android:text="Add"
         android:onClick="addFriend"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/friendListView" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Friends"
-        android:id="@+id/textView12"
+        android:layout_below="@+id/friendsActionBar"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/addB"
-        android:layout_toStartOf="@+id/addB"
-        android:layout_alignBottom="@+id/addB" />
+        android:layout_alignEnd="@+id/friendListView"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -45,5 +35,13 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/addB"
         android:layout_alignParentStart="true" />
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:id="@+id/friendsActionBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>
