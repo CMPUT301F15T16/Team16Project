@@ -44,17 +44,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="137dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login_activity_text"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView13"
-        android:layout_marginTop="80dp"
-        android:gravity="center"
-        android:textColor="#8B2A82"
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:id="@+id/listView"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView"/>
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
