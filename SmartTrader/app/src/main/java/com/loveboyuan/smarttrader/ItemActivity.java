@@ -3,9 +3,7 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -32,6 +29,8 @@ public class ItemActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private int MEDIA_TYPE_IMAGE = 1;
     private ImageView imageView;
+    private View.OnClickListener update;
+    private View.OnClickListener add;
 
 
     // Thread that close the activity after finishing add
@@ -45,6 +44,16 @@ public class ItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
+        update = new View.OnClickListener(){
+            public void onClick(View v){
+                updateItem(v);
+            }
+        };
+        add = new View.OnClickListener(){
+            public void onClick(View v){
+                addItem(v);
+            }
+        };
 
 
         UserLocation.startTracking(this);
@@ -83,15 +92,17 @@ public class ItemActivity extends AppCompatActivity {
 
         // In case of edit item in the inventory, the activity is started with message passed with. get intent!
         try {
-            Item item = (Item) getIntent().getSerializableExtra("MyItem");
+            Item item = (Item)getIntent().getExtras().getSerializable("MyItem");
+
+            Location location = (Location) getIntent().getExtras().get("Location");
+
+            item.setLocation(location);
 
             String name = item.getName();
             if(!name.equals("")) {
-                Button addButton = (Button) findViewById(R.id.addButton);
-
-                Button updateButton = (Button) findViewById(R.id.updateButton);
-                addButton.setVisibility(View.GONE);
-                updateButton.setVisibility(View.VISIBLE);
+                Button updateButton = (Button) findViewById(R.id.addButton);
+                updateButton.setText("Save");
+                updateButton.setOnClickListener(update);
 
                 String quality = item.getQuality();
                 String category = item.getCategory();
@@ -147,6 +158,7 @@ public class ItemActivity extends AppCompatActivity {
 
             }
         } catch (RuntimeException exception){
+            //Toast.makeText(ItemActivity.this, "not working "+exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
         try{
@@ -232,7 +244,7 @@ public class ItemActivity extends AppCompatActivity {
             String name, category, quality, description;
             String photoPath;
             boolean isPrivate;
-            int quantity;
+            Integer quantity;
 
 
             // name
@@ -242,8 +254,10 @@ public class ItemActivity extends AppCompatActivity {
             Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
             category = spinner.getSelectedItem().toString();
             // quantity
-            NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-            quantity = numberPicker.getValue();
+            EditText quantityfield = (EditText) findViewById(R.id.quantityEdit);
+            quantity = Integer.valueOf(quantityfield.getText().toString());
+            if (quantity == null) quantity = 1;
+            System.out.println("Quantity " + quantity);
             // quality
             RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
             RadioButton qualityRadio = (RadioButton) findViewById(qualityRadios.getCheckedRadioButtonId());
@@ -271,8 +285,8 @@ public class ItemActivity extends AppCompatActivity {
             InventoryController.getInventoryModel().addItem(item);
 
             // Execute the thread to add this remotely
-            Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
-            thread1.start();
+           // Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
+           // thread1.start();
             Thread thread = new AddThread(InventoryController.getInventoryModel());
             thread.start();
         }catch (RuntimeException ignored){
@@ -304,7 +318,7 @@ public class ItemActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-    
+
 
 
     public void goBackInventory(View v){
@@ -331,29 +345,6 @@ public class ItemActivity extends AppCompatActivity {
 
         addItem(v);
 
-    }
-
-    class RemoveThread extends Thread {
-        private Inventory inventory;
-
-        public RemoveThread(Inventory inventory) {
-            this.inventory = inventory;
-        }
-
-        @Override
-        public void run() {
-
-            InventoryController.removeInventory(inventory);
-
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
     }
 
 

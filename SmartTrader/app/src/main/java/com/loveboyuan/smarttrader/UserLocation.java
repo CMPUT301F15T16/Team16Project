@@ -19,6 +19,7 @@ public class UserLocation {
     private static LocationListener listener;
 
 
+
     public static void startTracking(Context con){
         context = con;
         isRunning = true;
@@ -90,16 +91,18 @@ public class UserLocation {
         };
 
         try {
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+           manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
+            manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
         }catch (SecurityException e){
             System.out.println("Lack Permissions to use location");
         }
 
     }
 
+
     private static void updateLocation(Location location){
         if (locationIsCurrent(location)){
-            if (location.getAccuracy() > currentlocation.getAccuracy()){
+            if (location.getAccuracy() < currentlocation.getAccuracy()){
                 currentlocation = location;
             }
         } else {
@@ -110,7 +113,7 @@ public class UserLocation {
 
     private static Boolean locationIsCurrent(Location location){
 
-        if (currentlocation == null || (location.getTime()-currentlocation.getTime())>5000) {
+        if (currentlocation == null || (location.getTime()-currentlocation.getTime())>2000) {
             System.out.println("locating not Current(time)");
             return false;
         } else{

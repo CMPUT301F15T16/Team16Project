@@ -3,8 +3,6 @@ package com.loveboyuan.smarttrader;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +13,14 @@ import java.util.Collection;
 
 public class FriendsActivity extends AppCompatActivity {
     private FriendListManager friendListManager = new FriendListManager("");
-    FriendList pulledFriendList = new FriendList();
+    FriendList pulledFriendList =null;
+    private Runnable doFinishAdd = new Runnable() {
+        public void run() {
+            finish();
+        }
+    };
+
+    static User usr=LoginActivity.usr;
 
 
     // SearchView searchView;
@@ -29,8 +34,11 @@ public class FriendsActivity extends AppCompatActivity {
 
         // We want to pull from server what friends the user has and add it to friendsController
 
+
+        // We want to pull from server the user's inventory and concurrent it with controller
+
         // So search first
-        String searchString = "*";
+        String searchString = String.valueOf(usr.getMy_id());
         SearchThread searchThread = new SearchThread(searchString);
         searchThread.start();
 
@@ -41,10 +49,22 @@ public class FriendsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        for(User user: pulledFriendList.getFriendList()){
 
-            FriendListController.getFriendListModel().addFriend(user);
+        if(pulledFriendList != null) {
+            for (User user : pulledFriendList.getFriendList()) {
+
+                FriendListController.getFriendListModel().addFriend(user);
+            }
+        }else{
+            // else we need to make sure we create a new friendlist and push it to the server
+
+            FriendList friendList = new FriendList();
+            friendList.setFriendListId(usr.getMy_id());
+            Thread thread = new AddThread(friendList);
+            thread.start();
+
         }
+
 
 
         ListView friendListView = (ListView)findViewById(R.id.friendListView);
@@ -79,29 +99,7 @@ public class FriendsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_friends, menu);
-        return true;
-    }
 
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
 
     public void addFriend(View v){
@@ -119,7 +117,6 @@ public class FriendsActivity extends AppCompatActivity {
     }
 
 
-
     class SearchThread extends Thread {
         // TODO: Implement search thread
 
@@ -130,14 +127,45 @@ public class FriendsActivity extends AppCompatActivity {
 
         }
 
+
         @Override
-        public void run(){
-            ArrayList<User>users = friendListManager.searchOwnFriends(search, null).getFriendList();
-            for(User user: users ) {
-                pulledFriendList.addFriend(user);
-            }
+        public void run() {
+          //  try {
+                pulledFriendList = friendListManager.searchOwnFriends(search, null);
+       //     }catch (RuntimeException e){
+
+
+          //  }
         }
 
     }
+
+
+
+
+    class AddThread extends Thread {
+        private FriendList friendList;
+
+        public AddThread(FriendList friendList) {
+            this.friendList = friendList;
+        }
+
+        @Override
+        public void run() {
+
+            FriendListController.addFriendList(friendList);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
 
 }

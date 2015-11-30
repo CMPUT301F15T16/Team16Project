@@ -1,7 +1,6 @@
 package com.loveboyuan.smarttrader;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by bstang on 11/5/2015.
@@ -24,7 +23,7 @@ public class Pending {
      * @param user this is the User being accepted as a friend
      */
     public void acceptFriend(User user) {
-        FriendListController.addFriend(user);
+        FriendListController.getFriendListModel().addFriend(user);
         removeRequest(user);
         this.notifyAllObservers();
     }
@@ -37,7 +36,7 @@ public class Pending {
      */
     public void acceptAllFriends(ArrayList<User>list) {
         for(User usr :list) {
-            FriendListController.addFriend(usr);
+            FriendListController.getFriendListModel().addFriend(usr);
         }
         this.notifyAllObservers();
     }

@@ -7,8 +7,10 @@ import java.util.ArrayList;
 public class FriendList {
 
 
-    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User";
+    public static String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/Friends";
+    public static String prefix2 = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/User/_search";
 
+    static User usr=LoginActivity.usr;
 
     // the model needs to set address of the server
     private static final String RESOURCE_URL = prefix.concat("/");
@@ -19,6 +21,15 @@ public class FriendList {
     //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
     private ArrayList<User> friendList = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
+
+
+
+    private int friendListId;
+    public FriendList() {
+
+    }
+
+
 
     public void addFriend(User user) {
         if (!this.friendList.contains(user)) {
@@ -47,6 +58,15 @@ public class FriendList {
             observer.update();
     }
 
+
+    public int getFriendListId() {
+        return friendListId;
+    }
+
+    public void setFriendListId(int friendListId) {
+        this.friendListId = friendListId;
+    }
+
     public static String getSearchUrl() {
         return SEARCH_URL;
     }
@@ -54,5 +74,9 @@ public class FriendList {
     public static String getResourceUrl() {
         return RESOURCE_URL;
     }
+    public static String getSearchUrl2() {
+        return prefix2;
+    }
+
 
 }
