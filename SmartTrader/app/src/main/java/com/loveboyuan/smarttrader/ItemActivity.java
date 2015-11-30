@@ -3,6 +3,7 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -59,6 +60,7 @@ public class ItemActivity extends AppCompatActivity {
         UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
         imageView = (ImageView) findViewById(R.id.itemIV);
+        Button deletePhotoBtn = (Button) findViewById(R.id.btnPhotoDelete);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -79,13 +81,25 @@ public class ItemActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(photo == null) {
-                    Toast.makeText(ItemActivity.this,"Please long click to edit item image",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent intent = new Intent(ItemActivity.this,ImageViewActivity.class);
-                    intent.putExtra("Item Photo",photo);
+                if (photo == null) {
+                    Toast.makeText(ItemActivity.this, "Please long click to edit item image", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(ItemActivity.this, ImageViewActivity.class);
+                    intent.putExtra("Item Photo", photo);
                     startActivity(intent);
+                }
+            }
+        });
+
+        deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(photo == null) {
+                    Toast.makeText(ItemActivity.this, "No photo to delete!", Toast.LENGTH_SHORT).show();
+                } else {
+                    photo = null;
+                    Drawable drawable = getResources().getDrawable(R.drawable.camera_icon);
+                    imageView.setImageDrawable(drawable);
                 }
             }
         });
