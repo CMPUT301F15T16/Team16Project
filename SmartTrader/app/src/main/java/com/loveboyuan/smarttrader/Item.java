@@ -36,7 +36,6 @@ public class Item implements Serializable {
         this.isPrivate = isPrivate;
         this.description = description;
         this.photo = photo;
-        this.location = null;
         this.ownerID = usr.getMy_id();
     }
 

@@ -232,7 +232,7 @@ public class ItemActivity extends AppCompatActivity {
             String name, category, quality, description;
             String photoPath;
             boolean isPrivate;
-            int quantity;
+            Integer quantity;
 
 
             // name
@@ -242,8 +242,10 @@ public class ItemActivity extends AppCompatActivity {
             Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
             category = spinner.getSelectedItem().toString();
             // quantity
-            NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-            quantity = numberPicker.getValue();
+            EditText quantityfield = (EditText) findViewById(R.id.quantityEdit);
+            quantity = Integer.valueOf(quantityfield.getText().toString());
+            if (quantity == null) quantity = 1;
+            System.out.println("Quantity " + quantity);
             // quality
             RadioGroup qualityRadios = (RadioGroup) findViewById(R.id.qualityRadioGroup);
             RadioButton qualityRadio = (RadioButton) findViewById(qualityRadios.getCheckedRadioButtonId());
