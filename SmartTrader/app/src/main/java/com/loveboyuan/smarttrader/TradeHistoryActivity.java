@@ -19,6 +19,9 @@ public class TradeHistoryActivity extends AppCompatActivity {
             finish();
         }
     };
+    Collection<Trade> trades = TradeHistoryController.getTradeHistory().getTrades();
+    // list contains items
+    final ArrayList<Trade> list = new ArrayList<Trade>(trades);
     private TradeHistory pulledTradeHistory = new TradeHistory();
 
     @Override
@@ -53,10 +56,7 @@ public class TradeHistoryActivity extends AppCompatActivity {
 
 
 
-        // items contains all items in the inventory
-        Collection<Trade> trades = TradeHistoryController.getTradeHistory().getTrades();
-        // list contains items
-        final ArrayList<Trade> list = new ArrayList<Trade>(trades);
+
         // inventoryAdapter is an array Adapter to fit data in the list view
         final ArrayAdapter<Trade> tradeHistoryAdapter = new ArrayAdapter<Trade>(this, android.R.layout.simple_list_item_1, list);
         // inventoryListView set inventoryAdapter as its adaptor
@@ -83,10 +83,9 @@ public class TradeHistoryActivity extends AppCompatActivity {
                 Trade trade = list.get(position);
 
 
-
                 Intent intent = new Intent(TradeHistoryActivity.this, TradeActivity.class);
                 intent.putExtra("MyTrade", trade);
-                if(trade.getOwner() != usr.getMy_id()) {
+                if (trade.getOwner() != usr.getMy_id()) {
                     intent.putExtra("OTH", "others");
                 }
                 startActivity(intent);
@@ -135,6 +134,33 @@ public class TradeHistoryActivity extends AppCompatActivity {
 
     }
 
+    public void asOwner(View view){
+
+        
+
+
+
+    }
+
+
+    public void asBorrower(View view){
+
+
+
+    }
+
+
+    public void current(View view){
+
+
+
+    }
+
+    public void past(View view){
+
+
+
+    }
 
 
 

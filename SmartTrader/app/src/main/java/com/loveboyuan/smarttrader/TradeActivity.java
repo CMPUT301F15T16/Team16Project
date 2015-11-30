@@ -167,6 +167,7 @@ public class TradeActivity extends AppCompatActivity {
 
         Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
         trade.setTradeState("inProgress");
+        trade.setTradeResult(true);
 
     }
 
@@ -224,6 +225,8 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void update(View view){
+        Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+
 
     }
 
@@ -241,6 +244,8 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void complete(View view){
+        Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+        trade.setTradeState("complete");
 
 
     }
