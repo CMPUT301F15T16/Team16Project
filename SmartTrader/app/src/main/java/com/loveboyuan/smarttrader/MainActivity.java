@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private ListView mDrawerList;
@@ -23,13 +25,20 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerList = (ListView)findViewById(R.id.left_drawer);
 
-        addDrawerItems();
+        // comment out for testing the new drawer list
+        //addDrawerItems();
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generateDrawerData());
+        mDrawerList.setAdapter(adapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // first we want to get the string representation of the clicked text
-                String activityName = mAdapter.getItem(position).toString();
+
+                // the following line is commented out for testing the new drawer list
+                //String activityName = mAdapter.getItem(position).toString();
+
+                String activityName = adapter.getItem(position).toString();
                 Toast.makeText(MainActivity.this, activityName, Toast.LENGTH_SHORT).show();
                 // then get the actual class name with corresponding prefix(package name)
                 // and postfix(Activity)
@@ -81,5 +90,19 @@ public class MainActivity extends AppCompatActivity {
                 "Profile", "UserSettings", "Pending" , "Inventory", "Friends", "TradeHistory" };
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, osArray);
         mDrawerList.setAdapter(mAdapter);
+    }
+
+    private ArrayList<DrawerListEntry> generateDrawerData() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Smart Trader"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.profile_icon,"Profile"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.settings_icon,"UserSettings"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.pending_icon,"Pending"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.inventory_icon,"Inventory"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.friendlist_icon,"Friends"));
+        drawerListEntries.add(new DrawerListEntry(R.drawable.trade_history_icon,"TradeHistory"));
+
+        return drawerListEntries;
     }
 }

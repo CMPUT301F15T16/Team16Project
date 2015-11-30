@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/friendSearchText"
         android:text="type user name here!"
+        android:selectAllOnFocus="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/searchButton"
         android:layout_alignParentBottom="true" />
