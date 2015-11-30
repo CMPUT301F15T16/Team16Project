@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmail.setText(usr.getEmail());
 
         try {
-            User user = (User) getIntent().getSerializableExtra("USR");
+            User user = (User) getIntent().getSerializableExtra("USRPend");
             int userID = user.getMy_id();
             textView.setText(String.valueOf(userID));
             if(userID != usr.getMy_id()){
@@ -145,14 +145,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void add(View v){
-        User user = (User) getIntent().getSerializableExtra("USR");
+        User user = (User) getIntent().getSerializableExtra("USRPend");
 
         // Pending stuff:
         //PendingController.addPending(user);
         if(checkUserNotAdded(user)) {
-            FriendListController.getFriendListModel().addFriend(user);
+            PendingController.getPendingModel().addPendingSent(user);
 
-            Thread thread = new AddThread1(FriendListController.getFriendListModel());
+            Thread thread = new AddThread2(PendingController.getPendingModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -314,6 +314,29 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void run() {
             FriendListController.addFriendList(friendList);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
+    class AddThread2 extends Thread {
+        private Pending pending;
+
+        public AddThread2(Pending pending) {
+            this.pending = pending;
+        }
+
+        @Override
+        public void run() {
+            PendingController.addPendingSent(pending);
 
 
             // Give some time to get updated info
