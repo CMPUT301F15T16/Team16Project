@@ -3,6 +3,7 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,6 +32,8 @@ public class ItemActivity extends AppCompatActivity {
     private ImageView imageView;
     private View.OnClickListener update;
     private View.OnClickListener add;
+    private EditText lat;
+    private EditText longit;
 
 
     // Thread that close the activity after finishing add
@@ -46,6 +49,7 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
         update = new View.OnClickListener(){
             public void onClick(View v){
+
                 updateItem(v);
             }
         };
@@ -59,6 +63,7 @@ public class ItemActivity extends AppCompatActivity {
         UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
         imageView = (ImageView) findViewById(R.id.itemIV);
+        Button deletePhotoBtn = (Button) findViewById(R.id.btnPhotoDelete);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -79,13 +84,25 @@ public class ItemActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(photo == null) {
-                    Toast.makeText(ItemActivity.this,"Please long click to edit item image",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Intent intent = new Intent(ItemActivity.this,ImageViewActivity.class);
-                    intent.putExtra("Item Photo",photo);
+                if (photo == null) {
+                    Toast.makeText(ItemActivity.this, "Please long click to edit item image", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(ItemActivity.this, ImageViewActivity.class);
+                    intent.putExtra("Item Photo", photo);
                     startActivity(intent);
+                }
+            }
+        });
+
+        deletePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(photo == null) {
+                    Toast.makeText(ItemActivity.this, "No photo to delete!", Toast.LENGTH_SHORT).show();
+                } else {
+                    photo = null;
+                    Drawable drawable = getResources().getDrawable(R.drawable.camera_icon);
+                    imageView.setImageDrawable(drawable);
                 }
             }
         });
@@ -101,11 +118,16 @@ public class ItemActivity extends AppCompatActivity {
             String name = item.getName();
             if(!name.equals("")) {
                 Button updateButton = (Button) findViewById(R.id.addButton);
+                EditText lat = (EditText) findViewById(R.id.latitude);
+                EditText longit = (EditText) findViewById(R.id.longitude);
                 updateButton.setText("Save");
                 updateButton.setOnClickListener(update);
+                lat.setText(String.valueOf(item.getLocation().getLatitude()));
+                longit.setText(String.valueOf(item.getLocation().getLongitude()));
 
                 String quality = item.getQuality();
                 String category = item.getCategory();
+
                 String description = item.getDescription();
                 int quantity = item.getQuantity();
                 Boolean isPrivate = item.isPrivate();
@@ -330,6 +352,10 @@ public class ItemActivity extends AppCompatActivity {
     public void updateItem(View v){
         Serializable item = getIntent().getSerializableExtra("MyItem");
         Item theItem = (Item) item;
+        Location loc = theItem.getLocation();
+        loc.setLatitude(Double.valueOf(lat.getText().toString()));
+        loc.setLongitude(Double.valueOf(longit.getText().toString()));
+        theItem.setLocation(loc);
         Inventory deleteList = new Inventory();
        // Toast.makeText(ItemActivity.this, theItem.getName(), Toast.LENGTH_SHORT).show();
         for (Item item1 :InventoryController.getInventoryModel().getInventory()){
