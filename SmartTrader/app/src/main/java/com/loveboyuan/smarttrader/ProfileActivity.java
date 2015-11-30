@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmail.setText(usr.getEmail());
 
         try {
-            User user = (User) getIntent().getSerializableExtra("USR");
+            User user = (User) getIntent().getSerializableExtra("USRPend");
             int userID = user.getMy_id();
             textView.setText(String.valueOf(userID));
             if(userID != usr.getMy_id()){
@@ -145,14 +145,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void add(View v){
-        User user = (User) getIntent().getSerializableExtra("USR");
+        User user = (User) getIntent().getSerializableExtra("USRPend");
 
         // Pending stuff:
         //PendingController.addPending(user);
         if(checkUserNotAdded(user)) {
-            FriendListController.getFriendListModel().addFriend(user);
+            PendingController.getPendingModel().addPendingSent(user);
 
-            Thread thread = new AddThread1(FriendListController.getFriendListModel());
+            Thread thread = new AddThread2(PendingController.getPendingModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -230,30 +230,15 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-
     public void deleteFriend(View view){
-        User user = (User) getIntent().getSerializableExtra("USR");
-       // FriendListController.getFriendListModel().removeFriend(user);
+        final User user = (User) getIntent().getSerializableExtra("USR");
 
-        // I want to search my server friendlist
-        pulledFriendList.getFriendList().clear();
 
-        String searchString = "*";
-        SearchThread searchThread = new SearchThread(searchString);
-        searchThread.start();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        for(final User user1: pulledFriendList.getFriendList()){
-            if(user1.getMy_id()==user.getMy_id()){
-                AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
-                adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
+        adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                     //   FriendListController.getFriendListModel().removeFriend(user1);
+                        FriendListController.getFriendListModel().removeFriend(user);
                         Thread thread = new AddThread1(FriendListController.getFriendListModel());
                         thread.start();
                     }
@@ -265,10 +250,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
                 adb.show();
-
-
-            }
-        }
 
 
 
@@ -315,6 +296,31 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void run() {
             FriendListController.addFriendList(friendList);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+    
+
+
+    class AddThread2 extends Thread {
+        private Pending pending;
+
+        public AddThread2(Pending pending) {
+            this.pending = pending;
+        }
+
+        @Override
+        public void run() {
+            PendingController.addPendingSent(pending);
 
 
             // Give some time to get updated info

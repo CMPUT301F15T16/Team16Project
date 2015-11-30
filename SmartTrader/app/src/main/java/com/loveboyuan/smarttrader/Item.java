@@ -1,8 +1,5 @@
 package com.loveboyuan.smarttrader;
 
-import android.location.Location;
-import android.net.Uri;
-
 import java.io.Serializable;
 
 /**
@@ -15,7 +12,7 @@ public class Item implements Serializable {
     //final int id;
     private String name;
     private int ownerID;
-    private Location location;
+   // private Location location;
     private String category;
     private int quantity;
     private String quality;
@@ -96,16 +93,18 @@ public class Item implements Serializable {
     public boolean isPrivate() {
         return isPrivate;
     }
-
+/*
     public Location getLocation() {
         return location;
     }
-
+*/
     public String getPhoto() {return photo;}
 
+    /*
     public void setLocation(Location location) {
         this.location = location;
     }
+    */
     public int getOwnerID() {
         return ownerID;
     }

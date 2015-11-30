@@ -111,7 +111,7 @@ public class ItemActivity extends AppCompatActivity {
 
             Location location = (Location) getIntent().getExtras().get("Location");
 
-            item.setLocation(location);
+         //   item.setLocation(location);
 
             String name = item.getName();
             if(!name.equals("")) {
@@ -120,8 +120,8 @@ public class ItemActivity extends AppCompatActivity {
                 longit = (EditText) findViewById(R.id.longitude);
                 updateButton.setText("Save");
                 updateButton.setOnClickListener(update);
-                lat.setText(String.valueOf(item.getLocation().getLatitude()));
-                longit.setText(String.valueOf(item.getLocation().getLongitude()));
+         //       lat.setText(String.valueOf(item.getLocation().getLatitude()));
+         //       longit.setText(String.valueOf(item.getLocation().getLongitude()));
 
                 String quality = item.getQuality();
                 String category = item.getCategory();
@@ -298,7 +298,7 @@ public class ItemActivity extends AppCompatActivity {
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
          //   if (lat.getText().toString().equals("")) {
-            UserLocation.setItemLocation(item);
+         //   UserLocation.setItemLocation(item);
        //     }
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
@@ -351,11 +351,11 @@ public class ItemActivity extends AppCompatActivity {
     public void updateItem(View v){
         Item item = (Item)getIntent().getSerializableExtra("MyItem");
 
-        Location loc = (Location) getIntent().getExtras().get("Location");
+       // Location loc = (Location) getIntent().getExtras().get("Location");
 
-        loc.setLatitude(Double.valueOf(lat.getText().toString()));
-        loc.setLongitude(Double.valueOf(longit.getText().toString()));
-        item.setLocation(loc);
+       // loc.setLatitude(Double.valueOf(lat.getText().toString()));
+       // loc.setLongitude(Double.valueOf(longit.getText().toString()));
+      //  item.setLocation(loc);
         Inventory deleteList = new Inventory();
        // Toast.makeText(ItemActivity.this, theItem.getName(), Toast.LENGTH_SHORT).show();
         for (Item item1 :InventoryController.getInventoryModel().getInventory()){

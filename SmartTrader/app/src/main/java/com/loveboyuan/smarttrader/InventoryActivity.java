@@ -3,7 +3,6 @@ package com.loveboyuan.smarttrader;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -110,10 +109,10 @@ public class InventoryActivity extends AppCompatActivity{
 
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
-                Location location = item.getLocation();
-                item.setLocation(null);
+            //    Location location = item.getLocation();
+           //     item.setLocation(null);
                 intent.putExtra("MyItem", item);
-                intent.putExtra("Location", location);
+            //    intent.putExtra("Location", location);
 
                 // This is to check if the user is browsing other people's inventory
                 if(item.getOwnerID() != usr.getMy_id()) {

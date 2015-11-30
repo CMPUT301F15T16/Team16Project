@@ -36,7 +36,7 @@ public class UserLocation {
             System.out.println("Lack Permissions to use location");
         }
     }
-
+/*
     public static void setItemLocation(Item item){
 
         if (isRunning) {
@@ -48,6 +48,7 @@ public class UserLocation {
         }
     }
 
+*/
     public static Location getUserLocation(){
 
             long start = System.currentTimeMillis();
@@ -58,12 +59,12 @@ public class UserLocation {
 
         return currentlocation;
     }
-
+/*
     public static double itemDistanceFromUser(Item item) {
 
         return getUserLocation().distanceTo(item.getLocation());
     }
-
+*/
     private static void init() {
 
         manager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
