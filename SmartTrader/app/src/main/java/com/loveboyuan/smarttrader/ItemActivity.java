@@ -24,7 +24,6 @@ import java.io.Serializable;
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String photo = null;
     private Bitmap bitmap;
@@ -184,9 +183,6 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
-       // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
