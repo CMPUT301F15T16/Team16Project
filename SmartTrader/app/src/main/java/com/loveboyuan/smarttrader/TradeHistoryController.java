@@ -1,7 +1,5 @@
 package com.loveboyuan.smarttrader;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import org.apache.http.HttpResponse;
@@ -34,18 +32,15 @@ public class TradeHistoryController {
 
     public static void addTradeToServer(Trade trade) {
         HttpClient httpClient = new DefaultHttpClient();
-        String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/TradeHistory";
+        String prefix = "http://cmput301.softwareprocess.es:8080/cmput301f15t16/TradeHistory/";
 
 
-        String resourseURL = prefix.concat(String.valueOf(trade.getBorrower()).concat("/"));
-        String resourseURL2 = prefix.concat(String.valueOf(trade.getOwner()).concat("/"));
         try {
 
-            HttpPost addRequest = new HttpPost(resourseURL);
+            HttpPost addRequest = new HttpPost(prefix + trade.getTradeID());
 
 
             StringEntity stringEntity = new StringEntity(gson.toJson(trade));
-            Log.e("gsonitem", gson.toJson(trade).toString());
 
             addRequest.setEntity(stringEntity);
             addRequest.setHeader("Accept", "application/json");
@@ -58,33 +53,9 @@ public class TradeHistoryController {
         }
 
 
-        try {
-
-            HttpPost addRequest = new HttpPost(resourseURL2);
-
-
-            StringEntity stringEntity = new StringEntity(gson.toJson(trade));
-            Log.e("gsonitem", gson.toJson(trade).toString());
-
-            addRequest.setEntity(stringEntity);
-            addRequest.setHeader("Accept", "application/json");
-
-            HttpResponse response = httpClient.execute(addRequest);
-            String status = response.getStatusLine().toString();
-            // Log.e(TAG, status);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
     }
 
-
-
-
-    public static void removeTradeFromServer(Trade trade) {
-    }
 
 
 
