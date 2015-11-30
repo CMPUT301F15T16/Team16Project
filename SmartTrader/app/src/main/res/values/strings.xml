@@ -3,7 +3,9 @@
 
     <string name="splash_activity_title">Smart Trader</string>
 
-    <string name="login_activity_button">LOGIN</string>
+    <string name="login_activity_text">Log In</string>
+    <string name="login_activity_hint">User ID</string>
+    <string name="login_activity_button">Sign In</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

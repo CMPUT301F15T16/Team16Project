@@ -10,37 +10,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/usrID"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentStart="true"
+        android:ellipsize="start"
+        android:gravity="center_horizontal"
+        android:hint="@string/login_activity_hint"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="45dp"
+        android:layout_alignStart="@+id/imageView"
         android:layout_alignEnd="@+id/imageView"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login_activity_button"
+        android:textColor="#FFFFFF"
         android:id="@+id/loginButton"
-        android:layout_alignParentBottom="true"
         android:onClick="login"
+        android:textSize="24sp"
+        android:background="#FF9E00"
         android:layout_below="@+id/usrID"
-        android:layout_alignParentStart="true"
-        android:layout_alignEnd="@+id/usrID"
-        android:textSize="24sp"/>
+        android:layout_alignStart="@+id/usrID"
+        android:layout_marginTop="38dp"
+        android:layout_alignEnd="@+id/usrID"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:src="@drawable/user_icon"
+        android:adjustViewBounds="true"
+        android:maxWidth="150dp"
+        android:maxHeight="150dp"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/textView13"/>
+        android:layout_marginTop="137dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please enter your user ID"
+        android:text="@string/login_activity_text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center"
         android:id="@+id/textView13"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginTop="80dp"
+        android:gravity="center"
+        android:textColor="#8B2A82"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView"/>
+
 </RelativeLayout>
