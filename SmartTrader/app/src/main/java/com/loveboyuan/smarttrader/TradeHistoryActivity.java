@@ -1,12 +1,8 @@
 package com.loveboyuan.smarttrader;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,8 +53,6 @@ public class TradeHistoryActivity extends AppCompatActivity {
 
 
 
-
-
         // items contains all items in the inventory
         Collection<Trade> trades = TradeHistoryController.getTradeHistory().getTrades();
         // list contains items
@@ -103,61 +97,11 @@ public class TradeHistoryActivity extends AppCompatActivity {
         });
 
 
-        // remove inventory item
-        tradeHistoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-
-                AlertDialog.Builder adb = new AlertDialog.Builder(TradeHistoryActivity.this);
-                adb.setMessage("Delete " + list.get(position).toString() + "?");
-                adb.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Trade trade = list.get(position);
-                        TradeHistoryController.getTradeHistory().removeTrade(trade);
-                        // Execute the thread to add this remotely
-                        Thread thread = new RemoveThread(trade);
-                        thread.start();
-                    }
-                });
-                adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                adb.show();
-
-
-                return false;
-            }
-        });
-
 
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_trade_history, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     private ArrayList<DrawerListEntry> generateTradeHistoryActionBar() {
         ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
@@ -169,29 +113,6 @@ public class TradeHistoryActivity extends AppCompatActivity {
 
 
 
-    class RemoveThread extends Thread {
-        private Trade trade;
-
-        public RemoveThread(Trade trade) {
-            this.trade = trade;
-        }
-
-        @Override
-        public void run() {
-
-            TradeHistoryController.removeTradeFromServer(trade);
-
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
-    }
 
 
     class SearchThread extends Thread {
@@ -213,6 +134,8 @@ public class TradeHistoryActivity extends AppCompatActivity {
         }
 
     }
+
+
 
 
 }

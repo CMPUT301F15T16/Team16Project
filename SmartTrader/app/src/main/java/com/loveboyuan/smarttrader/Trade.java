@@ -30,7 +30,7 @@ public class Trade implements Serializable{
 
     // Constructor! A Trade has owner, trade for item, borrower and trade using items(what the borrower uses to trade).
     public Trade(int owner, Item oItem, int borrower, ArrayList<Item> bItems) {
-        this.tradeID = String.valueOf(borrower).concat(oItem.getName());
+        this.tradeID = String.valueOf(owner) + "," +String.valueOf(borrower) + oItem.getName();
         this.ownerID = owner;
         this.oItem = oItem;
         this.borrowerID = borrower;

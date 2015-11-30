@@ -172,6 +172,7 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void decline(View view){
+
         Button completeTradeButton = (Button) findViewById(R.id.completeTradeButton);
         Button acceptTradeButton = (Button) findViewById(R.id.acceptTradeButton);
         Button declineTradeButton = (Button) findViewById(R.id.declineTradeButton);
@@ -180,7 +181,7 @@ public class TradeActivity extends AppCompatActivity {
         acceptTradeButton.setVisibility(View.GONE);
         declineTradeButton.setVisibility(View.GONE);
 
-        Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+        final Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
         trade.setTradeState("complete");
         trade.setTradeResult(Boolean.FALSE);
 
@@ -192,7 +193,19 @@ public class TradeActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
               //Create a new trade object and push it to the server
                 // Happily, I dont need to go to other intent
+                ArrayList<Item>items = new ArrayList<Item>();
+                items.add(trade.getOItem());
 
+                ArrayList<Item> itemm = (ArrayList < Item >) trade.getBItems();
+                Item myItem = itemm.get(0);
+
+                Trade counterTrade = new Trade(trade.getBorrower(), myItem, trade.getOwner(),items);
+
+                TradeHistoryController.getTradeHistory().addTrade(counterTrade);
+
+                // Execute the thread to add this remotely
+                Thread thread = new AddThread(counterTrade);
+                thread.start();
 
             }
         });
@@ -216,6 +229,12 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void delete(View view){
+        // Delete post!
+        final Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+
+        RemoveThread thread = new RemoveThread(trade);
+        thread.start();
+
 
     }
 
@@ -224,6 +243,32 @@ public class TradeActivity extends AppCompatActivity {
     public void complete(View view){
 
 
+    }
+
+
+
+    class RemoveThread extends Thread {
+        private Trade trade;
+
+        public RemoveThread(Trade trade) {
+            this.trade = trade;
+        }
+
+        @Override
+        public void run() {
+            TradeHistoryController.removeTradeFromServer(trade);
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            runOnUiThread(doFinishAdd);
+
+        }
     }
 
 }

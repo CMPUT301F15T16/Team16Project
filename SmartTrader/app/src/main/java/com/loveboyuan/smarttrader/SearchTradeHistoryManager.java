@@ -43,7 +43,7 @@ public class SearchTradeHistoryManager {
         TradeHistory result = new TradeHistory();
 
 
-        HttpPost searchRequest = new HttpPost(prefix.concat(String.valueOf(usr.getMy_id())).concat("/_search"));
+        HttpPost searchRequest = new HttpPost(prefix.concat("/_search"));
 
 
         String[] fields = null;
@@ -102,7 +102,11 @@ public class SearchTradeHistoryManager {
 
 
         for (SearchHit<Trade> hit : esResponse.getHits().getHits()) {
-            result.addTrade(hit.getSource());
+            if((hit.getSource().getOwner() == usr.getMy_id()) || (hit.getSource().getBorrower() == usr.getMy_id())) {
+                result.addTrade(hit.getSource());
+            }
+
+
 
         }
 
