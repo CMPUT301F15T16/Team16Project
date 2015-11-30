@@ -30,6 +30,10 @@ public class FriendsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.friendsActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generateFriendsActionBar());
+        fakeActionBar.setAdapter(adapter);
+
         FriendListController.clear();
 
         // We want to pull from server what friends the user has and add it to friendsController
@@ -119,6 +123,13 @@ public class FriendsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private ArrayList<DrawerListEntry> generateFriendsActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Friends"));
+
+        return drawerListEntries;
+    }
 
     class SearchThread extends Thread {
         // TODO: Implement search thread

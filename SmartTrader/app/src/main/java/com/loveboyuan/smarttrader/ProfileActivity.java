@@ -25,6 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static Gson gson = new Gson();
     private FriendListManager friendListManager = new FriendListManager("");
     FriendList pulledFriendList = new FriendList();
+    Pending pendingSent = new Pending();
 
 
     private Runnable doFinishAdd = new Runnable() {
@@ -147,10 +148,16 @@ public class ProfileActivity extends AppCompatActivity {
     public void add(View v){
         User user = (User) getIntent().getSerializableExtra("USR");
 
+
         // Pending stuff:
         //PendingController.addPending(user);
         if(checkUserNotAdded(user)) {
             FriendListController.getFriendListModel().addFriend(user);
+/*
+        if(checkUserNotSent(user)) {
+            PendingController.getPendingModel().addPendingSent(user);
+            PendingController.getPendingModel().addPendingReceived(user);
+*/
 
             Thread thread = new AddThread1(FriendListController.getFriendListModel());
             thread.start();
@@ -176,6 +183,31 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         for(User user1: pulledFriendList.getFriendList()){
+            if(user1.getMy_id()==user.getMy_id()){
+                return false;
+            }
+        }
+
+        return true;
+
+
+    }
+
+    private boolean checkUserNotSent(User user) {
+        // So search first
+        pendingSent.getPendingSent().clear();
+
+        String searchString = "*";
+        SearchThread searchThread = new SearchThread(searchString);
+        searchThread.start();
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for(User user1: pendingSent.getPendingSent()){
             if(user1.getMy_id()==user.getMy_id()){
                 return false;
             }
@@ -325,6 +357,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void run() {
             PendingController.addPendingSent(pending);
+            PendingController.addPendingReceived(pending);
 
 
             // Give some time to get updated info

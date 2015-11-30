@@ -30,6 +30,11 @@ public class TradeHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_history);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.tradeHistoryActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this,
+                generateTradeHistoryActionBar());
+        fakeActionBar.setAdapter(adapter);
+
         TradeHistoryController.clear();
 
         ListView tradeHistoryListView = (ListView) findViewById(R.id.tradeHistoryListView);
@@ -154,7 +159,13 @@ public class TradeHistoryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private ArrayList<DrawerListEntry> generateTradeHistoryActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
 
+        drawerListEntries.add(new DrawerListEntry("History"));
+
+        return drawerListEntries;
+    }
 
 
 

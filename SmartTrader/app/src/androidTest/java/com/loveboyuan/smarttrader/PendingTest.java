@@ -31,11 +31,11 @@ public class PendingTest extends TestCase {
     public void testAddPending() throws Exception {
         User pending_friend = new User(0);
         Pending pending = new Pending();
-        pending.addPending(pending_friend);
+        pending.addPendingSent(pending_friend);
 
         assertTrue("PendingTest: add pending friend failed", pending.getPendingSent().contains(pending_friend));
 
-        pending.addPending(pending_friend);
+        pending.addPendingSent(pending_friend);
         int checkSame = Collections.frequency(pending.getPendingSent(), pending_friend);
         assertTrue("PendingTest: add same pending failed", checkSame == 1);
     }
@@ -43,7 +43,7 @@ public class PendingTest extends TestCase {
     public void testRemoveRequest() throws Exception {
         Pending pending = new Pending();
         User pending_friend = new User(0);
-        pending.addPending(pending_friend);
+        pending.addPendingSent(pending_friend);
         pending.removeRequest(pending_friend);
         assertFalse("PendingTest: remove request failed", pending.getPendingReceived().contains(pending_friend));
     }
@@ -51,32 +51,11 @@ public class PendingTest extends TestCase {
     public void testCancelRequest() throws Exception {
         Pending pending = new Pending();
         User pending_friend = new User(0);
-        pending.addPending(pending_friend);
+        pending.addPendingSent(pending_friend);
         pending.cancelRequest(pending_friend);
         assertFalse("PendingTest: cancel request failed", pending.getPendingSent().contains(pending_friend));
     }
 
-    public void testCancelAllRequests() throws Exception {
-        Pending pending = new Pending();
-        User pending_friend = new User(0);
-        ArrayList<User> pendingList = new ArrayList<User>();
-        pendingList.add(pending_friend);
-        pendingList = PendingController.getPendingSent();
-        pending.cancelAllRequests(pendingList);
-        assertFalse("PendingTest: cancel request failed", pending.getPendingSent().contains(pending_friend));
-
-    }
-
-    public void testRemoveAllRequests() throws Exception {
-        Pending pending = new Pending();
-        User pending_friend = new User(0);
-        ArrayList<User> pendingList = new ArrayList<User>();
-        pendingList.add(pending_friend);
-        pendingList = PendingController.getPendingReceived();
-        pending.cancelAllRequests(pendingList);
-        assertFalse("PendingTest: cancel request failed", pending.getPendingReceived().contains(pending_friend));
-
-    }
 
 
     public void testGetPendingSent() throws Exception {
@@ -86,7 +65,7 @@ public class PendingTest extends TestCase {
         assertTrue("PendingTest: pending is not empty",
                 pending.getPendingSent().size() == 0);
 
-        pending.addPending(pending_friend);
+        pending.addPendingSent(pending_friend);
 
         assertTrue("PendingTest: pending is empty after adding pending friend",
                 pending.getPendingSent().size() != 0);
@@ -99,7 +78,7 @@ public class PendingTest extends TestCase {
         assertTrue("PendingTest: pending is not empty",
                 pending.getPendingReceived().size() == 0);
 
-        pending.addPending(pending_friend);
+        pending.addPendingReceived(pending_friend);
 
         assertTrue("PendingTest: pending is empty after adding pending friend",
                 pending.getPendingReceived().size() != 0);
