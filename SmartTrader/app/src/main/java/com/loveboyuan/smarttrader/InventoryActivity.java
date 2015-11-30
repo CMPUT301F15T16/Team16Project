@@ -34,6 +34,11 @@ public class InventoryActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.inventoryActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generateInventoryActionBar());
+        fakeActionBar.setAdapter(adapter);
+
+
         InventoryController.clear();
 
         ListView inventoryListView = (ListView) findViewById(R.id.inventoryListView);
@@ -166,7 +171,13 @@ public class InventoryActivity extends AppCompatActivity{
 
     }
 
+    private ArrayList<DrawerListEntry> generateInventoryActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
 
+        drawerListEntries.add(new DrawerListEntry("Stock"));
+
+        return drawerListEntries;
+    }
 
     class SearchThread extends Thread {
         // TODO: Implement search thread

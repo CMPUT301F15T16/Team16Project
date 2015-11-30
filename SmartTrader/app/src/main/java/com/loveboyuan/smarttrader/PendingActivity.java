@@ -32,6 +32,9 @@ public class PendingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending);
 
+        ListView fakeActionBar = (ListView)findViewById(R.id.pendingActionBar);
+        final DrawerListAdapter adapter = new DrawerListAdapter(this, generatePendingActionBar());
+        fakeActionBar.setAdapter(adapter);
 
         ListView pendingSentView = (ListView) findViewById(R.id.pendingSentView);
         ListView pendingReceivedView = (ListView) findViewById(R.id.pendingReceivedView);
@@ -125,5 +128,13 @@ public class PendingActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private ArrayList<DrawerListEntry> generatePendingActionBar() {
+        ArrayList<DrawerListEntry> drawerListEntries = new ArrayList<>();
+
+        drawerListEntries.add(new DrawerListEntry("Pend"));
+
+        return drawerListEntries;
     }
 }
