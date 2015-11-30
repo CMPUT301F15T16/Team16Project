@@ -27,7 +27,7 @@ public class InventoryActivity extends AppCompatActivity{
     static User usr=LoginActivity.usr;
     private SearchInventoryManager searchInventoryManager = new SearchInventoryManager("");
 
-    private Inventory pulledInventory = new Inventory();
+    private Inventory pulledInventory = null;
 
 
     @Override
@@ -36,16 +36,16 @@ public class InventoryActivity extends AppCompatActivity{
         setContentView(R.layout.activity_inventory);
 
         InventoryController.clear();
-        // getting the list view in the ui
 
         ListView inventoryListView = (ListView) findViewById(R.id.inventoryListView);
 
-        // We want to pull from server what items the user has and add it to inventoryController
+        // We want to pull from server the user's inventory and concurrent it with controller
 
         // So search first
-        String searchString = "*";
+        String searchString = String.valueOf(usr.getMy_id());
         SearchThread searchThread = new SearchThread(searchString);
         searchThread.start();
+
 
 
         try {
@@ -54,10 +54,25 @@ public class InventoryActivity extends AppCompatActivity{
             e.printStackTrace();
         }
 
-        for(Item item: pulledInventory.getInventory()){
 
-            InventoryController.getInventoryModel().addItem(item);
+        // If the returned inventory is not null:
+        if(pulledInventory != null) {
+            for (Item item : pulledInventory.getInventory()) {
+
+                InventoryController.getInventoryModel().addItem(item);
+            }
+        }else{
+            // else we need to make sure we create a new inventory and push it to the server
+
+            Inventory inventory = new Inventory();
+            inventory.setInventoryId(usr.getMy_id());
+            Thread thread = new AddThread(inventory);
+            thread.start();
+
         }
+
+
+
 
         // items contains all items in the inventory
         Collection<Item> items = InventoryController.getInventoryModel().getInventory();
@@ -92,6 +107,8 @@ public class InventoryActivity extends AppCompatActivity{
 
                 Intent intent = new Intent(InventoryActivity.this, ItemActivity.class);
                 intent.putExtra("MyItem", item);
+
+                // This is to check if the user is browsing other people's inventory
                 if(item.getOwnerID() != usr.getMy_id()) {
                     intent.putExtra("OTH", "others");
                 }
@@ -115,9 +132,12 @@ public class InventoryActivity extends AppCompatActivity{
                     public void onClick(DialogInterface dialog, int which) {
                         Item item = list.get(position);
                         InventoryController.getInventoryModel().removeItem(item);
-                        // Execute the thread to add this remotely
-                        Thread thread = new RemoveThread(item);
+
+                        Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
+                        thread1.start();
+                        Thread thread = new AddThread(InventoryController.getInventoryModel());
                         thread.start();
+
                     }
                 });
                 adb.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -169,19 +189,18 @@ public class InventoryActivity extends AppCompatActivity{
 
 
     class RemoveThread extends Thread {
-        private Item item;
+        private Inventory inventory;
 
-        public RemoveThread(Item item) {
-            this.item = item;
+        public RemoveThread(Inventory inventory) {
+            this.inventory = inventory;
         }
 
         @Override
         public void run() {
 
-            InventoryController.removeItem(item);
+            InventoryController.removeInventory(inventory);
 
 
-            // Give some time to get updated info
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
@@ -204,14 +223,37 @@ public class InventoryActivity extends AppCompatActivity{
 
         }
 
+
         @Override
-        public void run(){
-            ArrayList<Item>items = searchInventoryManager.searchOwnInventory(search, null).getInventory();
-            for(Item item: items ) {
-                pulledInventory.addItem(item);
-            }
+        public void run() {
+            pulledInventory = searchInventoryManager.searchOwnInventory(search, null);
+
         }
 
+    }
+
+
+    class AddThread extends Thread {
+        private Inventory inventory;
+
+        public AddThread(Inventory inventory) {
+            this.inventory = inventory;
+        }
+
+        @Override
+        public void run() {
+            InventoryController.addInventory(inventory);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
     }
 
 

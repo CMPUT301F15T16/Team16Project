@@ -3,6 +3,9 @@ package com.loveboyuan.smarttrader;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +27,6 @@ import java.io.Serializable;
 
 public class ItemActivity extends AppCompatActivity {
     private static final String TAG = "Locationlatitude";
-    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private String photo = null;
     private Bitmap bitmap;
@@ -45,11 +47,8 @@ public class ItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item);
 
 
-      //  UserLocation.startTracking(this);
+        UserLocation.startTracking(this);
         // We want to let the user choose the quantity of the item
-        NumberPicker numberPicker = (NumberPicker) findViewById(R.id.numberPicker);
-        numberPicker.setMaxValue(1000);
-        numberPicker.setMinValue(1);
         imageView = (ImageView) findViewById(R.id.itemIV);
 
         Spinner spinner = (Spinner) findViewById(R.id.categorySpinner);
@@ -113,7 +112,6 @@ public class ItemActivity extends AppCompatActivity {
                 //set name to view
                 nameView.setText(name);
                 //set quantity to view
-                numberPicker.setValue(quantity);
 
                 //set description to view
                 descriptionView.setText(description);
@@ -184,9 +182,6 @@ public class ItemActivity extends AppCompatActivity {
     //http://developer.android.com/guide/topics/media/camera.html#manifest
     public void setPhoto(){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        //fileUri = ItemController.getOutputMediaFileUri(MEDIA_TYPE_IMAGE,this.getBaseContext());
-       // intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        //startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
     }
 
@@ -268,14 +263,17 @@ public class ItemActivity extends AppCompatActivity {
             photoPath = photo;
 
             Item item = new Item(name, category, quantity, quality, isPrivate, description, photo);
-         //   UserLocation.setItemLocation(item);
+
+            UserLocation.setItemLocation(item);
           //  Log.e(TAG, (String.valueOf(item.getLocation().getLatitude())));
 
 
             InventoryController.getInventoryModel().addItem(item);
 
             // Execute the thread to add this remotely
-            Thread thread = new AddThread(item);
+            Thread thread1 = new RemoveThread(InventoryController.getInventoryModel());
+            thread1.start();
+            Thread thread = new AddThread(InventoryController.getInventoryModel());
             thread.start();
         }catch (RuntimeException ignored){
         }
@@ -283,17 +281,18 @@ public class ItemActivity extends AppCompatActivity {
         this.finish();
     }
 
-    class AddThread extends Thread {
-        private Item item;
 
-        public AddThread(Item item) {
-            this.item = item;
+    class AddThread extends Thread {
+        private Inventory inventory;
+
+        public AddThread(Inventory inventory) {
+            this.inventory = inventory;
         }
 
         @Override
         public void run() {
+            InventoryController.addInventory(inventory);
 
-            InventoryController.addItem(item);
 
             // Give some time to get updated info
             try {
@@ -305,7 +304,7 @@ public class ItemActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-
+    
 
 
     public void goBackInventory(View v){
@@ -327,9 +326,6 @@ public class ItemActivity extends AppCompatActivity {
         for (Item item2: deleteList.getInventory()){
 
             InventoryController.getInventoryModel().removeItem(item2);
-            // Execute the thread to add this remotely
-            Thread thread = new RemoveThread(item2);
-            thread.start();
 
         }
 
@@ -338,16 +334,16 @@ public class ItemActivity extends AppCompatActivity {
     }
 
     class RemoveThread extends Thread {
-        private Item item;
+        private Inventory inventory;
 
-        public RemoveThread(Item item) {
-            this.item = item;
+        public RemoveThread(Inventory inventory) {
+            this.inventory = inventory;
         }
 
         @Override
         public void run() {
 
-            InventoryController.removeItem(item);
+            InventoryController.removeInventory(inventory);
 
 
             try {
