@@ -106,6 +106,8 @@ public class SearchTradeHistoryManager {
                 result.addTrade(hit.getSource());
             }
 
+
+
         }
 
 

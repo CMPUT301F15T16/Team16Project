@@ -229,6 +229,12 @@ public class TradeActivity extends AppCompatActivity {
 
 
     public void delete(View view){
+        // Delete post!
+        final Trade trade = (Trade) getIntent().getSerializableExtra("MyTrade");
+
+        RemoveThread thread = new RemoveThread(trade);
+        thread.start();
+
 
     }
 
@@ -237,6 +243,32 @@ public class TradeActivity extends AppCompatActivity {
     public void complete(View view){
 
 
+    }
+
+
+
+    class RemoveThread extends Thread {
+        private Trade trade;
+
+        public RemoveThread(Trade trade) {
+            this.trade = trade;
+        }
+
+        @Override
+        public void run() {
+            TradeHistoryController.removeTradeFromServer(trade);
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            runOnUiThread(doFinishAdd);
+
+        }
     }
 
 }
