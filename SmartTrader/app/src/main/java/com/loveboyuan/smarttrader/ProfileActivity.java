@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileEmail.setText(usr.getEmail());
 
         try {
-            User user = (User) getIntent().getSerializableExtra("USRPend");
+            User user = (User) getIntent().getSerializableExtra("USR");
             int userID = user.getMy_id();
             textView.setText(String.valueOf(userID));
             if(userID != usr.getMy_id()){
@@ -145,14 +145,14 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void add(View v){
-        User user = (User) getIntent().getSerializableExtra("USRPend");
+        User user = (User) getIntent().getSerializableExtra("USR");
 
         // Pending stuff:
         //PendingController.addPending(user);
         if(checkUserNotAdded(user)) {
-            PendingController.getPendingModel().addPendingSent(user);
+            FriendListController.getFriendListModel().addFriend(user);
 
-            Thread thread = new AddThread2(PendingController.getPendingModel());
+            Thread thread = new AddThread1(FriendListController.getFriendListModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -231,14 +231,18 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     public void deleteFriend(View view){
-        final User user = (User) getIntent().getSerializableExtra("USR");
+        Button button =  (Button) findViewById(R.id.profileSaveButton);
+        button.setVisibility(View.GONE);
 
 
         AlertDialog.Builder adb = new AlertDialog.Builder(ProfileActivity.this);
         adb.setPositiveButton("Delete?", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        final User user = (User) getIntent().getSerializableExtra("USR");
+
                         FriendListController.getFriendListModel().removeFriend(user);
+                        FriendListController.clear();
                         Thread thread = new AddThread1(FriendListController.getFriendListModel());
                         thread.start();
                     }
@@ -308,7 +312,7 @@ public class ProfileActivity extends AppCompatActivity {
             runOnUiThread(doFinishAdd);
         }
     }
-    
+
 
 
     class AddThread2 extends Thread {

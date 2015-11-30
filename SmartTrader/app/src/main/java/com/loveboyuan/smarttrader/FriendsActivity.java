@@ -38,6 +38,8 @@ public class FriendsActivity extends AppCompatActivity {
         // We want to pull from server the user's inventory and concurrent it with controller
 
         // So search first
+        User usr=LoginActivity.usr;
+
         String searchString = String.valueOf(usr.getMy_id());
         SearchThread searchThread = new SearchThread(searchString);
         searchThread.start();
@@ -83,6 +85,7 @@ public class FriendsActivity extends AppCompatActivity {
                 friendListAdapter.notifyDataSetChanged();
             }
         });
+
 
 
         friendListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
