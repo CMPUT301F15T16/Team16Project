@@ -137,4 +137,5 @@ public class Pending {
     public static String getResourceUrlR() {
         return RESOURCE_URL_R;
     }
+
 }

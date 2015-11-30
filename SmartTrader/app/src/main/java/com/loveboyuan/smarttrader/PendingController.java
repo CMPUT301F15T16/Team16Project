@@ -73,7 +73,6 @@ public class PendingController {
         HttpClient httpClient = new DefaultHttpClient();
 
         try {
-
             pending.setPendingReceivedId(usr.getMy_id());
             HttpPost addRequest = new HttpPost(getPendingModel().getResourceUrlR() + pending.getPendingReceivedId());
 

@@ -152,7 +152,22 @@ public class ProfileActivity extends AppCompatActivity {
             PendingController.getPendingModel().addPendingSent(user);
             PendingController.getPendingModel().addPendingReceived(user);
 
-            Thread thread = new AddThread2(PendingController.getPendingModel());
+            Thread thread = new AddThread2(PendingController.getPendingModel(), user);
+            thread.start();
+        }else{
+            Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
+
+        }
+
+    }
+
+    public void addFriend(View v){
+        User user = (User) getIntent().getSerializableExtra("USRFriend");
+
+        if(checkUserNotSent(user)) {
+            FriendListController.getFriendListModel().addFriend(user);
+
+            Thread thread = new AddThread1(FriendListController.getFriendListModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -339,7 +354,7 @@ public class ProfileActivity extends AppCompatActivity {
     class AddThread2 extends Thread {
         private Pending pending;
 
-        public AddThread2(Pending pending) {
+        public AddThread2(Pending pending, User user) {
             this.pending = pending;
         }
 

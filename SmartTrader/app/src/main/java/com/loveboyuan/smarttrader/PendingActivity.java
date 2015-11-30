@@ -80,10 +80,9 @@ public class PendingActivity extends AppCompatActivity {
             }
         }else{
             // else we need to make sure we create a new pending received list and push it to the server
-
             Pending pendingR = new Pending();
             pendingR.setPendingReceivedId(usr.getMy_id());
-            Thread thread = new AddRThread(pendingR);
+            Thread thread = new AddRThread(pendingR, null);
             thread.start();
 
         }
@@ -124,8 +123,7 @@ public class PendingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = pendingSent.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
-                intent.putExtra("USR",  user);
-                intent.putExtra("ARD", "ard");
+                intent.putExtra("USRFriend",  user);
                 startActivity(intent);
             }
         });
@@ -135,8 +133,7 @@ public class PendingActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 User user = pendingReceived.get(position);
                 Intent intent = new Intent(PendingActivity.this, ProfileActivity.class);
-                intent.putExtra("USR",  user);
-                intent.putExtra("ARD", "ard");
+                intent.putExtra("USRFriend",  user);
                 startActivity(intent);
             }
         });
@@ -194,7 +191,7 @@ public class PendingActivity extends AppCompatActivity {
     class AddRThread extends Thread {
         private Pending pendingR;
 
-        public AddRThread(Pending pending) {
+        public AddRThread(Pending pending, User user) {
             this.pendingR = pending;
         }
 
