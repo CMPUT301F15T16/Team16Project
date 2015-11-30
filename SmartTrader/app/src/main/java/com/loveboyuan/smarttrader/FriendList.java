@@ -45,8 +45,9 @@ public class FriendList {
         for (User user1 : getFriendList()){
             if (user1.getName().equals(user.getName())){
 
-                removeFriend(user1);
+                getFriendList().remove(user1);
             }
+
         }
 
         this.notifyAllObservers();
