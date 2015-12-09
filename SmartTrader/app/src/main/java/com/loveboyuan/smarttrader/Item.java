@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * This model class records all the possible attributes of
+ * a trade Item; there is not much meaningful methods other
+ * than getters and setters.
  */
 public class Item implements Serializable {
 

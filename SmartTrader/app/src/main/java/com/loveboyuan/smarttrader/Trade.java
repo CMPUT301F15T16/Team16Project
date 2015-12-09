@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * Each Trade record is saved in this model class.
  */
 public class Trade implements Serializable{
 

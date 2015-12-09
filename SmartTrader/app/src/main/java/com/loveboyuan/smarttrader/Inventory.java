@@ -4,8 +4,17 @@ package com.loveboyuan.smarttrader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Created by boyuangu on 2015-10-16.
+ *
+ * Inventory is yet another model class for storing collection
+ * info about a particular user; but in contrast to FriendList,
+ * it stores all the items a user possesses.
+ */
 
 public class Inventory implements  Serializable{
+
+
 
     static User usr=LoginActivity.usr;
 
@@ -35,12 +44,21 @@ public class Inventory implements  Serializable{
     public ArrayList<Item> getInventory() {
         return inventory;
     }
-    // Inventory can add an Item (to the "items")
+
+    /**
+     * Add an item to the inventory and notify all the observers.
+     * @param item item to be added
+     */
     public void addItem(Item item) {
+        // Inventory can add an Item (to the "items")
         inventory.add(item);
         this.notifyAllObservers();
     }
 
+    /**
+     * Remove an item from the inventory and notify all the observers.
+     * @param item item to be removed
+     */
     public void removeItem(Item item){
         inventory.remove(item);
         this.notifyAllObservers();

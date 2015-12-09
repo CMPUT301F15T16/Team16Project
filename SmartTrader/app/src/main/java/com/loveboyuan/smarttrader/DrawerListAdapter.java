@@ -12,14 +12,21 @@ import java.util.ArrayList;
 
 /**
  * Created by jiahui on 11/29/15.
+ *
+ * This customized adapter is used for storing all the DrawerListEntry in order
+ * to be invoked by a ListView to display the entries properly.
  */
-
-// Based on http://hmkcode.com/android-custom-listview-titles-icons-counter/
-// but changed extensively
 public class DrawerListAdapter extends ArrayAdapter<DrawerListEntry> {
+    // Based on http://hmkcode.com/android-custom-listview-titles-icons-counter/
+    // but changed extensively
     private final Context context;
     private final ArrayList<DrawerListEntry> drawerListEntryArrayList;
 
+    /**
+     * Initialing a new DrawerListAdapter.
+     * @param context the underlying context, normally should be an activity
+     * @param drawerListEntryArrayList ArrayList containing all the individual pieces
+     */
     public DrawerListAdapter(Context context, ArrayList<DrawerListEntry> drawerListEntryArrayList) {
 
         super(context, R.layout.list_entry, drawerListEntryArrayList);
