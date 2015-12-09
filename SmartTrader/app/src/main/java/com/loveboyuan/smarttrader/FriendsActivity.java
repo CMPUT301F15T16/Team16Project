@@ -14,6 +14,9 @@ import java.util.Collection;
 public class FriendsActivity extends AppCompatActivity {
     private FriendListManager friendListManager = new FriendListManager("");
     FriendList pulledFriendList =null;
+    Inventory pulledInventory = null;
+    private SearchInventoryManager searchInventoryManager = new SearchInventoryManager("");
+
     private Runnable doFinishAdd = new Runnable() {
         public void run() {
             finish();
@@ -43,6 +46,8 @@ public class FriendsActivity extends AppCompatActivity {
         SearchThread searchThread = new SearchThread(searchString);
         searchThread.start();
 
+        SearchInventoryThread searchInventoryThread = new SearchInventoryThread(searchString);
+        searchInventoryThread.start();
 
         try {
             Thread.sleep(500);
@@ -66,6 +71,12 @@ public class FriendsActivity extends AppCompatActivity {
 
         }
 
+        if(pulledInventory != null) {
+            for (Item item : pulledInventory.getInventory()) {
+
+                InventoryController.getInventoryModel().addItem(item);
+            }
+        }
 
 
         ListView friendListView = (ListView)findViewById(R.id.friendListView);
@@ -169,5 +180,25 @@ public class FriendsActivity extends AppCompatActivity {
         }
     }
 
+
+
+    class SearchInventoryThread extends Thread {
+        // TODO: Implement search thread
+
+        private String search;
+
+        public SearchInventoryThread(String search){
+            this.search = search;
+
+        }
+
+
+        @Override
+        public void run() {
+            pulledInventory = searchInventoryManager.searchOwnInventory(search, null);
+
+        }
+
+    }
 
 }
