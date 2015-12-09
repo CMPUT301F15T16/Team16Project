@@ -39,7 +39,7 @@ public class FriendsActivity extends AppCompatActivity {
 
         FriendListController.clear();
 
-
+        InventoryController.clear();
 
 
         String searchString = String.valueOf(usr.getMy_id());

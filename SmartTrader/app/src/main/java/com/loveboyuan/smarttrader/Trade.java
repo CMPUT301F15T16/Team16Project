@@ -2,7 +2,6 @@ package com.loveboyuan.smarttrader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 /**
  * Created by boyuangu on 2015-10-16.
  *
@@ -26,8 +25,6 @@ public class Trade implements Serializable{
     private String ownerComments;
 
     private String tradeState;
-
-
 
 
     // Constructor! A Trade has owner, trade for item, borrower and trade using items(what the borrower uses to trade).
@@ -81,5 +78,20 @@ public class Trade implements Serializable{
 
     public void setTradeResult(Boolean tradeResult) {
         this.tradeResult = tradeResult;
+    }
+
+    public boolean getTradeResult() {
+        return tradeResult;
+    }
+
+    public void rejectTrade() {
+        setTradeResult(Boolean.FALSE);
+    }
+
+    public Trade makeCounterTrader(Trade trade) {
+        ArrayList<Item> items = new ArrayList<Item>();
+        items.add(trade.getOItem());
+        return new Trade(trade.getBorrower(), null, trade.getOwner(), items);
+
     }
 }

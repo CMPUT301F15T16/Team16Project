@@ -12,136 +12,121 @@ public class TradeTest extends TestCase {
     public void testAcceptTrade() throws Exception {
         User borrower = new User(1);
         User owner = new User(2);
+        Inventory bInventory = new Inventory();
+        bInventory.setInventoryId(borrower.getMy_id());
 
+        Inventory oInventory = new Inventory();
+        oInventory.setInventoryId(owner.getMy_id());
 
-        borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
-        borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
-        owner.getInventory().addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
+        bInventory.addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
+        bInventory.addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
+        oInventory.addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
 
-        Item oitem = owner.getInventory().getInventory().get(0);
+        Item oitem = oInventory.getInventory().get(0);
 
         ArrayList<Item> bitems = new ArrayList<Item>();
-        bitems.add(borrower.getInventory().getInventory().get(0));
-        bitems.add(borrower.getInventory().getInventory().get(1));
+        bitems.add(bInventory.getInventory().get(0));
+        bitems.add(bInventory.getInventory().get(1));
 
-        Trade trade = new Trade(owner, oitem,borrower,bitems);
-        borrower.proposeTrade(trade);
+        Trade trade = new Trade(owner.getMy_id(), oitem, borrower.getMy_id(), bitems);
 
-        owner.getTradeHistory().getTrade(trade).acceptTrade();
+        TradeHistory bTradeHistory = new TradeHistory();
 
-        assertTrue(borrower.getTradeHistory().getTrade(trade).getTradeResult());
-        assertTrue(owner.getTradeHistory().getTrade(trade).getTradeResult());
+        TradeHistory oTradeHistory = new TradeHistory();
+
+
+        bTradeHistory.addTrade(trade);
+
+        oTradeHistory.getTrades().get(0).setTradeResult(true);
+
+        assertTrue(bTradeHistory.getTrades().get(0).getTradeResult());
+        assertTrue(oTradeHistory.getTrades().get(0).getTradeResult());
 
     }
+
+
+
+
 
     public void testRejectTrade() throws Exception {
         User borrower = new User(1);
         User owner = new User(2);
+        Inventory bInventory = new Inventory();
+        bInventory.setInventoryId(borrower.getMy_id());
 
+        Inventory oInventory = new Inventory();
+        oInventory.setInventoryId(owner.getMy_id());
 
-        borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
-        borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
-        owner.getInventory().addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
+        bInventory.addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
+        bInventory.addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
+        oInventory.addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
 
-        Item oitem = owner.getInventory().getInventory().get(0);
+        Item oitem = oInventory.getInventory().get(0);
 
         ArrayList<Item> bitems = new ArrayList<Item>();
-        bitems.add(borrower.getInventory().getInventory().get(0));
-        bitems.add(borrower.getInventory().getInventory().get(1));
+        bitems.add(bInventory.getInventory().get(0));
+        bitems.add(bInventory.getInventory().get(1));
 
-        Trade trade = new Trade(owner, oitem,borrower,bitems);
-        borrower.proposeTrade(trade);
+        Trade trade = new Trade(owner.getMy_id(), oitem,borrower.getMy_id(),bitems);
 
-        owner.getTradeHistory().getTrade(trade).rejectTrade();
+        TradeHistory bTradeHistory = new TradeHistory();
 
-        assertFalse(borrower.getTradeHistory().getTrade(trade).getTradeResult());
-        assertFalse(owner.getTradeHistory().getTrade(trade).getTradeResult());
+        TradeHistory oTradeHistory = new TradeHistory();
+
+        bTradeHistory.addTrade(trade);
+
+        oTradeHistory.getTrades().get(0).rejectTrade();
+
+        assertFalse(bTradeHistory.getTrades().get(0).getTradeResult());
+        assertFalse(oTradeHistory.getTrades().get(0).getTradeResult());
 
     }
+
+
+
+
 
     public void testMakeCounterTrader() throws Exception {
         User borrower = new User(1);
         User owner = new User(2);
 
+        Inventory bInventory = new Inventory();
+        bInventory.setInventoryId(borrower.getMy_id());
 
-        borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
-        borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
-        owner.getInventory().addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
+        Inventory oInventory = new Inventory();
+        oInventory.setInventoryId(owner.getMy_id());
+        bInventory.addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
+        bInventory.addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
+        oInventory.addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
 
-        Item oitem = owner.getInventory().getInventory().get(0);
+        Item oitem = oInventory.getInventory().get(0);
 
         ArrayList<Item> bitems = new ArrayList<Item>();
-        bitems.add(borrower.getInventory().getInventory().get(0));
-        bitems.add(borrower.getInventory().getInventory().get(1));
+        bitems.add(bInventory.getInventory().get(0));
+        bitems.add(bInventory.getInventory().get(1));
 
-        Trade trade = new Trade(owner, oitem,borrower,bitems);
-        borrower.proposeTrade(trade);
+        Trade trade = new Trade(owner.getMy_id(), oitem,borrower.getMy_id(),bitems);
 
-        owner.getTradeHistory().getTrade(trade).rejectTrade();
+        TradeHistory bTradeHistory = new TradeHistory();
 
-        assertFalse(borrower.getTradeHistory().getTrade(trade).getTradeResult());
-        assertFalse(owner.getTradeHistory().getTrade(trade).getTradeResult());
+        TradeHistory oTradeHistory = new TradeHistory();
 
-        Trade newtrade = owner.getTradeHistory().getTrade(trade).makeCounterTrader();
+        bTradeHistory.addTrade(trade);
 
-        owner.proposeTrade(newtrade);
+        oTradeHistory.getTrades().get(0).rejectTrade();
+
+        assertFalse(bTradeHistory.getTrades().get(0).getTradeResult());
+        assertFalse(oTradeHistory.getTrades().get(0).getTradeResult());
+
+        Trade newtrade = oTradeHistory.getTrades().get(0).makeCounterTrader(trade);
+
+        oTradeHistory.addTrade(newtrade);
 
         ArrayList<Item> oitems = new ArrayList<Item>();
         oitems.add(oitem);
-        assertTrue(borrower.getTradeHistory().getTrade(newtrade).getBItems().equals(oitems));
+        assertTrue(bTradeHistory.getTrades().get(0).getBItems().equals(oitems));
     }
 
-    public void testEditOItem() throws Exception {
-        User borrower = new User(1);
-        User owner = new User(2);
 
 
-        borrower.getInventory().addItem(new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", ""));
-        borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
-        owner.getInventory().addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
-
-        Item oitem = owner.getInventory().getInventory().get(0);
-
-        ArrayList<Item> bitems = new ArrayList<Item>();
-        bitems.add(borrower.getInventory().getInventory().get(0));
-        bitems.add(borrower.getInventory().getInventory().get(1));
-
-        Trade trade = new Trade(owner, oitem,borrower,bitems);
-        borrower.proposeTrade(trade);
-
-        Item newOItem = new Item("number theory", "Mathematics", 1, "Old", Boolean.FALSE, "a nice book", "");
-        owner.getInventory().addItem(newOItem);
-        borrower.getTradeHistory().getTrade(trade).editOItem(owner.getInventory().getInventory().get(1));
-        assertTrue(owner.getTradeHistory().getTrade(trade).getOItem().equals(newOItem));
-    }
-
-    public void testEditBItems() throws Exception {
-        User borrower = new User(1);
-        User owner = new User(2);
-
-
-        Item item1 = new Item("Alogorthm", "Computer Science", 1, "New", Boolean.FALSE, "good book", "");
-        borrower.getInventory().addItem(item1);
-        borrower.getInventory().addItem(new Item("benju", "French", 1, "Lightly Used", Boolean.FALSE, "language book", ""));
-        owner.getInventory().addItem(new Item("calculus", "Mathematics", 1, "Old", Boolean.FALSE, "nice book", ""));
-
-        Item oitem = owner.getInventory().getInventory().get(0);
-
-        ArrayList<Item> bitems = new ArrayList<Item>();
-        bitems.add(borrower.getInventory().getInventory().get(0));
-        bitems.add(borrower.getInventory().getInventory().get(1));
-
-        Trade trade = new Trade(owner, oitem,borrower,bitems);
-        borrower.proposeTrade(trade);
-
-        ArrayList<Item> newBItems = new ArrayList<Item>();
-        newBItems = bitems;
-        newBItems.remove(item1);
-        borrower.getTradeHistory().getTrade(trade).editBItems(newBItems);
-
-        owner.getTradeHistory().getTrade(trade).getBItems().equals(newBItems);
-
-
-
-    }
 }
