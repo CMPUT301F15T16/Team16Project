@@ -36,12 +36,8 @@ public class FriendsActivity extends AppCompatActivity {
 
         FriendListController.clear();
 
-        // We want to pull from server what friends the user has and add it to friendsController
 
 
-        // We want to pull from server the user's inventory and concurrent it with controller
-
-        // So search first
 
         String searchString = String.valueOf(usr.getMy_id());
         SearchThread searchThread = new SearchThread(searchString);
