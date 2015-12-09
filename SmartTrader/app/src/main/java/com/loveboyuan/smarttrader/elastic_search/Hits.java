@@ -2,9 +2,6 @@ package com.loveboyuan.smarttrader.elastic_search;
 
 import java.util.List;
 
-/**
- * Created by boyuangu on 2015-11-24.
- */
 
 public class Hits<T> {
     private int total;
@@ -13,29 +10,10 @@ public class Hits<T> {
 
     public Hits() {}
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-
-    public float getMax_score() {
-        return max_score;
-    }
-
-    public void setMax_score(float max_score) {
-        this.max_score = max_score;
-    }
-
     public List<SearchHit<T>> getHits() {
         return hits;
     }
 
-    public void setHits(List<SearchHit<T>> hits) {
-        this.hits = hits;
-    }
 
     @Override
     public String toString() {

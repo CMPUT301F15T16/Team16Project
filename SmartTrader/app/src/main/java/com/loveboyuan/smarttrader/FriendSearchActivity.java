@@ -112,7 +112,6 @@ public class FriendSearchActivity extends AppCompatActivity {
     }
 
     public void notifyUpdated() {
-        // Thread to update adapter after an operation
         Runnable doUpdateGUIList = new Runnable() {
             public void run() {
                 searchFriendAdapter.notifyDataSetChanged();

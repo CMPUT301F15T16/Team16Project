@@ -1,8 +1,6 @@
 package com.loveboyuan.smarttrader.elastic_search;
 
-/**
- * Created by boyuangu on 2015-11-24.
- */
+
 
 public class SearchResponse<T> {
 
@@ -13,39 +11,11 @@ public class SearchResponse<T> {
 
     public SearchResponse() {}
 
-    public int getTook() {
-        return took;
-    }
-
-    public void setTook(int took) {
-        this.took = took;
-    }
-
-    public boolean isTimed_out() {
-        return timed_out;
-    }
-
-    public void setTimed_out(boolean timed_out) {
-        this.timed_out = timed_out;
-    }
-
-    public Shard get_shards() {
-        return _shards;
-    }
-
-    public void set_shards(Shard _shards) {
-        this._shards = _shards;
-    }
-
     public Hits<T> getHits() {
         return hits;
     }
 
-    public void setHits(Hits<T> hits) {
-        this.hits = hits;
-    }
 }
-
 
 
 class Shard {
@@ -55,22 +25,5 @@ class Shard {
 
     public Shard() {}
 
-    public int getTotal() {
-        return total;
-    }
-    public void setTotal(int total) {
-        this.total = total;
-    }
-    public int getSuccessful() {
-        return successful;
-    }
-    public void setSuccessful(int successful) {
-        this.successful = successful;
-    }
-    public int getFailed() {
-        return failed;
-    }
-    public void setFailed(int failed) {
-        this.failed = failed;
-    }
+
 }

@@ -91,8 +91,24 @@ public class LoginActivity extends AppCompatActivity {
             usr = new User(usrID);
 
             // Execute the thread to add this remotely
-            Thread thread = new AddThread(usr);
+            Thread thread = new AddUserThread(usr);
             thread.start();
+            // We also want to add the pending, inventoyr friendlist to the server
+
+
+            Inventory inventory = new Inventory();
+            inventory.setInventoryId(usr.getMy_id());
+
+            Thread thread2 = new AddInventoryThread(inventory);
+            thread2.start();
+
+
+            FriendList friendList = new FriendList();
+            friendList.setFriendListId(usr.getMy_id());
+
+            Thread thread3 = new AddFriendListThread(friendList);
+            thread3.start();
+
         }
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -109,10 +125,62 @@ public class LoginActivity extends AppCompatActivity {
         return drawerListEntries;
     }
 
-    class AddThread extends Thread {
+
+    class AddInventoryThread extends Thread {
+        private Inventory inventory;
+
+        public AddInventoryThread(Inventory inventory) {
+            this.inventory = inventory;
+        }
+
+        @Override
+        public void run() {
+            InventoryController.addInventory(inventory);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
+
+    class AddFriendListThread extends Thread {
+        private FriendList friendList;
+
+        public AddFriendListThread(FriendList friendList) {
+            this.friendList = friendList;
+        }
+
+        @Override
+        public void run() {
+
+            FriendListController.addFriendList(friendList);
+
+
+            // Give some time to get updated info
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            runOnUiThread(doFinishAdd);
+        }
+    }
+
+
+
+
+    class AddUserThread extends Thread {
         private User user;
 
-        public AddThread(User user) {
+        public AddUserThread(User user) {
             this.user = user;
         }
 

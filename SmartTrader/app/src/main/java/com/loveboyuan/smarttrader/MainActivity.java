@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         drawerListEntries.add(new DrawerListEntry("Smart Trader"));
         drawerListEntries.add(new DrawerListEntry(R.drawable.profile_icon,"Profile"));
         drawerListEntries.add(new DrawerListEntry(R.drawable.settings_icon,"UserSettings"));
-        drawerListEntries.add(new DrawerListEntry(R.drawable.pending_icon,"Pending"));
         drawerListEntries.add(new DrawerListEntry(R.drawable.inventory_icon,"Inventory"));
         drawerListEntries.add(new DrawerListEntry(R.drawable.friendlist_icon,"Friends"));
         drawerListEntries.add(new DrawerListEntry(R.drawable.trade_history_icon,"TradeHistory"));

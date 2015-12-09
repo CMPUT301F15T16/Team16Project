@@ -2,9 +2,10 @@ package com.loveboyuan.smarttrader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * Each Trade record is saved in this model class.
  */
 public class Trade implements Serializable{
 
@@ -24,8 +25,6 @@ public class Trade implements Serializable{
     private String ownerComments;
 
     private String tradeState;
-
-
 
 
     // Constructor! A Trade has owner, trade for item, borrower and trade using items(what the borrower uses to trade).
@@ -59,43 +58,6 @@ public class Trade implements Serializable{
         return oItem;
     }
 
-    // Trade can get its trade result
-    public boolean getTradeResult() {
-        return tradeResult;
-    }
-
-    // Trade can be accepted by the owner
-    public void acceptTrade() {
-        this.tradeResult = Boolean.TRUE;
-
-        // send email to both parties
-    }
-
-    // Trade can be rejected by the owner
-    public void rejectTrade() {
-        this.tradeResult = Boolean.FALSE;
-    }
-
-
-    // Trade can be turned into a counter trade by the owner
-    public Trade makeCounterTrader() {
-
-        ArrayList<Item>items  = new ArrayList<Item>();
-        items.add(oItem);
-        return new Trade(borrowerID, null, ownerID, items);
-
-    }
-
-    // Trade can change owner item by editing
-    public void editOItem(Item newOItem) {
-        this.oItem = newOItem;
-    }
-
-    // Trade can change borrower items by editing
-    public void editBItems(ArrayList<Item> bItems) {
-        this.bItems = bItems;
-
-    }
 
     public String getTradeState() {
         return tradeState;
@@ -116,5 +78,20 @@ public class Trade implements Serializable{
 
     public void setTradeResult(Boolean tradeResult) {
         this.tradeResult = tradeResult;
+    }
+
+    public boolean getTradeResult() {
+        return tradeResult;
+    }
+
+    public void rejectTrade() {
+        setTradeResult(Boolean.FALSE);
+    }
+
+    public Trade makeCounterTrader(Trade trade) {
+        ArrayList<Item> items = new ArrayList<Item>();
+        items.add(trade.getOItem());
+        return new Trade(trade.getBorrower(), null, trade.getOwner(), items);
+
     }
 }

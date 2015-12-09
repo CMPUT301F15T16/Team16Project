@@ -1,8 +1,6 @@
 package com.loveboyuan.smarttrader;
 
-import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ActivityUnitTestCase;
 import android.test.ViewAsserts;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.view.KeyEvent;
@@ -14,7 +12,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 /**
  * Created by Michael on 2015-11-05.
@@ -99,14 +96,6 @@ public class ItemActivityTest
         assertEquals(layoutParams.height, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
-
-    // Test if the Add button's label text is the same as the expected text (update strings.xml)
-    /*public void testmClickAddButton_labelText() {
-        final String expected =
-                mItemActivity.getString(R.string.addButton);
-        final String actual = mFirstTestText.getText().toString();
-        assertEquals(expected, actual);
-    } */
 
 
     // Test the Spinner

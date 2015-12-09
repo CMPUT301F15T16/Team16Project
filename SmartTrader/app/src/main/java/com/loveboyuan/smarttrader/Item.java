@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * This model class records all the possible attributes of
+ * a trade Item; there is not much meaningful methods other
+ * than getters and setters.
  */
 public class Item implements Serializable {
 
@@ -21,9 +25,16 @@ public class Item implements Serializable {
     private String photo;
 
 
-
-
-
+    /**
+     * Blob constructor for the Item model.
+     * @param name name of the textbook to be traded
+     * @param category which category the textbook belongs to
+     * @param quantity number of textbooks to be traded at a time
+     * @param quality quality of the textbooks
+     * @param isPrivate whether the traded textbook is publicly visible
+     * @param description short description about the content of the textbook
+     * @param photo the associated photo with the textbook
+     */
     public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, String photo){
       //  id = name;
         this.name = name;
@@ -41,25 +52,6 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setQuality(String quality) {
-        this.quality = quality;
-    }
-
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public String getCategory() {
         return category;

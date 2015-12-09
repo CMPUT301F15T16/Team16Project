@@ -23,6 +23,13 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
 
+/**
+ * FriendListManager handles the communication between the local
+ * app and the remote elastic search server to ensure the integrity
+ * of the local FriendList;
+ * it also implements the search functionality by querying the
+ * server on demand.
+ */
 public class FriendListManager {
     static User usr=LoginActivity.usr;
 
@@ -37,6 +44,11 @@ public class FriendListManager {
     }
 
 
+    /**
+     * Global friend search based on a string text field.
+     * @param searchString keyword string to be queried
+     * @return FriendList contains search results
+     */
     public FriendList searchFriends(String searchString, String field) {
         FriendList result = new FriendList();
 
@@ -95,20 +107,23 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        // Extract the movies from the esResponse and put them in result
 
 
         for(SearchHit<User> hit : esResponse.getHits().getHits()){
             result.addFriend(hit.getSource());
 
         }
-     //  Log.i(TAG, "Json command: " + result.getFriendList().size());
 
 
         return result;
     }
 
 
+    /**
+     * Restricted search function.
+     * @param searchString keyword string to be queried
+     * @return FriendList contains search results
+     */
     public FriendList searchOwnFriends(String searchString, String field) {
         FriendList result = null;
         User usr=LoginActivity.usr;
@@ -148,9 +163,7 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        /**
-         * Parses the response of a search
-         */
+
         Type searchResponseType = new TypeToken<SearchResponse<FriendList>>() {
         }.getType();
 
@@ -169,8 +182,6 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        // Extract the movies from the esResponse and put them in result
-
 
         for(SearchHit<FriendList> hit : esResponse.getHits().getHits()){
 
@@ -182,9 +193,7 @@ public class FriendListManager {
             }
 
 
-
         }
-
 
         return result;
     }
