@@ -139,17 +139,11 @@ public class FriendsActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-          //  try {
                 pulledFriendList = friendListManager.searchOwnFriends(search, null);
-       //     }catch (RuntimeException e){
 
-
-          //  }
         }
 
     }
-
-
 
 
     class AddThread extends Thread {
@@ -165,7 +159,6 @@ public class FriendsActivity extends AppCompatActivity {
             FriendListController.addFriendList(friendList);
 
 
-            // Give some time to get updated info
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {

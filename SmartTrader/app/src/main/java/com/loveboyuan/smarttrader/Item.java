@@ -41,25 +41,6 @@ public class Item implements Serializable {
         this.name = name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setQuality(String quality) {
-        this.quality = quality;
-    }
-
-    public void setIsPrivate(boolean isPrivate) {
-        this.isPrivate = isPrivate;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
 
     public String getCategory() {
         return category;

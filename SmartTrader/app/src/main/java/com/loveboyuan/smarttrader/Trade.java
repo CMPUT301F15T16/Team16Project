@@ -59,43 +59,6 @@ public class Trade implements Serializable{
         return oItem;
     }
 
-    // Trade can get its trade result
-    public boolean getTradeResult() {
-        return tradeResult;
-    }
-
-    // Trade can be accepted by the owner
-    public void acceptTrade() {
-        this.tradeResult = Boolean.TRUE;
-
-        // send email to both parties
-    }
-
-    // Trade can be rejected by the owner
-    public void rejectTrade() {
-        this.tradeResult = Boolean.FALSE;
-    }
-
-
-    // Trade can be turned into a counter trade by the owner
-    public Trade makeCounterTrader() {
-
-        ArrayList<Item>items  = new ArrayList<Item>();
-        items.add(oItem);
-        return new Trade(borrowerID, null, ownerID, items);
-
-    }
-
-    // Trade can change owner item by editing
-    public void editOItem(Item newOItem) {
-        this.oItem = newOItem;
-    }
-
-    // Trade can change borrower items by editing
-    public void editBItems(ArrayList<Item> bItems) {
-        this.bItems = bItems;
-
-    }
 
     public String getTradeState() {
         return tradeState;

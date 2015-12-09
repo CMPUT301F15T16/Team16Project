@@ -4,10 +4,8 @@ package com.loveboyuan.smarttrader;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-/**
- * Created by boyuangu on 2015-10-16.
- */
-public class Inventory implements Search, Serializable{
+
+public class Inventory implements  Serializable{
 
     static User usr=LoginActivity.usr;
 
@@ -19,7 +17,6 @@ public class Inventory implements Search, Serializable{
 
     private int inventoryId;
     public Inventory() {
-
          setInventoryId(usr.getMy_id());
     }
 

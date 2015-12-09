@@ -30,7 +30,6 @@ public class FriendListController {
 
 
 
-
     public static void clear() {
         friendList = null;
     }

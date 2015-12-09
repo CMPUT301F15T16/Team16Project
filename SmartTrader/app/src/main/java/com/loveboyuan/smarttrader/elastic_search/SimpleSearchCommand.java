@@ -1,8 +1,6 @@
 package com.loveboyuan.smarttrader.elastic_search;
 
-/**
- * Created by boyuangu on 2015-11-24.
- */
+
 public class SimpleSearchCommand {
     private SimpleSearchQuery query;
 
@@ -11,18 +9,6 @@ public class SimpleSearchCommand {
         this.query = new SimpleSearchQuery(query);
     }
 
-    public SimpleSearchCommand(String query, String[] fields) {
-        super();
-        throw new UnsupportedOperationException("Fields not yet implemented.");
-    }
-
-    public SimpleSearchQuery getQuery() {
-        return query;
-    }
-
-    public void setQuery(SimpleSearchQuery query) {
-        this.query = query;
-    }
 
     static class SimpleSearchQuery {
         private SimpleSearchQueryString queryString;
@@ -32,13 +18,6 @@ public class SimpleSearchCommand {
             this.queryString = new SimpleSearchQueryString(query);
         }
 
-        public SimpleSearchQueryString getQueryString() {
-            return queryString;
-        }
-
-        public void setQueryString(SimpleSearchQueryString queryString) {
-            this.queryString = queryString;
-        }
 
         static class SimpleSearchQueryString {
             private String query;
@@ -48,13 +27,6 @@ public class SimpleSearchCommand {
                 this.query = query;
             }
 
-            public String getQuery() {
-                return query;
-            }
-
-            public void setQuery(String query) {
-                this.query = query;
-            }
         }
     }
 }

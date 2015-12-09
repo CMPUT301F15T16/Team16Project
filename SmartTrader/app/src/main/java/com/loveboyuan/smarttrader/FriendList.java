@@ -1,9 +1,7 @@
 package com.loveboyuan.smarttrader;
 import java.util.ArrayList;
 
-/**
- * Created by jiahui on 10/18/15.
- */
+
 public class FriendList {
 
 
@@ -12,13 +10,10 @@ public class FriendList {
 
     static User usr=LoginActivity.usr;
 
-    // the model needs to set address of the server
     private static final String RESOURCE_URL = prefix.concat("/");
 
 
-    //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/";
     private static final String SEARCH_URL = prefix.concat("/_search");
-    //"http://cmput301.softwareprocess.es:8080/cmput301f15t16/inventoryItem/_search";
     private ArrayList<User> friendList = new ArrayList<User>();
     private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
 
@@ -39,9 +34,7 @@ public class FriendList {
     }
 
     public void removeFriend(User user) {
-     /*   if (this.friendList.contains(user)) {
-            this.friendList.remove(user);
-        }*/
+
         for (User user1 : getFriendList()){
             if (user1.getName().equals(user.getName())){
 

@@ -95,14 +95,12 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        // Extract the movies from the esResponse and put them in result
 
 
         for(SearchHit<User> hit : esResponse.getHits().getHits()){
             result.addFriend(hit.getSource());
 
         }
-     //  Log.i(TAG, "Json command: " + result.getFriendList().size());
 
 
         return result;
@@ -148,9 +146,7 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        /**
-         * Parses the response of a search
-         */
+
         Type searchResponseType = new TypeToken<SearchResponse<FriendList>>() {
         }.getType();
 
@@ -169,8 +165,6 @@ public class FriendListManager {
             throw new RuntimeException(e);
         }
 
-        // Extract the movies from the esResponse and put them in result
-
 
         for(SearchHit<FriendList> hit : esResponse.getHits().getHits()){
 
@@ -182,9 +176,7 @@ public class FriendListManager {
             }
 
 
-
         }
-
 
         return result;
     }

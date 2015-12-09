@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Created by boyuangu on 2015-10-16.
  */
-public class TradeHistory implements Search, Serializable {
+public class TradeHistory implements  Serializable {
     static User usr=LoginActivity.usr;
 
     // A TradeHistory has an array list of trades
