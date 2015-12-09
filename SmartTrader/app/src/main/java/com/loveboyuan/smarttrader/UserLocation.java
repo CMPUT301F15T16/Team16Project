@@ -8,6 +8,8 @@ import android.os.Bundle;
 
 /**
  * Created by BSid on 15-11-19.
+ *
+ * UserLocation is used to track the location of the user.
  */
 public class UserLocation {
 

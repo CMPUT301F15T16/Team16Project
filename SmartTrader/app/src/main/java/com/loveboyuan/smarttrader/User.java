@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * User model class has all the personal information about an user.
+ * Please note that even though there is a Profile option in our
+ * app that functionality is actually carried over by this class
+ * since Profile is merged into this class for simplicity.
  */
 public class User implements Serializable {
 
