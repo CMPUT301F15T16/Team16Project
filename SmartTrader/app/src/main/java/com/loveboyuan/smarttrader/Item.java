@@ -25,9 +25,16 @@ public class Item implements Serializable {
     private String photo;
 
 
-
-
-
+    /**
+     * Blob constructor for the Item model.
+     * @param name name of the textbook to be traded
+     * @param category which category the textbook belongs to
+     * @param quantity number of textbooks to be traded at a time
+     * @param quality quality of the textbooks
+     * @param isPrivate whether the traded textbook is publicly visible
+     * @param description short description about the content of the textbook
+     * @param photo the associated photo with the textbook
+     */
     public Item(String name, String category, int quantity, String quality, boolean isPrivate, String description, String photo){
       //  id = name;
         this.name = name;

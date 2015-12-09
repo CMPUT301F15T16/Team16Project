@@ -22,6 +22,10 @@ import java.lang.reflect.Type;
 
 /**
  * Created by boyuangu on 2015-11-29.
+ *
+ * SearchTradeHistoryManager is used to implement the communication
+ * of search requests of TradeHistory between the local app and the
+ * remote elastic search server.
  */
 public class SearchTradeHistoryManager {
 
@@ -38,7 +42,12 @@ public class SearchTradeHistoryManager {
     }
 
 
-
+    /**
+     * Main method used to queries the remote server about the given
+     * search text string.
+     * @param searchString search text keyword
+     * @return TradeHistory containing results
+     */
     public TradeHistory searchOwnTradeHistory(String searchString, String field) {
         TradeHistory result = new TradeHistory();
 

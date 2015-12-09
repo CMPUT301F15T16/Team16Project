@@ -12,6 +12,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * Created by jiahui on 11/4/15.
+ *
+ * FriendListController is part of a singleton pattern applied to FriendList
+ * and pulls data via elastic search to a local unique copy.
  */
 public class FriendListController {
     private static FriendList friendList = null;
@@ -22,6 +25,12 @@ public class FriendListController {
     private static final String TAG = "FriendListController";
 
 
+    /**
+     * Create a new FriendList model upon the first time
+     * the method is invoked; return the embedded FriendList model
+     * for the remaining calls.
+     * @return the embedded unique copy of FriendList
+     */
     static public FriendList getFriendListModel() {
         if (null == friendList)
             friendList = new FriendList();
@@ -34,6 +43,10 @@ public class FriendListController {
         friendList = null;
     }
 
+    /**
+     * Push the embedded local FriendList model up to the elastic search server.
+     * @param friendList FriendList to be added
+     */
     public static void addFriendList(FriendList friendList) {
 
 

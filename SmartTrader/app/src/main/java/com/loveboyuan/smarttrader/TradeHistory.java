@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 /**
  * Created by boyuangu on 2015-10-16.
+ *
+ * Each transaction of textbook is internally represented
+ * by the TradeHistory model class;
+ * each TradeHistory maintains a unique id for each trade record.
  */
 public class TradeHistory implements  Serializable {
     static User usr=LoginActivity.usr;

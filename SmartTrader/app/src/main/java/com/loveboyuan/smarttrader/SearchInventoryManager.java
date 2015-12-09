@@ -24,6 +24,10 @@ import java.lang.reflect.Type;
 
 /**
  * Created by boyuangu on 2015-11-26.
+ *
+ * SearchInventoryManager implements the search functionality
+ * within the Inventory by handling the communication between
+ * the local app and the remote elastic search server.
  */
 public class SearchInventoryManager {
     static User usr=LoginActivity.usr;
@@ -42,6 +46,12 @@ public class SearchInventoryManager {
     }
 
 
+    /**
+     * Queries the elastic search database for the search result
+     * returned by using the given search keyword.
+     * @param searchString text search keyword
+     * @return Inventory containing search results
+     */
     public Inventory searchInventory(String searchString, String field) {
         Inventory result = new Inventory();
 
@@ -121,6 +131,12 @@ public class SearchInventoryManager {
     }
 
 
+    /**
+     * Queries only the Inventory of the current logged in user
+     * by the given string text field.
+     * @param searchString text search keyword
+     * @return Inventory containing the results
+     */
     public Inventory searchOwnInventory(String searchString, String field) {
         Inventory result =null;
 
@@ -198,7 +214,12 @@ public class SearchInventoryManager {
 
     }
 
-
+    /**
+     * Determines whether the Inventory of a particular
+     * user belongs to one of the friends.
+     * @param inventoryId unique id of Inventory
+     * @return whether the associated Inventory belongs to a friend
+     */
     private boolean isFriend(int inventoryId) {
 
         for(User user: FriendListController.getFriendListModel().getFriendList()){
