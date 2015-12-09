@@ -24,9 +24,7 @@ import java.util.ArrayList;
 public class ProfileActivity extends AppCompatActivity {
     private static Gson gson = new Gson();
     private FriendListManager friendListManager = new FriendListManager("");
-    private PendingManager pendingManager = new PendingManager("");
     FriendList pulledFriendList = new FriendList();
-    Pending pulledList = new Pending();
 
 
     private Runnable doFinishAdd = new Runnable() {
@@ -181,33 +179,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    public void add(View v){
-        User user = (User) getIntent().getSerializableExtra("USR");
-
-
-        if(checkUserNotSent(user)) {
-            PendingController.getPendingModel().addPendingSent(user);
-            PendingController.getPendingModel().addPendingReceived(usr);
-            PendingController.getPendingModel().setPendingId(usr.getMy_id() + ',' + user.getMy_id());
-            PendingController.getPendingModel().setPendingSentId(usr.getMy_id());
-            PendingController.getPendingModel().setPendingReceivedId(user.getMy_id());
-
-            Thread thread = new AddThread2(PendingController.getPendingModel());
-            thread.start();
-        }else{
-            Toast.makeText(ProfileActivity.this, "Friend! Already Requested", Toast.LENGTH_SHORT).show();
-
-        }
-
-    }
 
     public void addFriend(View v){
-        User user = (User) getIntent().getSerializableExtra("USRFriend");
+        User user = (User) getIntent().getSerializableExtra("USR");
 
         if(checkUserNotAdded(user)) {
             FriendListController.getFriendListModel().addFriend(user);
 
-            Thread thread = new AddThread1(FriendListController.getFriendListModel());
+            Thread thread = new AddFriendThread(FriendListController.getFriendListModel());
             thread.start();
         }else{
             Toast.makeText(ProfileActivity.this, "Already your Friend!",Toast.LENGTH_SHORT).show();
@@ -215,6 +194,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
     }
+
 
     private boolean checkUserNotAdded(User user) {
         // So search first
@@ -241,31 +221,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkUserNotSent(User user) {
-        // So search first
 
-        pulledList.getPendingSent().clear();
-
-        String searchString = "*";
-        SearchSentThread searchSentThread = new SearchSentThread(searchString);
-        searchSentThread.start();
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        for(User user1: pulledList.getPendingSent()){
-            if(user1.getMy_id()==user.getMy_id()){
-                return false;
-            }
-        }
-
-        return true;
-
-
-    }
 
     class AddThread extends Thread {
         private User user;
@@ -323,8 +279,7 @@ public class ProfileActivity extends AppCompatActivity {
                         final User user = (User) getIntent().getSerializableExtra("USR");
 
                         FriendListController.getFriendListModel().removeFriend(user);
-                      //  FriendListController.clear();
-                        Thread thread = new AddThread1(FriendListController.getFriendListModel());
+                        Thread thread = new AddFriendThread(FriendListController.getFriendListModel());
                         thread.start();
                     }
                 });
@@ -370,31 +325,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    class SearchSentThread extends Thread {
-        // TODO: Implement search thread
-
-        private String search;
-
-        public SearchSentThread(String search){
-            this.search = search;
-
-        }
-
-        @Override
-        public void run(){
-            ArrayList<User> users = pendingManager.searchOwnSent(search, null).getPendingSent();
-            for(User user: users ) {
-                pulledList.addPendingSent(user);
-            }
-        }
-
-    }
 
 
-    class AddThread1 extends Thread {
+    class AddFriendThread extends Thread {
         private FriendList friendList;
 
-        public AddThread1(FriendList friendList) {
+        public AddFriendThread(FriendList friendList) {
             this.friendList = friendList;
         }
 
@@ -416,27 +352,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
 
-    class AddThread2 extends Thread {
-        private Pending pending;
 
-        public AddThread2(Pending pending) {
-            this.pending = pending;
-        }
-
-        @Override
-        public void run() {
-            PendingController.addPending(pending);
-
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            runOnUiThread(doFinishAdd);
-        }
-    }
 
 }

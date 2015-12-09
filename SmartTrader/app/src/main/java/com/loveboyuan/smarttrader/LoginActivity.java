@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
 
             Thread thread3 = new AddFriendListThread(friendList);
             thread3.start();
-            
+
         }
 
         Intent intent = new Intent(this, MainActivity.class);
